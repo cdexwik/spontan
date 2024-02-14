@@ -11,7 +11,7 @@ function ForgotPass() {
           <Text style={styles.inputLabel}>Forgot your password?</Text>
           <Text style={styles.italic}>
             Enter your email address and you will receive instructions on how to
-            change it. Please wait a little bit with out spontaneous mail.
+            change it. Please wait a little bit with our spontaneous mail.
           </Text>
           <Text style={styles.inputLabel}>Email</Text>
           <TextInput style={styles.emailInput} />
