@@ -1,61 +1,32 @@
-import React, { useState } from "react";
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  Pressable,
-} from "react-native";
-import Checkbox from "expo-checkbox";
+import * as React from "react";
+import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
 
-const Login = () => {
-  const [isChecked, setChecked] = useState(false);
-
+function ForgotPass() {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Spontan</Text>
         <Text style={styles.subTitle}>Embrace the spark of Spontaneity! </Text>
         <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Tag or email</Text>
+          <Text style={styles.inputLabel}>Forgot your password?</Text>
+          <Text style={styles.italic}>
+            Enter your email address and you will receive instructions on how to
+            change it
+          </Text>
+          <Text style={styles.inputLabel}>Email</Text>
           <TextInput style={styles.emailInput} />
-          <Text style={styles.inputLabel}>Password</Text>
-          <TextInput style={styles.passwordInput} secureTextEntry={true} />
-          <View style={styles.remeberMeContainer}>
-            <Checkbox
-              style={styles.checkbox}
-              value={isChecked}
-              onValueChange={setChecked}
-              color={isChecked ? "#4630EB" : undefined}
-            />
-            <Text style={styles.remeberMeText}>Remember me</Text>
-          </View>
-        </View>
-
-        <View style={styles.accountLinkContainer}>
           <Pressable style={styles.loginButton}>
             <Text style={styles.loginText}>Login</Text>
           </Pressable>
           <View style={styles.textBox}>
-            <Text style={styles.accountText}>Don’t have an account?</Text>
-            <Text style={styles.registerText}>Register</Text>
-          </View>
-          <View>
-            <Text style={styles.passwordText}>Forgot password?</Text>
+            <Text style={styles.accountText}>Back to</Text>
+            <Text style={styles.registerText}>Login</Text>
           </View>
         </View>
       </View>
-
-      <ScrollView style={styles.contentContainer}>
-        {/*
-          Your Items would be listed here using FlatList or some other ways for the sake of maintainability 
-          of the code, I've simplified how those items would be.
-        */}
-      </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -65,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 50,
   },
-  headerContainerContainer: {
+  headerContainer: {
     textAlign: "center",
     maxWidth: 380,
   },
@@ -91,11 +62,11 @@ const styles = StyleSheet.create({
   inputContainer: {
     backgroundColor: "#3B3B3B",
     width: 380,
+    height: 576,
     marginTop: 24,
     flexDirection: "column",
     borderRadius: 8,
     alignItems: "stretch",
-    justifyContent: "center", // maybe remove
     padding: 48,
   },
   inputLabel: {
@@ -104,6 +75,12 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
     fontSize: 16,
+  },
+  italic: {
+    marginTop: 8,
+    fontSize: 14,
+    color: "#A0A0A0",
+    fontStyle: "italic",
   },
   emailInput: {
     height: 32,
@@ -114,35 +91,10 @@ const styles = StyleSheet.create({
     color: "#D9D9D9",
     fontSize: 16,
   },
-  passwordInput: {
-    height: 32,
-    marginTop: 12,
-    borderRadius: 8,
-    backgroundColor: "#424242",
-    color: "#D9D9D9",
-    fontSize: 16,
-  },
-  remeberMeContainer: {
-    flexDirection: "row",
-    marginTop: 16,
-    fontSize: 12,
-    color: "#A0A0A0",
-  },
-  remeberMeText: {
-    marginLeft: 8,
-    fontSize: 14,
-    color: "#A0A0A0",
-  },
-  accountLinkContainer: {
-    marginTop: 24,
-    alignSelf: "center",
-    justifyContent: "space-between",
-    fontSize: 10,
-    fontWeight: "700",
-  },
+
   loginButton: {
     marginTop: 24,
-    backgroundColor: "#afe8c4",
+    backgroundColor: "#FDD3D5",
     alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
@@ -152,10 +104,6 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
   },
-  textBox: {
-    flexDirection: "row",
-    padding: 8,
-  },
   loginText: {
     fontSize: 16,
     lineHeight: 21,
@@ -164,6 +112,11 @@ const styles = StyleSheet.create({
     color: "black",
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
+  },
+  textBox: {
+    flexDirection: "row",
+    padding: 8,
+    alignSelf: "center",
   },
   accountText: {
     fontSize: 12,
@@ -175,27 +128,15 @@ const styles = StyleSheet.create({
     color: "#A0A0A0",
   },
   registerText: {
+    paddingLeft: 4,
     fontSize: 12,
     lineHeight: 21,
     fontWeight: "bold",
     letterSpacing: 0.25,
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
-    color: "#D4F0FC",
-  },
-  passwordText: {
-    fontSize: 12,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    color: "#FDD3D5",
-    alignSelf: "center",
-  },
-  contentContainer: {
-    marginTop: 16,
+    color: "#afe8c4",
   },
 });
 
-export default Login;
+export default ForgotPass;
