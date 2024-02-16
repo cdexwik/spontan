@@ -36,3 +36,4 @@ yarn-error.*
 package.json
 package-lock.json
 app.json
+prettierrc.js
