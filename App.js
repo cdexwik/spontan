@@ -2,11 +2,13 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
+import Register from "./components/Register";
+import Main from "./components/Main";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ForgotPass />
+      <Main />
     </View>
   );
 }
