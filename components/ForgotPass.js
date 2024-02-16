@@ -1,30 +1,37 @@
-import * as React from "react";
+import React from "react";
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
 function ForgotPass() {
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Spontan</Text>
-        <Text style={styles.subTitle}>Embrace the spark of Spontaneity! </Text>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Forgot your password?</Text>
-          <Text style={styles.italic}>
-            Enter your email address and you will receive instructions on how to
-            change it
-          </Text>
-          <Text style={styles.inputLabel}>Email</Text>
-          <TextInput style={styles.emailInput} />
-          <Pressable style={styles.loginButton}>
-            <Text style={styles.loginText}>Login</Text>
-          </Pressable>
-          <View style={styles.textBox}>
-            <Text style={styles.accountText}>Back to</Text>
-            <Text style={styles.registerText}>Login</Text>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>Spontan</Text>
+            <Text style={styles.subTitle}>
+              Embrace the spark of Spontaneity!{" "}
+            </Text>
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Forgot your password?</Text>
+              <Text style={styles.italic}>
+                Enter your email address and you will receive instructions on
+                how to change it
+              </Text>
+              <Text style={styles.inputLabel}>Email</Text>
+              <TextInput style={styles.emailInput} />
+              <Pressable style={styles.loginButton}>
+                <Text style={styles.loginText}>Login</Text>
+              </Pressable>
+              <View style={styles.textBox}>
+                <Text style={styles.accountText}>Back to</Text>
+                <Text style={styles.registerText}>Login</Text>
+              </View>
+            </View>
           </View>
         </View>
-      </View>
-    </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

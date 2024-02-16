@@ -7,53 +7,60 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Checkbox from "expo-checkbox";
 
 const Login = () => {
   const [isChecked, setChecked] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Spontan</Text>
-        <Text style={styles.subTitle}>Embrace the spark of Spontaneity! </Text>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Tag or email</Text>
-          <TextInput style={styles.emailInput} />
-          <Text style={styles.inputLabel}>Password</Text>
-          <TextInput style={styles.passwordInput} secureTextEntry={true} />
-          <View style={styles.remeberMeContainer}>
-            <Checkbox
-              style={styles.checkbox}
-              value={isChecked}
-              onValueChange={setChecked}
-              color={isChecked ? "#4630EB" : undefined}
-            />
-            <Text style={styles.remeberMeText}>Remember me</Text>
-          </View>
-        </View>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>Spontan</Text>
+            <Text style={styles.subTitle}>
+              Embrace the spark of Spontaneity!{" "}
+            </Text>
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Tag or email</Text>
+              <TextInput style={styles.emailInput} />
+              <Text style={styles.inputLabel}>Password</Text>
+              <TextInput style={styles.passwordInput} secureTextEntry={true} />
+              <View style={styles.remeberMeContainer}>
+                <Checkbox
+                  style={styles.checkbox}
+                  value={isChecked}
+                  onValueChange={setChecked}
+                  color={isChecked ? "#afe8c4" : undefined}
+                />
+                <Text style={styles.remeberMeText}>Remember me</Text>
+              </View>
+            </View>
 
-        <View style={styles.accountLinkContainer}>
-          <Pressable style={styles.loginButton}>
-            <Text style={styles.loginText}>Login</Text>
-          </Pressable>
-          <View style={styles.textBox}>
-            <Text style={styles.accountText}>Don’t have an account?</Text>
-            <Text style={styles.registerText}>Register</Text>
+            <View style={styles.accountLinkContainer}>
+              <Pressable style={styles.loginButton}>
+                <Text style={styles.loginText}>Login</Text>
+              </Pressable>
+              <View style={styles.textBox}>
+                <Text style={styles.accountText}>Don’t have an account? </Text>
+                <Text style={styles.registerText}>Register</Text>
+              </View>
+              <View>
+                <Text style={styles.passwordText}>Forgot password?</Text>
+              </View>
+            </View>
           </View>
-          <View>
-            <Text style={styles.passwordText}>Forgot password?</Text>
-          </View>
-        </View>
-      </View>
 
-      <ScrollView style={styles.contentContainer}>
-        {/*
+          <ScrollView style={styles.contentContainer}>
+            {/*
           Your Items would be listed here using FlatList or some other ways for the sake of maintainability 
           of the code, I've simplified how those items would be.
         */}
-      </ScrollView>
-    </View>
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 

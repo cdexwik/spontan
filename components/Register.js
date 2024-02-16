@@ -1,35 +1,42 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
 function Register() {
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Spontan</Text>
-        <Text style={styles.subTitle}>Embrace the spark of Spontaneity! </Text>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>First Name</Text>
-          <TextInput style={styles.input} />
-          <Text style={styles.inputLabel}>Last Name</Text>
-          <TextInput style={styles.input} />
-          <Text style={styles.inputLabel}>Tag</Text>
-          <TextInput style={styles.input} />
-          <Text style={styles.inputLabel}>Email</Text>
-          <TextInput style={styles.input} />
-          <Text style={styles.inputLabel}>Password</Text>
-          <TextInput style={styles.input} />
-          <Text style={styles.inputLabel}>Confirm Password</Text>
-          <TextInput style={styles.input} />
-          <Pressable style={styles.registerButton}>
-            <Text style={styles.registerText}>Register</Text>
-          </Pressable>
-          <View style={styles.textBox}>
-            <Text style={styles.accountText}>Already have an account?</Text>
-            <Text style={styles.loginText}>Login</Text>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>Spontan</Text>
+            <Text style={styles.subTitle}>
+              Embrace the spark of Spontaneity!{" "}
+            </Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>First Name</Text>
+            <TextInput style={styles.input} />
+            <Text style={styles.inputLabel}>Last Name</Text>
+            <TextInput style={styles.input} />
+            <Text style={styles.inputLabel}>Tag</Text>
+            <TextInput style={styles.input} />
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput style={styles.input} />
+            <Text style={styles.inputLabel}>Password</Text>
+            <TextInput style={styles.input} />
+            <Text style={styles.inputLabel}>Confirm Password</Text>
+            <TextInput style={styles.input} />
+            <Pressable style={styles.registerButton}>
+              <Text style={styles.registerText}>Register</Text>
+            </Pressable>
+            <View style={styles.textBox}>
+              <Text style={styles.accountText}>Already have an account?</Text>
+              <Text style={styles.loginText}>Login</Text>
+            </View>
           </View>
         </View>
-      </View>
-    </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -138,3 +145,4 @@ const styles = StyleSheet.create({
 });
 
 export default Register;
+x
