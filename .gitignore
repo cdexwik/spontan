@@ -37,3 +37,4 @@ package.json
 package-lock.json
 app.json
 prettierrc.js
+components/Chat.js
