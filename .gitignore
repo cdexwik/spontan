@@ -33,7 +33,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-package.json
-package-lock.json
 app.json
 prettierrc.js
+components/Chat.js

@@ -8,7 +8,7 @@ import Main from "./components/Main";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Main />
+      <Login />
     </View>
   );
 }
@@ -17,7 +17,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#2B2B2B",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
