@@ -2,8 +2,12 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NavigationContainer } from "@react-navigation/native";
 
-function Main() {
+const Tab = createMaterialTopTabNavigator();
+
+function Friends() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
@@ -67,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Main;
+export default Friends;
