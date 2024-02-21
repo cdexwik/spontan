@@ -1,26 +1,46 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Checkbox from "expo-checkbox";
 
 const Login = () => {
-  const [isChecked, setChecked] = useState(false);
+  const [isChecked, setChecked] = useState(false); //Checkbox
+  const [inputContainerWidth, setInputContainerWidth] = useState(0); //Width of sample activities
+  const [showScrollView, setShowScrollView] = useState(false); //FUTURE: show ScrollView only if enough space available
+  const [inputContainerMarginBottom, setInputContainerMarginBottom] =
+    useState(24); //FUTURE: margin 0 if ScrollView is visible
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>Spontan</Text>
+            <Text style={styles.spontan}>Spontan</Text>
             <Text style={styles.subTitle}>
               Embrace the{"\n"}spark of Spontaneity!
             </Text>
           </View>
 
-          <View style={styles.inputContainer}>
+          <View
+            style={[
+              styles.inputContainer,
+              { marginBottom: inputContainerMarginBottom },
+            ]}
+            onLayout={(event) => {
+              const { width } = event.nativeEvent.layout;
+              setInputContainerWidth(width);
+            }}
+          >
             <Text style={styles.inputLabel}>Tag or email</Text>
             <TextInput
-              style={styles.emailInput}
+              style={styles.input}
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
@@ -29,32 +49,57 @@ const Login = () => {
             />
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
-              style={styles.passwordInput}
+              style={styles.input}
               secureTextEntry={true}
               cursorColor="#D9D9D9"
             />
             <View style={styles.remeberMeContainer}>
               <Checkbox
-                style={styles.checkbox}
                 value={isChecked}
                 onValueChange={setChecked}
                 color={isChecked ? "#afe8c4" : undefined}
               />
               <Text style={styles.remeberMeText}>Remember me</Text>
             </View>
-            <View style={styles.accountLinkContainer}>
-              <Pressable style={styles.loginButton}>
-                <Text style={styles.loginText}>Login</Text>
-              </Pressable>
-              <View style={styles.textBox}>
-                <Text style={styles.accountText}>Don’t have an account? </Text>
-                <Text style={styles.registerText}>Register</Text>
-              </View>
-              <View>
-                <Text style={styles.passwordText}>Forgot password?</Text>
-              </View>
+            <Pressable style={styles.loginButton}>
+              <Text style={styles.buttonText}>Login</Text>
+            </Pressable>
+            <View style={styles.textBox}>
+              <Text style={styles.normalText}>Don’t have an account?</Text>
+              <Text style={styles.registerText}>Register</Text>
             </View>
+            <Text style={styles.forgotPasswordText}>Forgot password?</Text>
           </View>
+
+          {showScrollView && (
+            <ScrollView
+              style={styles.scrollContainer}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              {/*Maybe display only if the device is large enough*/}
+              <View
+                style={[
+                  styles.sampleActivity,
+                  { width: inputContainerWidth },
+                  { marginLeft: 0 },
+                ]}
+              />
+              <View
+                style={[styles.sampleActivity, { width: inputContainerWidth }]}
+              ></View>
+              <View
+                style={[styles.sampleActivity, { width: inputContainerWidth }]}
+              ></View>
+              <View
+                style={[
+                  styles.sampleActivity,
+                  { width: inputContainerWidth },
+                  { marginRight: 0 },
+                ]}
+              ></View>
+            </ScrollView>
+          )}
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -66,17 +111,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
-    // borderWidth: 2, //debug
-    // borderColor: "white", //debug
   },
   headerContainer: {
     alignItems: "center",
     marginTop: 30,
     maxWidth: 380,
-    // borderWidth: 2, //debug
-    // borderColor: "white", //debug
   },
-  headerText: {
+  spontan: {
     color: "#F8F8F8",
     fontSize: 42,
     textAlign: "center",
@@ -98,15 +139,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#3B3B3B",
     width: "92%",
-    height: "90%",
     maxWidth: 480,
+    minHeight: 360,
     marginTop: 32,
-    marginBottom: 24,
     flexDirection: "column",
     borderRadius: 8,
     alignItems: "stretch",
     padding: 20,
     elevation: 4,
+    overflow: "hidden",
   },
   inputLabel: {
     color: "#F8F8F8",
@@ -115,22 +156,12 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     fontSize: 17,
   },
-  emailInput: {
+  input: {
     height: 32,
     marginTop: 8,
     borderRadius: 8,
     backgroundColor: "#424242",
     fontFamily: "Helvetica Neue",
-    color: "#D9D9D9",
-    fontStyle: "italic",
-    fontSize: 15,
-    paddingLeft: 10,
-  },
-  passwordInput: {
-    height: 32,
-    marginTop: 12,
-    borderRadius: 8,
-    backgroundColor: "#424242",
     color: "#D9D9D9",
     fontStyle: "italic",
     fontSize: 15,
@@ -149,13 +180,6 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
   },
-  accountLinkContainer: {
-    marginTop: 24,
-    alignSelf: "center",
-    justifyContent: "space-between",
-    fontSize: 10,
-    fontWeight: "700",
-  },
   loginButton: {
     marginTop: 24,
     backgroundColor: "#afe8c4",
@@ -168,11 +192,7 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
   },
-  textBox: {
-    flexDirection: "row",
-    padding: 8,
-  },
-  loginText: {
+  buttonText: {
     fontSize: 16,
     lineHeight: 21,
     fontWeight: "bold",
@@ -181,7 +201,12 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
   },
-  accountText: {
+  textBox: {
+    flexDirection: "row",
+    paddingTop: 8,
+    alignSelf: "center",
+  },
+  normalText: {
     fontSize: 12,
     lineHeight: 21,
     fontWeight: "bold",
@@ -191,6 +216,7 @@ const styles = StyleSheet.create({
     color: "#A0A0A0",
   },
   registerText: {
+    paddingLeft: 4,
     fontSize: 12,
     lineHeight: 21,
     fontWeight: "bold",
@@ -199,7 +225,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     color: "#D4F0FC",
   },
-  passwordText: {
+  forgotPasswordText: {
     fontSize: 12,
     lineHeight: 21,
     fontWeight: "bold",
@@ -209,8 +235,23 @@ const styles = StyleSheet.create({
     color: "#FDD3D5",
     alignSelf: "center",
   },
-  contentContainer: {
-    marginTop: 16,
+  scrollContainer: {
+    width: "92%",
+    maxWidth: 480,
+    height: 200,
+    marginTop: 18,
+    marginBottom: 24,
+  },
+  sampleActivity: {
+    height: 300,
+    marginHorizontal: 8,
+    backgroundColor: "#3B3B3B",
+    flexDirection: "column",
+    borderRadius: 8,
+    alignItems: "stretch",
+    padding: 20,
+    elevation: 4,
+    overflow: "hidden",
   },
 });
 

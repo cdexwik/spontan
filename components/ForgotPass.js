@@ -8,12 +8,11 @@ function ForgotPass() {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>Spontan</Text>
+            <Text style={styles.spontan}>Spontan</Text>
             <Text style={styles.subTitle}>
               Embrace the{"\n"}spark of Spontaneity!
             </Text>
           </View>
-
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Forgot your password?</Text>
             <Text style={styles.message}>
@@ -22,19 +21,19 @@ function ForgotPass() {
             </Text>
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
-              style={styles.emailInput}
+              style={styles.input}
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect={false}
               cursorColor="#D9D9D9"
             />
-            <Pressable style={styles.loginButton}>
-              <Text style={styles.loginText}>Send Email</Text>
+            <Pressable style={styles.sendEmailButton}>
+              <Text style={styles.buttonText}>Send Email</Text>
             </Pressable>
             <View style={styles.textBox}>
-              <Text style={styles.accountText}>Back to</Text>
-              <Text style={styles.registerText}>Login</Text>
+              <Text style={styles.normalText}>Back to</Text>
+              <Text style={styles.loginText}>Login</Text>
             </View>
           </View>
         </View>
@@ -48,17 +47,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
-    // borderWidth: 2, //debug
-    // borderColor: "white", //debug
   },
   headerContainer: {
     alignItems: "center",
     marginTop: 30,
     maxWidth: 380,
-    // borderWidth: 2, //debug
-    // borderColor: "white", //debug
   },
-  headerText: {
+  spontan: {
     color: "#F8F8F8",
     fontSize: 42,
     textAlign: "center",
@@ -80,9 +75,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#3B3B3B",
     width: "92%",
-    height: "90%",
     maxWidth: 480,
-    // minHeight: 300, //don't know how I like it better
+    minHeight: 310,
     marginTop: 32,
     marginBottom: 24,
     flexDirection: "column",
@@ -105,7 +99,7 @@ const styles = StyleSheet.create({
     color: "#A0A0A0",
     fontStyle: "italic",
   },
-  emailInput: {
+  input: {
     height: 32,
     marginTop: 8,
     borderRadius: 8,
@@ -116,8 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingLeft: 10,
   },
-
-  loginButton: {
+  sendEmailButton: {
     marginTop: 24,
     backgroundColor: "#FDD3D5",
     alignItems: "center",
@@ -129,7 +122,7 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
   },
-  loginText: {
+  buttonText: {
     fontSize: 16,
     lineHeight: 21,
     fontWeight: "bold",
@@ -140,10 +133,10 @@ const styles = StyleSheet.create({
   },
   textBox: {
     flexDirection: "row",
-    padding: 8,
+    paddingTop: 8,
     alignSelf: "center",
   },
-  accountText: {
+  normalText: {
     fontSize: 12,
     lineHeight: 21,
     fontWeight: "bold",
@@ -152,7 +145,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     color: "#A0A0A0",
   },
-  registerText: {
+  loginText: {
     paddingLeft: 4,
     fontSize: 12,
     lineHeight: 21,
