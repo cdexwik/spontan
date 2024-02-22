@@ -79,15 +79,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
-    // borderWidth: 2, //debug
-    // borderColor: "white", //debug
   },
   headerContainer: {
     alignItems: "center",
     marginTop: 30,
     maxWidth: 380,
-    // borderWidth: 2, //debug
-    // borderColor: "white", //debug
   },
   spontan: {
     color: "#F8F8F8",

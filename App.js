@@ -1,14 +1,16 @@
+import "react-native-gesture-handler";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import Register from "./components/Register";
-import Main from "./components/Main";
+import NewActivityScreen from "./components/NewActivityScreen";
+import Wrapper from "./components/Wrapper";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Main />
+      <Wrapper />
     </View>
   );
 }
