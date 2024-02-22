@@ -1,26 +1,35 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import Main from "./Main";
-import Activities from "./Activities";
-import Friends from "./Friends";
-import { NavigationContainer } from "@react-navigation/native";
+import { View, Text } from "react-native";
+import Main from "../screens/Main";
+import Activities from "../screens/Activities";
+import Friends from "../screens/Friends";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Feather } from "@expo/vector-icons";
 
 const Tab = createMaterialTopTabNavigator();
 const Tabs = () => {
   return (
     <Tab.Navigator
+      initialRouteName="main"
+      backBehavior="initialRoute"
       screenOptions={({ route }) => ({
         tabBarLabel: ({ focused }) => {
+          /*let justifyContentType;
+          if (route.name === "friends") {
+            justifyContentType = "flex-start";
+          } else if (route.name === "main") {
+            justifyContentType = "center";
+          } else if (route.name === "activities") {
+            justifyContentType = "flex-end";
+          }*/
           return (
             <View
               style={{
                 flexDirection: "row",
                 flexWrap: "nowrap",
                 overflow: "visible",
-                justifyContent: "center",
                 alignItems: "center",
+                justifyContent: "center",
+                // justifyContent: JSON.stringify({ justifyContentType }),
               }}
             >
               <Text
@@ -40,6 +49,7 @@ const Tabs = () => {
         },
         tabBarStyle: {
           backgroundColor: "#2B2B2B",
+          elevation: 0,
         },
         headerStyle: {
           backgroundColor: "#2B2B2B",
@@ -47,7 +57,6 @@ const Tabs = () => {
         tabBarAndroidRipple: { borderless: true },
         tabBarIndicatorStyle: { backgroundColor: "none" },
         tabBarPressColor: "transparent",
-        //tabBarItemStyle: { flexDirection: "row", justifyContent: "flex-start" },
       })}
       /*screenOptions={{
         tabBarActiveTintColor: "tomato",
@@ -60,21 +69,11 @@ const Tabs = () => {
         },
       }}*/
     >
-      <Tab.Screen name="activities" component={Activities} options={{}} />
-      <Tab.Screen name="main" component={Main} />
       <Tab.Screen name="friends" component={Friends} />
+      <Tab.Screen name="main" component={Main} />
+      <Tab.Screen name="activities" component={Activities} />
     </Tab.Navigator>
   );
 };
 
-const Navigation = () => {
-  return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
-  );
-};
-
-const styles = StyleSheet.create({});
-
-export default Navigation;
+export default Tabs;

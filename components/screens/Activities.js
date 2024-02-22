@@ -2,12 +2,12 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
-function Main() {
+function Activities() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <Text>main</Text>
+          <Text>activities</Text>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -17,9 +17,9 @@ function Main() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#3B3B3B",
+    backgroundColor: "#2B2B2B",
     alignItems: "center",
   },
 });
 
-export default Main;
+export default Activities;

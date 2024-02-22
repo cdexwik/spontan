@@ -17,7 +17,7 @@ function Friends() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#3B3B3B",
+    backgroundColor: "#2B2B2B",
     alignItems: "center",
   },
 });
