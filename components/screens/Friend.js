@@ -9,6 +9,7 @@ const Friend = ({
   pendingRequest,
   activityData,
 }) => {
+  console.log(activityData);
   const responseTime = Math.round(
     activityData.totalResponseTime / activityData.numberOfInvites
   );

@@ -3,6 +3,9 @@ import { View, Text, StyleSheet } from "react-native";
 import Friend from "./Friend";
 
 function renderFriendsCB(friend) {
+  {
+    console.log(friend);
+  }
   return (
     <Friend
       key={friend.userid}
