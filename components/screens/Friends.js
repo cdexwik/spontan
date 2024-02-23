@@ -63,11 +63,11 @@ const friendsData = [
 ];
 
 function Friends() {
-  const [friends, setFriends] = useState([]);
+  const [friends, setFriends] = useState(friendsData);
 
   useEffect(() => {
-    setFriends((friends) => [...friends, friendsData]);
-  }, []);
+    setFriends(friendsData);
+  }, [friendsData]);
 
   return (
     <SafeAreaProvider>
