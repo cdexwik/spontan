@@ -19,7 +19,10 @@ const showAlert = () =>
         text: "Ok",
         style: "default",
       },
-    ]
+    ],
+    {
+      cancelable: true,
+    }
   );
 
 function ForgotPass() {
