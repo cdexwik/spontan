@@ -1,12 +1,23 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const Friend = (friend) => {
-  console.log("From FriendCard");
-  console.log(friend);
+const Friend = ({
+  userid,
+  firstName,
+  lastName,
+  tag,
+  pendingRequest,
+  activityData,
+}) => {
+  const responseTime = Math.round(
+    activityData.totalResponseTime / activityData.numberOfInvites
+  );
+
   return (
-    <View style={styles.container}>
-      <Text>Test Friend</Text>
+    <View>
+      <Text>{`${firstName} ${lastName}`}</Text>
+      <Text>{tag}</Text>
+      <Text>{`Response Time: ${responseTime} seconds`}</Text>
     </View>
   );
 };

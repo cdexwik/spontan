@@ -73,9 +73,6 @@ function Friends() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <Text>Friends</Text>
-          {console.log("from Friends")}
-          {console.log(friends)}
           <FriendsList friends={friends} />
         </View>
       </SafeAreaView>

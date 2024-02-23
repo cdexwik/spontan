@@ -2,10 +2,20 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Friend from "./Friend";
 
-const FriendsList = ({ friends }) => {
-  console.log("From FL");
-  console.log(friends);
+function renderFriendsCB(friend) {
+  return (
+    <Friend
+      key={friend.userid}
+      firstName={friend.firstName}
+      lastName={friend.lastName}
+      tag={friend.tag}
+      pendingRequest={friend.pendingRequest}
+      activityData={friend.activityData}
+    />
+  );
+}
 
+const FriendsList = ({ friends }) => {
   if (!friends.length || friends.length === 0) {
     return (
       <View style={styles.container}>
@@ -14,16 +24,7 @@ const FriendsList = ({ friends }) => {
       </View>
     );
   } else {
-    return (
-      <View>
-        {friends.forEach((friend) => {
-          {
-            console.log("Friend detected!");
-          }
-          <Friend friend={friend} />;
-        })}
-      </View>
-    );
+    return <View>{friends.map(renderFriendsCB)}</View>;
   }
 };
 
