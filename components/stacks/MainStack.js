@@ -12,7 +12,6 @@ const MainStack = () => {
         name="Wrapper"
         component={Wrapper}
         options={{
-          headerStyle: { backgroundColor: "#2B2B2B" },
           headerShown: false,
         }}
       />
@@ -20,7 +19,6 @@ const MainStack = () => {
         name="SettingsStack"
         component={SettingsStack}
         options={{
-          headerStyle: { backgroundColor: "#2B2B2B" },
           headerShown: false,
         }}
       />

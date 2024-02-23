@@ -11,7 +11,6 @@ const SettingsStack = () => {
         name="Profile"
         component={Profile}
         options={{
-          headerStyle: { backgroundColor: "#2B2B2B" },
           headerShown: false,
         }}
       />
@@ -19,7 +18,6 @@ const SettingsStack = () => {
         name="EditProfile"
         component={EditProfile}
         options={{
-          headerStyle: { backgroundColor: "#2B2B2B" },
           headerShown: false,
         }}
       />

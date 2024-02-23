@@ -1,12 +1,12 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import MainStack from "./components/stacks/MainStack";
+import { StyleSheet, View, StatusBar } from "react-native";
 import LoginStack from "./components/stacks/LoginStack";
 
 export default function App() {
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#2B2B2B" barStyle="default" />
       <LoginStack />
     </View>
   );

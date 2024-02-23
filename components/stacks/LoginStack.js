@@ -15,7 +15,6 @@ const LoginStack = () => {
           name="Login"
           component={Login}
           options={{
-            headerStyle: { backgroundColor: "#2B2B2B" },
             headerShown: false,
           }}
         />
@@ -23,7 +22,6 @@ const LoginStack = () => {
           name="Register"
           component={Register}
           options={{
-            headerStyle: { backgroundColor: "#2B2B2B" },
             headerShown: false,
           }}
         />
@@ -31,7 +29,6 @@ const LoginStack = () => {
           name="ForgotPass"
           component={ForgotPass}
           options={{
-            headerStyle: { backgroundColor: "#2B2B2B" },
             headerShown: false,
           }}
         />
@@ -39,7 +36,6 @@ const LoginStack = () => {
           name="MainStack"
           component={MainStack}
           options={{
-            headerStyle: { backgroundColor: "#2B2B2B" },
             headerShown: false,
           }}
         />
