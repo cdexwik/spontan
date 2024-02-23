@@ -29,14 +29,17 @@ function Profile() {
                 navigate("EditProfile");
               }}
             >
-              <Feather name="edit-2" size={24} color="#8F8F8F" />
+              <Text style={styles.editProfileText}>Edit profile</Text>
             </Pressable>
+          </View>
+          <View>
             <Pressable
+              style={styles.logOutButton}
               onPress={() => {
                 navigate("Login");
               }}
             >
-              <Feather name="x" size={32} color="#8F8F8F" />
+              <Text style={styles.buttonText}>Log Out</Text>
             </Pressable>
           </View>
         </View>
@@ -84,13 +87,44 @@ const styles = StyleSheet.create({
     maxWidth: 480,
     minHeight: 310,
     marginTop: 28,
-    marginBottom: 24,
     flexDirection: "column",
     borderRadius: 8,
     alignItems: "stretch",
     padding: 20,
     elevation: 4,
     overflow: "hidden",
+  },
+  editProfileText: {
+    alignSelf: "center",
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: "500",
+    letterSpacing: 0.25,
+    fontFamily: "Helvetica Neue",
+    fontStyle: "italic",
+    color: "#afe8c4",
+  },
+  logOutButton: {
+    marginTop: 12,
+    marginBottom: 24,
+    backgroundColor: "#3B3B3B",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    alignSelf: "center",
+    borderRadius: 16,
+    elevation: 3,
+    fontFamily: "Helvetica Neue",
+    fontStyle: "italic",
+  },
+  buttonText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "#FDD3D5",
+    fontFamily: "Helvetica Neue",
+    fontStyle: "italic",
   },
 });
 

@@ -72,9 +72,11 @@ function Friends() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <FriendsList friends={friends} />
-        </View>
+        <ScrollView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
+          <View style={styles.container}>
+            <FriendsList friends={friends} />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -83,8 +85,15 @@ function Friends() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2B2B2B",
-    alignItems: "center",
+    width: "98%",
+    minHeight: 200,
+    backgroundColor: "#3B3B3B",
+    flexDirection: "column",
+    borderRadius: 8,
+    alignItems: "stretch",
+    padding: 20,
+    elevation: 6,
+    overflow: "hidden",
   },
 });
 

@@ -15,9 +15,12 @@ const Friend = ({
 
   return (
     <View>
-      <Text>{`${firstName} ${lastName}`}</Text>
-      <Text>{tag}</Text>
-      <Text>{`Response Time: ${responseTime} seconds`}</Text>
+      <Text style={styles.text}>{`${firstName} ${lastName}`}</Text>
+      <Text style={styles.text}>{tag}</Text>
+      <Text
+        style={styles.text}
+      >{`Response Time: ${responseTime} seconds`}</Text>
+      <Text style={styles.text}>-</Text>
     </View>
   );
 };
@@ -27,6 +30,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
+  },
+  text: {
+    color: "#F8F8F8",
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "Helvetica Neue",
+    fontStyle: "italic",
+    fontWeight: "500",
   },
 });
 
