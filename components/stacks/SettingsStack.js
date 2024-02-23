@@ -1,24 +1,23 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Wrapper from "../screens/Wrapper";
-import SettingsStack from "./SettingsStack";
-import { NavigationContainer } from "@react-navigation/native";
+import Profile from "../screens/Profile";
+import EditProfile from "../screens/EditProfile";
 
 const Stack = createNativeStackNavigator();
-const MainStack = () => {
+const SettingsStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Wrapper">
+    <Stack.Navigator initialRouteName="Profile">
       <Stack.Screen
-        name="Wrapper"
-        component={Wrapper}
+        name="Profile"
+        component={Profile}
         options={{
           headerStyle: { backgroundColor: "#2B2B2B" },
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="SettingsStack"
-        component={SettingsStack}
+        name="EditProfile"
+        component={EditProfile}
         options={{
           headerStyle: { backgroundColor: "#2B2B2B" },
           headerShown: false,
@@ -28,4 +27,4 @@ const MainStack = () => {
   );
 };
 
-export default MainStack;
+export default SettingsStack;

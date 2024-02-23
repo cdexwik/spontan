@@ -9,8 +9,10 @@ import {
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Checkbox from "expo-checkbox";
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
+  const { navigate } = useNavigation();
   const [isChecked, setChecked] = useState(false); //Checkbox
   const [inputContainerWidth, setInputContainerWidth] = useState(0); //Width of sample activities
   const [showScrollView, setShowScrollView] = useState(false); //FUTURE: show ScrollView only if enough space available
@@ -61,14 +63,31 @@ const Login = () => {
               />
               <Text style={styles.remeberMeText}>Remember me</Text>
             </View>
-            <Pressable style={styles.loginButton}>
+            <Pressable
+              style={styles.loginButton}
+              onPress={() => {
+                navigate("MainStack");
+              }}
+            >
               <Text style={styles.buttonText}>Login</Text>
             </Pressable>
             <View style={styles.textBox}>
               <Text style={styles.normalText}>Don’t have an account?</Text>
-              <Text style={styles.registerText}>Register</Text>
+              <Pressable
+                onPress={() => {
+                  navigate("Register");
+                }}
+              >
+                <Text style={styles.registerText}>Register</Text>
+              </Pressable>
             </View>
-            <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+            <Pressable
+              onPress={() => {
+                navigate("ForgotPass");
+              }}
+            >
+              <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+            </Pressable>
           </View>
 
           {showScrollView && (

@@ -1,13 +1,36 @@
 import React from "react";
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Alert,
+} from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useNavigation } from "@react-navigation/native";
+
+const showAlert = () =>
+  Alert.alert(
+    "Check yout inbox",
+    "Please check your inbox to finish the register process.",
+    [
+      {
+        text: "Ok",
+        style: "default",
+      },
+    ]
+  );
 
 function Register() {
+  const { navigate } = useNavigation();
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView
+          style={{ flex: 1, backgroundColor: "#2B2B2B" }}
+        >
           <View style={styles.container}>
             <View style={styles.headerContainer}>
               <Text style={styles.spontan}>Spontan</Text>
@@ -59,12 +82,24 @@ function Register() {
                 secureTextEntry={true}
                 cursorColor="#D9D9D9"
               />
-              <Pressable style={styles.registerButton}>
+              <Pressable
+                style={styles.registerButton}
+                onPress={() => {
+                  showAlert();
+                  navigate("Login");
+                }}
+              >
                 <Text style={styles.buttonText}>Register</Text>
               </Pressable>
               <View style={styles.textBox}>
                 <Text style={styles.normalText}>Already have an account?</Text>
-                <Text style={styles.loginText}>Login</Text>
+                <Pressable
+                  onPress={() => {
+                    navigate("Login");
+                  }}
+                >
+                  <Text style={styles.loginText}>Login</Text>
+                </Pressable>
               </View>
             </View>
           </View>

@@ -23,7 +23,22 @@ function Profile() {
               </Pressable>
             </View>
           </View>
-          <View style={styles.inputContainer} />
+          <View style={styles.inputContainer}>
+            <Pressable
+              onPress={() => {
+                navigate("EditProfile");
+              }}
+            >
+              <Feather name="edit-2" size={24} color="#8F8F8F" />
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                navigate("Login");
+              }}
+            >
+              <Feather name="x" size={32} color="#8F8F8F" />
+            </Pressable>
+          </View>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
