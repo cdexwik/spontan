@@ -15,12 +15,9 @@ const FriendsList = ({ friends }) => {
     );
   } else {
     return (
-      <View>
-        {friends.forEach((friend) => {
-          {
-            console.log("Friend detected!");
-          }
-          <Friend friend={friend} />;
+      <View style={styles.container}>
+        {friends.map((friend) => {
+          return <Friend key={friend[0]} friend={friend} />;
         })}
       </View>
     );
@@ -30,8 +27,10 @@ const FriendsList = ({ friends }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     backgroundColor: "#2B2B2B",
     alignItems: "center",
+    justifyContent: "center",
   },
 });
 

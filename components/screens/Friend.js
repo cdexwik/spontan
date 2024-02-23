@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const Friend = (friend) => {
-  console.log("From FriendCard");
-  console.log(friend);
+const Friend = ({ friend }) => {
   return (
     <View style={styles.container}>
-      <Text>Test Friend</Text>
+      {console.log("From FriendCard")}
+      {console.log(friend)}
+      <Text>{friend[3]}</Text>
     </View>
   );
 };
