@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SearchBar } from "@rneui/base";
-import { View } from "react-native-web";
+import { ScrollView, View, StyleSheet } from "react-native-web";
 import SearchList from "./SearchList";
 
 const usersDataBase = [
@@ -173,9 +173,36 @@ const Search = () => {
         value={searchField}
       />
 
-      {searchField && <SearchList filterdUsers={filteredUsers} />}
+      {searchField && (
+        <ScrollView
+          containerStyle={styles.searchContainer}
+          style={styles.search}
+        >
+          <SearchList filterdUsers={filteredUsers} />
+        </ScrollView>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  searchContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  search: {
+    flex: 1,
+    flexDirection: "column",
+    //backgroundColor: "#3B3B3B",
+    //backgroundColor: "red",
+    maxWidth: 480,
+    maxHeight: 300,
+    borderRadius: 8,
+    elevation: 4,
+    overflow: "hidden",
+  },
+});
 
 export default Search;

@@ -1,26 +1,28 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import Friend from "../screens/Friend";
+import SearchResult from "./SearchResult";
 
-function renderFriendsCB(friend) {
+function renderSearchResultCB(user) {
   {
-    console.log(friend);
+    console.log(user);
   }
   return (
-    <Friend
-      key={friend.userid}
-      firstName={friend.firstName}
-      lastName={friend.lastName}
-      tag={friend.tag}
-      pendingRequest={friend.pendingRequest}
-      activityData={friend.activityData}
+    <SearchResult
+      key={user.userid}
+      firstName={user.firstName}
+      lastName={user.lastName}
+      tag={user.tag}
+      pendingRequest={user.pendingRequest}
+      activityData={user.activityData}
     />
   );
 }
 
 const SearchList = ({ filterdUsers }) => {
   return (
-    <View style={styles.container}>{filterdUsers.map(renderFriendsCB)}</View>
+    <View style={styles.container}>
+      {filterdUsers.map(renderSearchResultCB)}
+    </View>
   );
 };
 
