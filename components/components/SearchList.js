@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import Friend from "./Friend";
+import Friend from "../screens/Friend";
 
 function renderFriendsCB(friend) {
   {
-    //console.log(friend);
+    console.log(friend);
   }
   return (
     <Friend
@@ -18,17 +18,10 @@ function renderFriendsCB(friend) {
   );
 }
 
-const FriendsList = ({ friends }) => {
-  if (!friends.length || friends.length === 0) {
-    return (
-      <View style={styles.container}>
-        {console.log("No friends")}
-        <Text>No friends!</Text>
-      </View>
-    );
-  } else {
-    return <View style={styles.container}>{friends.map(renderFriendsCB)}</View>;
-  }
+const SearchList = ({ filterdUsers }) => {
+  return (
+    <View style={styles.container}>{filterdUsers.map(renderFriendsCB)}</View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -39,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FriendsList;
+export default SearchList;

@@ -1,5 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import DashedLine from "../components/DashedLine";
+import ProfilePictureFriend from "../components/ProfilePictureFriend";
+import AcceptButton from "../components/AcceptButton";
 
 const Friend = ({
   userid,
@@ -9,16 +12,28 @@ const Friend = ({
   pendingRequest,
   activityData,
 }) => {
-  console.log(activityData);
   const responseTime = Math.round(
     activityData.totalResponseTime / activityData.numberOfInvites
   );
 
   return (
     <View>
-      <Text>{`${firstName} ${lastName}`}</Text>
-      <Text>{tag}</Text>
-      <Text>{`Response Time: ${responseTime} seconds`}</Text>
+      <View style={styles.container}>
+        <View style={styles.friend}>
+          <ProfilePictureFriend />
+          <View style={styles.friendTextBox}>
+            <Text
+              style={styles.friendTextName}
+            >{`${firstName} ${lastName}`}</Text>
+            <Text style={styles.friendTextTag}>@ {tag}</Text>
+            <Text
+              style={styles.friendText}
+            >{`Response Time: ${responseTime} s`}</Text>
+          </View>
+          {pendingRequest && <AcceptButton onClick />}
+        </View>
+        <DashedLine />
+      </View>
     </View>
   );
 };
@@ -26,8 +41,31 @@ const Friend = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2B2B2B",
-    alignItems: "center",
+    alignItems: "flex-start",
+  },
+  friend: {
+    flexDirection: "row",
+  },
+
+  friendTextBox: {
+    flexDirection: "column",
+    marginTop: 16,
+    marginRight: 20,
+  },
+
+  friendTextName: {
+    fontSize: 12,
+    color: "#F8F8F8",
+    fontWeight: "bold",
+  },
+  friendTextTag: {
+    fontSize: 12,
+    fontStyle: "italic",
+    color: "#A0A0A0",
+  },
+  friendText: {
+    fontSize: 12,
+    color: "#A0A0A0",
   },
 });
 
