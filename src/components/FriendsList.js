@@ -34,7 +34,9 @@ const FriendsList = ({ friends }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: "green",
+    flexDirection: "column",
+    alignContent: "space-between",
+    justifyContent: "center",
   },
 });
 

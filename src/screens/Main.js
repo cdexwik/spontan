@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import ReceivedActivity from "../ReceivedActivity";
+import ReceivedActivity from "../components/ReceivedActivity";
 
 function Main() {
   return (
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
+    maxWidth: 480,
   },
 });
 

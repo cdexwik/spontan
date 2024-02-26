@@ -87,7 +87,7 @@ function Friends() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.wrapper}>
+        <View style={styles.container}>
           <View style={styles.friendsContainer}>
             <ScrollView style={{ maxHeight: 290 }}>
               <FriendsList friends={friends} />
@@ -108,30 +108,32 @@ function Friends() {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  container: {
     flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
+    // borderWidth: 2, //debug
+    // borderColor: "pink", //debug
   },
   friendsContainer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
+    width: "98%",
     backgroundColor: "#3B3B3B",
-    //backgroundColor: "red",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    justifyContent: "center",
+    alignItems: "stretch",
     maxWidth: 480,
     maxHeight: 300,
     borderRadius: 8,
     elevation: 4,
     overflow: "hidden",
   },
-  friendsScrollView: {},
   searchContainer: {
     flex: 1,
-    //backgroundColor: "blue",
+    flexDirection: "column",
+    width: "98%",
     backgroundColor: "#3B3B3B",
-    marginTop: 24,
+    marginTop: 16,
     maxWidth: 480,
     borderRadius: 8,
     elevation: 4,
@@ -144,7 +146,6 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     fontWeight: "700",
     fontSize: 20,
-    lineHeight: 28,
     color: "#F8f8f8",
   },
 });

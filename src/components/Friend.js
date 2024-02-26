@@ -17,23 +17,24 @@ const Friend = ({
   );
 
   return (
-    <View>
-      <View style={styles.container}>
-        <View style={styles.friend}>
+    <View style={styles.container}>
+      <View style={styles.friend}>
+        <View style={styles.left}>
           <ProfilePictureFriend />
-          <View style={styles.friendTextBox}>
-            <Text
-              style={styles.friendTextName}
-            >{`${firstName} ${lastName}`}</Text>
-            <Text style={styles.friendTextTag}>@ {tag}</Text>
-            <Text
-              style={styles.friendText}
-            >{`Response Time: ${responseTime} s`}</Text>
-          </View>
-          {pendingRequest && <AcceptButton onClick />}
         </View>
-        <DashedLine />
+        <View style={styles.friendTextBox}>
+          <Text
+            style={styles.friendTextName}
+          >{`${firstName} ${lastName}`}</Text>
+          <Text style={styles.friendTextTag}>@ {tag}</Text>
+          <Text
+            style={styles.friendText}
+          >{`Response Time: ${responseTime} s`}</Text>
+        </View>
+        {pendingRequest && <AcceptButton onClick />}
+        {!pendingRequest && <View style={styles.rightSpace} />}
       </View>
+      <DashedLine />
     </View>
   );
 };
@@ -41,15 +42,24 @@ const Friend = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "flex-start",
+    alignItems: "stretch",
   },
   friend: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    width: "98%",
+    // borderColor: "pink",
+    // borderWidth: 2,
+  },
+  left: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginLeft: 20,
   },
   friendTextBox: {
     flexDirection: "column",
     paddingVertical: 10,
-    marginRight: 20,
   },
   friendTextName: {
     fontSize: 12,
@@ -64,6 +74,12 @@ const styles = StyleSheet.create({
   friendText: {
     fontSize: 12,
     color: "#A0A0A0",
+  },
+  rightSpace: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginRight: 20,
   },
 });
 

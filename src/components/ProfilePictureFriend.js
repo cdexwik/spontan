@@ -19,11 +19,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "flex-start",
-    //marginTop: 14,
-    marginRight: 20,
-    marginLeft: 20,
-    //backgroundColor: "red",
   },
   image: {
     width: 40,
