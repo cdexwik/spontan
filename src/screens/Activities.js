@@ -13,8 +13,19 @@ function Activities() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: "#2B2B2B",
+        }}
+      >
+        <ScrollView
+          style={{
+            flex: 1,
+            backgroundColor: "#2B2B2B",
+            marginBottom: 30,
+          }}
+        >
           <View style={styles.container}>
             <SentActivity />
             <SentActivity />

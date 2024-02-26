@@ -9,19 +9,16 @@ function NewActivity({ onPress }) {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.headerContainer1}>
+            <Text style={styles.spontan}>Spontan</Text>
+            <Text style={styles.subTitle}>I'm feeling{"\n"}spontaneous...</Text>
+          </View>
+          <View style={styles.inputContainer}>
             <View style={styles.crossButton}>
               <Pressable onPress={onPress}>
                 <Feather name="x" size={24} color="#8F8F8F" />
               </Pressable>
             </View>
-            <Text style={styles.profile}>Edit profile</Text>
-            <View style={styles.checkButton}></View>
           </View>
-          <View style={styles.headerContainer2}>
-            <Text style={styles.spontan}>Spontan</Text>
-            <Text style={styles.subTitle}>I'm feeling{"\n"}spontaneous...</Text>
-          </View>
-          <View style={styles.inputContainer} />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -34,33 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#2B2B2B",
     alignItems: "center",
   },
-  headerContainer1: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 18,
-    width: "92%",
-    maxWidth: 480,
-  },
-  crossButton: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  },
-  profile: {
-    color: "#F8F8F8",
-    fontSize: 18,
-    textAlign: "center",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    fontWeight: "400",
-  },
-  checkButton: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  headerContainer2: {
+  headerContainer: {
     alignItems: "center",
     marginTop: 30,
     maxWidth: 380,
@@ -97,6 +68,11 @@ const styles = StyleSheet.create({
     padding: 20,
     elevation: 4,
     overflow: "hidden",
+  },
+  crossButton: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
 });
 
