@@ -8,7 +8,8 @@ import NewActivity from "./NewActivity";
 function Activities() {
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const onPressHandler = () => setModalVisible(true);
+  const onPressShowModalHandler = () => setModalVisible(true);
+  const onPressHideModalHandler = () => setModalVisible(false);
 
   return (
     <SafeAreaProvider>
@@ -23,14 +24,14 @@ function Activities() {
         </ScrollView>
         <NewActivityButton
           style={styles.newActivity}
-          onPress={onPressHandler}
+          onPress={onPressShowModalHandler}
         />
         <Modal
           animationType="slide"
           visible={isModalVisible}
           onRequestClose={() => setModalVisible(false)}
         >
-          <NewActivity />
+          <NewActivity onPress={onPressHideModalHandler} />
         </Modal>
       </SafeAreaView>
     </SafeAreaProvider>
