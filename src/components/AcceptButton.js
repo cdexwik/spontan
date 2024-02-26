@@ -1,22 +1,15 @@
 import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
-const AcceptButton = () => {
+export default function AcceptButton({ onPress }) {
   return (
     <View style={styles.container}>
-      <Pressable
-        onPress={() => {
-          console.log("Accept Pressed");
-        }}
-        style={styles.acceptButton}
-      >
+      <Pressable onPress={onPress} style={styles.acceptButton}>
         <Text style={styles.buttonText}>Accept</Text>
       </Pressable>
     </View>
   );
-};
-
-export default AcceptButton;
+}
 
 const styles = StyleSheet.create({
   container: {

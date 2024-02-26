@@ -1,17 +1,24 @@
 import React from "react";
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { Feather } from "@expo/vector-icons";
 
-function NewActivity() {
+function NewActivity({ onPress }) {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <View style={styles.headerContainer}>
+          <View style={styles.headerContainer1}>
             <Text style={styles.spontan}>Spontan</Text>
             <Text style={styles.subTitle}>I'm feeling{"\n"}spontaneous...</Text>
           </View>
-          <View style={styles.inputContainer} />
+          <View style={styles.inputContainer}>
+            <View style={styles.crossButton}>
+              <Pressable onPress={onPress}>
+                <Feather name="x" size={24} color="#8F8F8F" />
+              </Pressable>
+            </View>
+          </View>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -61,6 +68,11 @@ const styles = StyleSheet.create({
     padding: 20,
     elevation: 4,
     overflow: "hidden",
+  },
+  crossButton: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
 });
 
