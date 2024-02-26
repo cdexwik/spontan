@@ -3,6 +3,9 @@ import { View, Text, StyleSheet } from "react-native";
 import Friend from "./Friend";
 
 function renderFriendsCB(friend) {
+  {
+    //console.log(friend);
+  }
   return (
     <Friend
       key={friend.userid}
@@ -24,17 +27,14 @@ const FriendsList = ({ friends }) => {
       </View>
     );
   } else {
-    return <View>{friends.map(renderFriendsCB)}</View>;
+    return <View style={styles.container}>{friends.map(renderFriendsCB)}</View>;
   }
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#2B2B2B",
-    alignItems: "center",
-    justifyContent: "center",
+    //backgroundColor: "green",
   },
 });
 
