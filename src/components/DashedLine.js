@@ -4,7 +4,14 @@ import { Dimensions } from "react-native";
 import Svg, { G, Rect } from "react-native-svg";
 
 const DashedLine = () => {
-  const { width } = Dimensions.get("screen");
+  let width = Dimensions.get("window").width;
+  {
+    if (width > 480) {
+      width = 480 * 0.96;
+    } else {
+      width = width * 0.88;
+    }
+  }
   const spacing = 16;
 
   const dashes = new Array(Math.floor(width / spacing)).fill(null);

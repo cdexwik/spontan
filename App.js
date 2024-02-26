@@ -1,9 +1,9 @@
 import "react-native-gesture-handler";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import MainStack from "./components/stacks/MainStack";
-import Friends from "./components/screens/Friends";
-import Main from "./components/screens/Main";
+import MainStack from "./src/stacks/MainStack";
+import Friends from "./src/screens/Friends";
+import Main from "./src/screens/Main";
 
 export default function App() {
   return (

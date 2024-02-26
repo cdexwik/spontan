@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SearchBar } from "@rneui/base";
-import { ScrollView, View, StyleSheet } from "react-native-web";
+import { ScrollView, View, StyleSheet } from "react-native";
 import SearchList from "./SearchList";
 
 const usersDataBase = [

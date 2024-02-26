@@ -46,13 +46,11 @@ const styles = StyleSheet.create({
   friend: {
     flexDirection: "row",
   },
-
   friendTextBox: {
     flexDirection: "column",
-    marginTop: 16,
+    paddingVertical: 10,
     marginRight: 20,
   },
-
   friendTextName: {
     fontSize: 12,
     color: "#F8F8F8",

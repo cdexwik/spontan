@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import FriendsList from "./FriendsList";
+import FriendsList from "../components/FriendsList";
 import Search from "../components/Search";
 
 const friendsData = [
@@ -86,7 +86,7 @@ function Friends() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.wrapper}>
           <View style={styles.friendsContainer}>
             <ScrollView style={{ maxHeight: 290 }}>
@@ -110,11 +110,8 @@ function Friends() {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    flexDirection: "column  ",
-  },
-  fill: {
-    flex: 1,
     backgroundColor: "#2B2B2B",
+    alignItems: "center",
   },
   friendsContainer: {
     flex: 1,
@@ -129,11 +126,12 @@ const styles = StyleSheet.create({
     elevation: 4,
     overflow: "hidden",
   },
+  friendsScrollView: {},
   searchContainer: {
     flex: 1,
     //backgroundColor: "blue",
     backgroundColor: "#3B3B3B",
-    marginTop: 32,
+    marginTop: 24,
     maxWidth: 480,
     borderRadius: 8,
     elevation: 4,

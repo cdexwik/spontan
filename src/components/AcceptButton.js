@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 
 const AcceptButton = () => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Pressable
         onPress={() => {
           console.log("Accept Pressed");
@@ -20,7 +20,7 @@ export default AcceptButton;
 
 const styles = StyleSheet.create({
   acceptButton: {
-    marginTop: 24,
+    //marginTop: 24,
     backgroundColor: "#afe8c4",
     alignItems: "center",
     paddingVertical: 0,
