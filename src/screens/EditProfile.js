@@ -2,19 +2,31 @@ import React from "react";
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 function EditProfile() {
+  const { navigate } = useNavigation();
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <View style={styles.crossButton}>
-              <Feather name="x" size={24} color="#8F8F8F" />
+              <Pressable
+                onPress={() => {
+                  navigate("Profile");
+                }}
+              >
+                <Feather name="x" size={24} color="#8F8F8F" />
+              </Pressable>
             </View>
             <Text style={styles.profile}>Edit profile</Text>
             <View style={styles.checkButton}>
-              <Pressable>
+              <Pressable
+                onPress={() => {
+                  navigate("Profile");
+                }}
+              >
                 <Feather name="check" size={24} color="#8F8F8F" />
               </Pressable>
             </View>
@@ -64,7 +76,7 @@ const styles = StyleSheet.create({
     width: "92%",
     maxWidth: 480,
     minHeight: 310,
-    marginTop: 32,
+    marginTop: 28,
     marginBottom: 24,
     flexDirection: "column",
     borderRadius: 8,

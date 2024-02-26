@@ -1,8 +1,32 @@
 import React from "react";
-import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Pressable,
+  Alert,
+} from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+
+const showAlert = () =>
+  Alert.alert(
+    "Check yout inbox",
+    "Please check your inbox to set up your new password.",
+    [
+      {
+        text: "Ok",
+        style: "default",
+      },
+    ],
+    {
+      cancelable: true,
+    }
+  );
 
 function ForgotPass() {
+  const { navigate } = useNavigation();
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
@@ -28,12 +52,24 @@ function ForgotPass() {
               autoCorrect={false}
               cursorColor="#D9D9D9"
             />
-            <Pressable style={styles.sendEmailButton}>
+            <Pressable
+              style={styles.sendEmailButton}
+              onPress={() => {
+                showAlert();
+                navigate("Login");
+              }}
+            >
               <Text style={styles.buttonText}>Send Email</Text>
             </Pressable>
             <View style={styles.textBox}>
               <Text style={styles.normalText}>Back to</Text>
-              <Text style={styles.loginText}>Login</Text>
+              <Pressable
+                onPress={() => {
+                  navigate("Login");
+                }}
+              >
+                <Text style={styles.loginText}>Login</Text>
+              </Pressable>
             </View>
           </View>
         </View>

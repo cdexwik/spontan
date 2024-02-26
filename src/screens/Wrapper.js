@@ -15,7 +15,7 @@ const Wrapper = () => {
             <View style={styles.menuButton}>
               <Pressable
                 onPress={() => {
-                  navigate("Profile");
+                  navigate("SettingsStack");
                 }}
               >
                 <Feather name="menu" size={24} color="#8F8F8F" />
