@@ -26,7 +26,7 @@ const Friend = ({
           <Text
             style={styles.friendTextName}
           >{`${firstName} ${lastName}`}</Text>
-          <Text style={styles.friendTextTag}>@ {tag}</Text>
+          <Text style={styles.friendTextTag}>@{tag}</Text>
           <Text
             style={styles.friendText}
           >{`Response Time: ${responseTime} s`}</Text>
@@ -48,8 +48,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "98%",
-    // borderColor: "pink",
-    // borderWidth: 2,
   },
   left: {
     flex: 1,
@@ -65,15 +63,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#F8F8F8",
     fontWeight: "bold",
+    fontFamily: "Helvetica Neue",
   },
   friendTextTag: {
     fontSize: 12,
     fontStyle: "italic",
     color: "#A0A0A0",
+    fontFamily: "Helvetica Neue",
   },
   friendText: {
     fontSize: 12,
     color: "#A0A0A0",
+    fontFamily: "Helvetica Neue",
   },
   rightSpace: {
     flex: 1,

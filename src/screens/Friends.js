@@ -89,7 +89,7 @@ function Friends() {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.friendsContainer}>
-            <ScrollView style={{ maxHeight: 290 }}>
+            <ScrollView style={{ flex: 1 }}>
               <FriendsList friends={friends} />
             </ScrollView>
           </View>
@@ -98,9 +98,6 @@ function Friends() {
             <Text style={styles.header}>Add New Friends</Text>
             <Search />
           </View>
-          {
-            //<View style={styles.fill}></View>
-          }
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -112,8 +109,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
-    // borderWidth: 2, //debug
-    // borderColor: "pink", //debug
   },
   friendsContainer: {
     flex: 1,
@@ -123,7 +118,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "stretch",
     maxWidth: 480,
-    maxHeight: 300,
     borderRadius: 8,
     elevation: 4,
     overflow: "hidden",
@@ -133,10 +127,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "98%",
     backgroundColor: "#3B3B3B",
-    marginTop: 16,
+    justifyContent: "center",
+    alignItems: "stretch",
     maxWidth: 480,
     borderRadius: 8,
     elevation: 4,
+    overflow: "hidden",
+    marginTop: 16,
   },
   header: {
     marginTop: 24,

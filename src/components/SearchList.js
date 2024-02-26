@@ -29,8 +29,9 @@ const SearchList = ({ filterdUsers }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: "green",
-    marginBottom: 28,
+    flexDirection: "column",
+    alignContent: "space-between",
+    justifyContent: "center",
   },
 });
 
