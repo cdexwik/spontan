@@ -16,6 +16,10 @@ const Friend = ({
     activityData.totalResponseTime / activityData.numberOfInvites
   );
 
+  const acceptButtonHandler = () => {
+    console.log("Accept Pressed");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.friend}>
@@ -31,7 +35,7 @@ const Friend = ({
             style={styles.friendText}
           >{`Response Time: ${responseTime} s`}</Text>
         </View>
-        {pendingRequest && <AcceptButton onClick />}
+        {pendingRequest && <AcceptButton onPress={acceptButtonHandler} />}
         {!pendingRequest && <View style={styles.rightSpace} />}
       </View>
       <DashedLine />
