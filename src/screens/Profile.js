@@ -50,7 +50,7 @@ function Profile() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
   },

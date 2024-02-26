@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
 const AcceptButton = () => {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginRight: 20,
+    marginRight: 12,
   },
   acceptButton: {
     backgroundColor: "#afe8c4",
