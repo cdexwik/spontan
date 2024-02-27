@@ -1,22 +1,20 @@
 import React from "react";
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { Feather } from "@expo/vector-icons";
+import CrossButton from "../components/CrossButton";
 
 function NewActivity({ onPress }) {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <View style={styles.headerContainer1}>
+          <View style={styles.headerContainer}>
             <Text style={styles.spontan}>Spontan</Text>
             <Text style={styles.subTitle}>I'm feeling{"\n"}spontaneous...</Text>
           </View>
           <View style={styles.inputContainer}>
             <View style={styles.crossButton}>
-              <Pressable onPress={onPress}>
-                <Feather name="x" size={24} color="#8F8F8F" />
-              </Pressable>
+              <CrossButton size={14} onPress={onPress} />
             </View>
           </View>
         </View>

@@ -143,13 +143,14 @@ const Search = () => {
 
   useEffect(() => {
     const newFilteredUsers = users.filter((user) => {
+      //return user.tag.includes(searchField);
       return user.tag.startsWith(searchField);
     });
     setFilteredUsers(newFilteredUsers);
   }, [searchField]);
 
   return (
-    <View style={{ flex: 1, alignItems: "center" }}>
+    <View style={{ flex: 1, alignContent: "space-between" }}>
       <SearchBar
         platform="default"
         autoCapitalize="none"
@@ -161,6 +162,7 @@ const Search = () => {
           borderTopColor: "transparent",
           justifyContent: "center",
           width: "98%",
+          alignSelf: "center",
         }}
         inputContainerStyle={{
           height: 32,
@@ -185,6 +187,15 @@ const Search = () => {
         cancelButtonProps={{}}
         onCancel={() => console.log(onCancel())}
         value={searchField}
+      />
+      <View
+        style={{
+          marginVertical: 5,
+          borderBottomColor: "#A0A0A0",
+          borderBottomWidth: 1,
+          alignSelf: "center",
+          width: "93%",
+        }}
       />
 
       {searchField && (

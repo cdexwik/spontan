@@ -1,28 +1,21 @@
 import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-export default function AcceptButton({ onPress }) {
+export default function ChatButton({ onPress }) {
   return (
-    <View style={styles.container}>
-      <Pressable onPress={onPress} style={styles.acceptButton}>
-        <Text style={styles.buttonText}>Accept</Text>
-      </Pressable>
-    </View>
+    <Pressable onPress={onPress} style={styles.acceptButton}>
+      <Feather name="message-square" size={16} color="black" />
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginRight: 10,
-  },
   acceptButton: {
-    backgroundColor: "#EEDFF6",
+    backgroundColor: "#D4F0FC",
     alignItems: "center",
-    paddingVertical: 0,
-    paddingHorizontal: 10,
+    paddingVertical: 2,
+    paddingHorizontal: 14,
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,

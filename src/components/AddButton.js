@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   addButton: {
-    backgroundColor: "#afe8c4",
+    backgroundColor: "#EEDFF6",
     alignItems: "center",
     paddingVertical: 0,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,

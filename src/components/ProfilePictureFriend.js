@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    width: 40,
-    height: 40,
-    borderRadius: 40 / 2,
+    width: 45,
+    height: 45,
+    borderRadius: 45 / 2,
   },
 });
 
