@@ -1,25 +1,73 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Pressable,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import CrossButton from "../components/CrossButton";
+import { Feather } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
+import CrossButton from "../components/CrossButton";
 
 function NewActivity({ onPress }) {
   const [date, setDate] = useState(new Date());
   const [endTime, setEndTime] = useState(date);
 
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
   useEffect(() => {
     setEndTime(date);
   }, [date]);
 
-  const onChangeSetDate = (e, selectedDate) => {
-    setDate(selectedDate);
+  const onChangeSetDate = ({ type }, selectedDate) => {
+    if (type == "set") {
+      setDate(selectedDate);
+      if (Platform.OS === "android") {
+        toggleDatePicker();
+      }
+    } else {
+      toggleDatePicker();
+    }
+  };
+
+  const onChangeSetTime = ({ type }, selectedTime) => {
+    if (type == "set") {
+      setDate(selectedTime);
+      if (Platform.OS === "android") {
+        toggleTimePicker();
+      }
+    } else {
+      toggleTimePicker();
+    }
   };
 
   const onChangeSetEndTime = (e, selectedDate) => {
     setEndTime(selectedDate);
+  };
+
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
+  };
+
+  const toggleTimePicker = () => {
+    setShowTimePicker(!showTimePicker);
+  };
+
+  const confirmIosDate = () => {
+    setDate(date);
+    toggleDatePicker();
+  };
+
+  const confirmIosTime = () => {
+    setDate(date);
+    toggleTimePicker();
   };
 
   const showAlert = () =>
@@ -39,7 +87,7 @@ function NewActivity({ onPress }) {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <KeyboardAwareScrollView
           style={{ flex: 1, backgroundColor: "#2B2B2B" }}
         >
@@ -59,7 +107,7 @@ function NewActivity({ onPress }) {
                 I'm feeling{"\n"}spontaneous...
               </Text>
             </View>
-            <View style={styles.inputContainer}>
+            <View style={styles.formContainer}>
               <Text style={styles.inputLabel}>Title</Text>
               <TextInput
                 style={styles.input}
@@ -88,48 +136,129 @@ function NewActivity({ onPress }) {
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
               />
+
               <Text style={styles.inputLabel}>Select Date</Text>
-              <View style={styles.rowWrapper}>
-                <View style={styles.rowLeft}>
+              {!showDatePicker && (
+                <Pressable onPressIn={toggleDatePicker}>
+                  <TextInput
+                    style={[styles.input, { color: "#F8f8f8" }]}
+                    autoCapitalize="words"
+                    cursorColor="#D9D9D9"
+                    value={date.toDateString()}
+                    onChangeText={setDate}
+                    editable={false}
+                    onPressIn={toggleDatePicker}
+                    placeholder={date.toDateString()}
+                  />
+                </Pressable>
+              )}
+              {showDatePicker && (
+                <DateTimePicker
+                  mode="date"
+                  display="spinner"
+                  value={date}
+                  onChange={onChangeSetDate}
+                  minimumDate={new Date()}
+                  maximumDate={
+                    new Date(new Date().setDate(new Date().getDate() + 1))
+                  }
+                />
+              )}
+
+              {showDatePicker && Platform.OS === "ios" && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={toggleDatePicker}
+                    style={styles.pickerButton}
+                  >
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={confirmIosDate}
+                    style={[
+                      styles.pickerButton,
+                      { backgroundColor: "#AFE8C4" },
+                    ]}
+                  >
+                    <Text style={styles.buttonText}>Confirm</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              <View>
+                <Text style={styles.inputLabel}>Select Start Time</Text>
+                {!showTimePicker && (
+                  <Pressable onPressIn={toggleTimePicker}>
+                    <TextInput
+                      style={[
+                        styles.input,
+                        {
+                          color: "#F8f8f8",
+                          width: 80,
+                          textAlign: "center",
+                          paddingLeft: -10,
+                        },
+                      ]}
+                      autoCapitalize="words"
+                      cursorColor="#D9D9D9"
+                      value={date.toLocaleString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                      onChangeText={setDate}
+                      editable={false}
+                      onPressIn={toggleTimePicker}
+                      placeholder={date.toDateString()}
+                    />
+                  </Pressable>
+                )}
+                {showTimePicker && (
                   <DateTimePicker
-                    style={{ marginLeft: -10 }}
+                    mode="time"
+                    display="spinner"
                     value={date}
-                    mode="date"
-                    onChange={onChangeSetDate}
+                    onChange={onChangeSetTime}
                     minimumDate={new Date()}
                     maximumDate={
                       new Date(new Date().setDate(new Date().getDate() + 1))
                     }
                   />
-                </View>
-                <View style={styles.rowRight} />
+                )}
+
+                {showTimePicker && Platform.OS === "ios" && (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={toggleTimePicker}
+                      style={styles.pickerButton}
+                    >
+                      <Text style={styles.buttonText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={confirmIosTime}
+                      style={[
+                        styles.pickerButton,
+                        { backgroundColor: "#AFE8C4" },
+                      ]}
+                    >
+                      <Text style={styles.buttonText}>Confirm</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </View>
-              <View style={styles.rowWrapper}>
-                <View style={styles.rowLeft}>
-                  <Text style={styles.inputLabel}>Select Start Time</Text>
-                </View>
-                <View style={styles.rowRight}>
-                  <Text style={styles.inputLabel}>Select End Time</Text>
-                </View>
-              </View>
-              <View style={styles.rowWrapper}>
-                <View style={styles.rowLeft}>
-                  <DateTimePicker
-                    style={{ marginLeft: -10 }}
-                    value={date}
-                    mode="time"
-                    onChange={onChangeSetDate}
-                  />
-                </View>
-                <View style={styles.rowRight}>
-                  <DateTimePicker
-                    value={endTime}
-                    mode="time"
-                    onChange={onChangeSetEndTime}
-                    minimumDate={new Date(date)}
-                  />
-                </View>
-              </View>
+              <Text>{date.toLocaleString()}</Text>
+              <Text>{endTime.toLocaleString()}</Text>
+              <Text>{showDatePicker.toLocaleString()}</Text>
+              <Text>{showTimePicker.toLocaleString()}</Text>
             </View>
           </View>
         </KeyboardAwareScrollView>
@@ -194,7 +323,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     lineHeight: 28,
   },
-  inputContainer: {
+  formContainer: {
     flex: 1,
     backgroundColor: "#3B3B3B",
     width: "92%",
@@ -216,17 +345,18 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica Neue",
     fontStyle: "italic",
     fontSize: 14,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   input: {
-    height: 32,
+    height: 36,
     borderRadius: 8,
     backgroundColor: "#424242",
     fontFamily: "Helvetica Neue",
     color: "#D9D9D9",
     //fontStyle: "italic",
-    fontSize: 12,
+    fontSize: 14,
     paddingLeft: 10,
+    paddingVertical: 4,
   },
   rowWrapper: {
     flexDirection: "row",
@@ -242,6 +372,32 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
+  },
+
+  datePicker: {
+    height: 120,
+    marginTop: -10,
+  },
+
+  pickerButton: {
+    backgroundColor: "#EEDFF6",
+    alignItems: "center",
+    paddingVertical: 2,
+    paddingHorizontal: 14,
+    alignSelf: "center",
+    borderRadius: 16,
+    elevation: 3,
+    fontFamily: "Helvetica Neue",
+    fontStyle: "italic",
+  },
+  buttonText: {
+    fontSize: 12,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "black",
+    fontFamily: "Helvetica Neue",
+    fontStyle: "italic",
   },
 });
 
