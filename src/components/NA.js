@@ -7,7 +7,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import CrossButton from "../components/CrossButton";
 
-function NewActivity({ onPress }) {
+function NA({ onPress }) {
   const [date, setDate] = useState(new Date());
   const [endTime, setEndTime] = useState(date);
 
@@ -246,4 +246,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewActivity;
+export default NA;

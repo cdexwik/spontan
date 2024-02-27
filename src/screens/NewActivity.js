@@ -12,19 +12,36 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import CrossButton from "../components/CrossButton";
+import { MultipleSelectList } from "react-native-dropdown-select-list";
 
-function NewActivity({ onPress }) {
+function NewActivity({ onPress, friends }) {
   const [date, setDate] = useState(new Date());
   const [endTime, setEndTime] = useState(date);
   const [duration, setDuration] = useState(
     new Date(new Date().setHours(0, 0, 0, 0))
   );
+  const [responseTime, setResponseTime] = useState(
+    new Date(new Date().setHours(0, 0, 0, 0))
+  );
+  const [responseTimeDate, setResponseTimeDate] = useState(date);
   const [endTimeOutput, setEndTimeOutput] = useState("");
-
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [showDurationPicker, setShowDurationPicker] = useState(false);
+  const [showResponseTimePicker, setShowResponseTimePicker] = useState(false);
+
+  const [friendsData, setFriendsData] = useState([]);
+  const [selectedFriends, setSelectedFriends] = useState([]);
+
+  useEffect(() => {
+    let newArray = friends.map((friend) => {
+      return {
+        key: friend.userid,
+        value: `${friend.firstName} ${friend.lastName}`,
+      };
+    });
+    setFriendsData(newArray);
+  }, []);
 
   useEffect(() => {
     const durH = duration.getHours();
@@ -34,6 +51,18 @@ function NewActivity({ onPress }) {
     nd.setMinutes(nd.getMinutes() + durM);
     setEndTime(nd);
   }, [date, duration]);
+
+  useEffect(() => {
+    // its possible that when user presses send we create a dateTimeStamp instead for timer to be
+    // counted from the moment the button is pressed and not from the time when the date is selected
+    // but for now we just use the date
+    const respH = responseTime.getHours();
+    const respM = responseTime.getMinutes();
+    let nd = new Date(date.getTime());
+    nd.setHours(nd.getHours() + respH);
+    nd.setMinutes(nd.getMinutes() + respM);
+    setResponseTimeDate(nd);
+  }, [date, responseTime]);
 
   useEffect(() => {
     const output = () => {
@@ -70,6 +99,17 @@ function NewActivity({ onPress }) {
     }
   };
 
+  const onChangeSetResponseTime = ({ type }, selectedResponseTime) => {
+    if (type == "set") {
+      setResponseTime(selectedResponseTime);
+      if (Platform.OS === "android") {
+        toggleResponseTimePicker();
+      }
+    } else {
+      toggleResponseTimePicker();
+    }
+  };
+
   const onChangeSetDuration = ({ type }, selectedDuration) => {
     if (type == "set") {
       setDuration(selectedDuration);
@@ -82,20 +122,26 @@ function NewActivity({ onPress }) {
   };
 
   const toggleDatePicker = () => {
-    if (!showTimePicker && !showDurationPicker) {
+    if (!showTimePicker && !showDurationPicker && !showResponseTimePicker) {
       setShowDatePicker(!showDatePicker);
     }
   };
 
   const toggleTimePicker = () => {
-    if (!showDatePicker && !showDurationPicker) {
+    if (!showDatePicker && !showDurationPicker && !showResponseTimePicker) {
       setShowTimePicker(!showTimePicker);
     }
   };
 
   const toggleDurationPicker = () => {
-    if (!showTimePicker && !showDatePicker) {
+    if (!showTimePicker && !showDatePicker && !showResponseTimePicker) {
       setShowDurationPicker(!showDurationPicker);
+    }
+  };
+
+  const toggleResponseTimePicker = () => {
+    if (!showTimePicker && !showDatePicker && !showDurationPicker) {
+      setShowResponseTimePicker(!showResponseTimePicker);
     }
   };
 
@@ -112,6 +158,11 @@ function NewActivity({ onPress }) {
   const confirmIosDuration = () => {
     setDuration(duration);
     toggleDurationPicker();
+  };
+
+  const confirmIosResponseTime = () => {
+    setResponseTime(responseTime);
+    toggleResponseTimePicker();
   };
 
   return (
@@ -351,7 +402,6 @@ function NewActivity({ onPress }) {
                 )}
               </View>
               <Text style={styles.inputLabel}>End Time</Text>
-
               <TextInput
                 style={[styles.input, { color: "#F8f8f8" }]}
                 autoCapitalize="words"
@@ -359,13 +409,130 @@ function NewActivity({ onPress }) {
                 value={endTimeOutput}
                 editable={false}
               />
+              <View>
+                <Text style={styles.inputLabel}>
+                  Select Response Time Limit
+                </Text>
+                {!showResponseTimePicker && (
+                  <Pressable onPressIn={toggleResponseTimePicker}>
+                    <TextInput
+                      style={[
+                        styles.input,
+                        {
+                          color: "#F8f8f8",
+                          width: 80,
+                          textAlign: "center",
+                          paddingLeft: -10,
+                        },
+                      ]}
+                      autoCapitalize="words"
+                      cursorColor="#D9D9D9"
+                      value={responseTime.toLocaleString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                      onChangeText={setResponseTime}
+                      editable={false}
+                      onPressIn={toggleResponseTimePicker}
+                      placeholder={responseTime.toDateString()}
+                    />
+                  </Pressable>
+                )}
+                {showResponseTimePicker && (
+                  <DateTimePicker
+                    mode="time"
+                    display="spinner"
+                    date={new Date(new Date().setHours(0, 0, 0, 0))}
+                    value={responseTime}
+                    is24Hour={true}
+                    locale="en_GB"
+                    onChange={onChangeSetResponseTime}
+                  />
+                )}
 
-              <Text>{date.toLocaleString()}</Text>
-              <Text>{endTime.toLocaleString()}</Text>
-              <Text>{duration.toLocaleString()}</Text>
-              <Text>{showDatePicker.toLocaleString()}</Text>
-              <Text>{showTimePicker.toLocaleString()}</Text>
-              <Text>{showDurationPicker.toLocaleString()}</Text>
+                {showResponseTimePicker && Platform.OS === "ios" && (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={toggleResponseTimePicker}
+                      style={styles.pickerButton}
+                    >
+                      <Text style={styles.buttonText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={confirmIosResponseTime}
+                      style={[
+                        styles.pickerButton,
+                        { backgroundColor: "#AFE8C4" },
+                      ]}
+                    >
+                      <Text style={styles.buttonText}>Confirm</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+
+              <View>
+                {
+                  // https://www.npmjs.com/package/react-native-dropdown-select-list
+                }
+                <Text style={styles.inputLabel}>Invite Friends</Text>
+                <MultipleSelectList
+                  setSelected={(val) => {
+                    setSelectedFriends(val);
+                  }}
+                  data={friendsData}
+                  fontFamily="Helvetica Neue"
+                  placeholder="Select friends"
+                  searchPlaceholder="Search friends"
+                  notFoundText="No friend with this name found"
+                  label="Selected Friends"
+                  save="key"
+                  boxStyles={{
+                    backgroundColor: "#424242",
+                    fontFamily: "Helvetica Neue",
+                    color: "#f8f8f8",
+                    borderWidth: 0,
+                  }}
+                  inputStyles={{
+                    fontSize: 16,
+                    fontFamily: "Helvetica Neue",
+                    color: "#D9D9D9",
+                  }}
+                  dropdownStyles={{
+                    backgroundColor: "#424242",
+                    fontFamily: "Helvetica Neue",
+                    borderWidth: 0,
+                  }}
+                  dropdownTextStyles={{
+                    color: "#D9D9D9",
+                    fontFamily: "Helvetica Neue",
+                  }}
+                  badgeStyles={{
+                    backgroundColor: "#AFE8C4",
+                  }}
+                  badgeTextStyles={{
+                    fontSize: 12,
+                    lineHeight: 21,
+                    fontWeight: "bold",
+                    letterSpacing: 0.25,
+                    color: "black",
+                    fontFamily: "Helvetica Neue",
+                    fontStyle: "italic",
+                  }}
+                  checkBoxStyles={{
+                    backgroundColor: "#D9D9D9",
+                    borderWidth: 0,
+                  }}
+                  labelStyles={{
+                    color: "#f8f8f8",
+                  }}
+                />
+              </View>
             </View>
           </View>
         </KeyboardAwareScrollView>
