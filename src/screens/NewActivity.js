@@ -18,11 +18,16 @@ import CrossButton from "../components/CrossButton";
 function NewActivity({ onPress }) {
   const [date, setDate] = useState(new Date());
   const [endTime, setEndTime] = useState(date);
+  const [duration, setDuration] = useState(
+    new Date(new Date().setHours(0, 0, 0, 0))
+  );
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showDurationPicker, setShowDurationPicker] = useState(false);
 
   useEffect(() => {
+    const calcEndTime = new Date();
     setEndTime(date);
   }, [date]);
 
@@ -48,16 +53,37 @@ function NewActivity({ onPress }) {
     }
   };
 
+  const onChangeSetDuration = ({ type }, selectedDuration) => {
+    if (type == "set") {
+      setDuration(selectedDuration);
+      if (Platform.OS === "android") {
+        toggleDurationPicker();
+      }
+    } else {
+      toggleDurationPicker();
+    }
+  };
+
   const onChangeSetEndTime = (e, selectedDate) => {
     setEndTime(selectedDate);
   };
 
   const toggleDatePicker = () => {
-    setShowDatePicker(!showDatePicker);
+    if (!showTimePicker && !showDurationPicker) {
+      setShowDatePicker(!showDatePicker);
+    }
   };
 
   const toggleTimePicker = () => {
-    setShowTimePicker(!showTimePicker);
+    if (!showDatePicker && !showDurationPicker) {
+      setShowTimePicker(!showTimePicker);
+    }
+  };
+
+  const toggleDurationPicker = () => {
+    if (!showTimePicker && !showDatePicker) {
+      setShowDurationPicker(!showDurationPicker);
+    }
   };
 
   const confirmIosDate = () => {
@@ -68,6 +94,11 @@ function NewActivity({ onPress }) {
   const confirmIosTime = () => {
     setDate(date);
     toggleTimePicker();
+  };
+
+  const confirmIosDuration = () => {
+    setDuration(duration);
+    toggleDurationPicker();
   };
 
   const showAlert = () =>
@@ -139,7 +170,7 @@ function NewActivity({ onPress }) {
 
               <Text style={styles.inputLabel}>Select Date</Text>
               {!showDatePicker && (
-                <Pressable onPressIn={toggleDatePicker}>
+                <Pressable onPress={toggleDatePicker}>
                   <TextInput
                     style={[styles.input, { color: "#F8f8f8" }]}
                     autoCapitalize="words"
@@ -222,6 +253,8 @@ function NewActivity({ onPress }) {
                     mode="time"
                     display="spinner"
                     value={date}
+                    is24Hour={true}
+                    locale="en_GB"
                     onChange={onChangeSetTime}
                     minimumDate={new Date()}
                     maximumDate={
@@ -255,10 +288,75 @@ function NewActivity({ onPress }) {
                   </View>
                 )}
               </View>
+              <View>
+                <Text style={styles.inputLabel}>Select Duration</Text>
+                {!showDurationPicker && (
+                  <Pressable onPressIn={toggleDurationPicker}>
+                    <TextInput
+                      style={[
+                        styles.input,
+                        {
+                          color: "#F8f8f8",
+                          width: 80,
+                          textAlign: "center",
+                          paddingLeft: -10,
+                        },
+                      ]}
+                      autoCapitalize="words"
+                      cursorColor="#D9D9D9"
+                      value={duration.toLocaleString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                      onChangeText={setDuration}
+                      editable={false}
+                      onPressIn={toggleDurationPicker}
+                      placeholder={duration.toDateString()}
+                    />
+                  </Pressable>
+                )}
+                {showDurationPicker && (
+                  <DateTimePicker
+                    mode="time"
+                    display="spinner"
+                    date={new Date(new Date().setHours(0, 0, 0, 0))}
+                    value={duration}
+                    is24Hour={true}
+                    locale="en_GB"
+                    onChange={onChangeSetDuration}
+                  />
+                )}
+
+                {showDurationPicker && Platform.OS === "ios" && (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={toggleDurationPicker}
+                      style={styles.pickerButton}
+                    >
+                      <Text style={styles.buttonText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={confirmIosDuration}
+                      style={[
+                        styles.pickerButton,
+                        { backgroundColor: "#AFE8C4" },
+                      ]}
+                    >
+                      <Text style={styles.buttonText}>Confirm</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
               <Text>{date.toLocaleString()}</Text>
               <Text>{endTime.toLocaleString()}</Text>
               <Text>{showDatePicker.toLocaleString()}</Text>
               <Text>{showTimePicker.toLocaleString()}</Text>
+              <Text>{showDurationPicker.toLocaleString()}</Text>
             </View>
           </View>
         </KeyboardAwareScrollView>
