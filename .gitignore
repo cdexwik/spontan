@@ -35,4 +35,3 @@ yarn-error.*
 *.tsbuildinfo
 app.json
 prettierrc.js
-components/Chat.js

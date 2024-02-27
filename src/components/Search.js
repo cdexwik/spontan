@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SearchBar } from "@rneui/base";
-import { ScrollView, View, StyleSheet } from "react-native";
+import { ScrollView, View } from "react-native";
 import SearchList from "./SearchList";
 
 const usersDataBase = [
@@ -138,71 +138,73 @@ const Search = () => {
   const [filteredUsers, setFilteredUsers] = useState(users);
 
   const updateSearchField = (searchField) => {
-    setSearchField(searchField.toLowerCase());
+    setSearchField(searchField);
   };
 
   useEffect(() => {
     const newFilteredUsers = users.filter((user) => {
-      return user.tag.toLowerCase().includes(searchField);
+      //return user.tag.includes(searchField);
+      return user.tag.startsWith(searchField);
     });
     setFilteredUsers(newFilteredUsers);
-  }, [users, searchField]);
+  }, [searchField]);
 
   return (
-    <View>
+    <View style={{ flex: 1, alignContent: "space-between" }}>
       <SearchBar
         platform="default"
+        autoCapitalize="none"
+        autoCorrect={false}
+        cursorColor="#D9D9D9"
         containerStyle={{
           backgroundColor: "#3B3B3B",
           borderBottomColor: "transparent",
           borderTopColor: "transparent",
+          justifyContent: "center",
+          width: "98%",
+          alignSelf: "center",
         }}
-        inputContainerStyle={{ height: 32 }}
-        inputStyle={{ fontSize: 14, fontStyle: "italic" }}
+        inputContainerStyle={{
+          height: 32,
+          borderRadius: 8,
+          backgroundColor: "#424242",
+        }}
+        inputStyle={{
+          fontSize: 13,
+          fontFamily: "Helvetica Neue",
+          fontStyle: "italic",
+          color: "#D9D9D9",
+        }}
         leftIconContainerStyle={{}}
         rightIconContainerStyle={{}}
         loadingProps={{}}
         onChangeText={updateSearchField}
         onClearText={() => console.log(onClearText())}
         placeholder="Search friends by tag"
-        placeholderTextColor="#888"
+        placeholderTextColor="#A0A0A0"
         round
         cancelButtonTitle="Cancel"
         cancelButtonProps={{}}
         onCancel={() => console.log(onCancel())}
         value={searchField}
       />
+      <View
+        style={{
+          marginVertical: 5,
+          borderBottomColor: "#A0A0A0",
+          borderBottomWidth: 1,
+          alignSelf: "center",
+          width: "93%",
+        }}
+      />
 
       {searchField && (
-        <ScrollView
-          containerStyle={styles.searchContainer}
-          style={styles.search}
-        >
+        <ScrollView style={{ flex: 1 }}>
           <SearchList filterdUsers={filteredUsers} />
         </ScrollView>
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  search: {
-    flex: 1,
-    flexDirection: "column",
-    //backgroundColor: "#3B3B3B",
-    //backgroundColor: "red",
-    maxWidth: 480,
-    maxHeight: 300,
-    borderRadius: 8,
-    elevation: 4,
-    overflow: "hidden",
-  },
-});
 
 export default Search;

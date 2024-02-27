@@ -1,4 +1,3 @@
-// @src/App.js
 import React from "react";
 import { Dimensions } from "react-native";
 import Svg, { G, Rect } from "react-native-svg";
@@ -16,13 +15,13 @@ const DashedLine = () => {
 
   const dashes = new Array(Math.floor(width / spacing)).fill(null);
   return (
-    <Svg height="11" width="100%">
+    <Svg height="11" width="98%">
       <G>
         {dashes.map((_, index) => (
           <Rect
             key={index}
             x="12"
-            y="10"
+            y="5"
             width="6"
             height="1"
             fill="#A0A0A0"

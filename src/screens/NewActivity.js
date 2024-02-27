@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { Feather } from "@expo/vector-icons";
+import CrossButton from "../components/CrossButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";

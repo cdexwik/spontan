@@ -1,9 +1,9 @@
-import react from "react";
+import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
 const AddButton = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Pressable
         onPress={() => {
           console.log("Add Pressed");
@@ -19,13 +19,17 @@ const AddButton = () => {
 export default AddButton;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginRight: 10,
+  },
   addButton: {
-    marginTop: 24,
-    marginRight: 20,
-    backgroundColor: "#afe8c4",
+    backgroundColor: "#EEDFF6",
     alignItems: "center",
     paddingVertical: 0,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,

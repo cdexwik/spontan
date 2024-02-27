@@ -23,7 +23,19 @@ const FriendsList = ({ friends }) => {
     return (
       <View style={styles.container}>
         {console.log("No friends")}
-        <Text>No friends!</Text>
+        <Text
+          style={{
+            fontSize: 16,
+            color: "#F8F8F8",
+            fontWeight: "bold",
+            fontFamily: "Helvetica Neue",
+            fontStyle: "italic",
+            alignSelf: "center",
+            marginTop: 20,
+          }}
+        >
+          No friends!
+        </Text>
       </View>
     );
   } else {
