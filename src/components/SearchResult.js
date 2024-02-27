@@ -14,19 +14,25 @@ const SearchResult = ({
 }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.friend}>
-        <View style={styles.left}>
-          <ProfilePictureFriend />
+      {pendingRequest && (
+        <View>
+          <View style={styles.friend}>
+            <View style={styles.left}>
+              <ProfilePictureFriend />
+            </View>
+            <View style={styles.center}>
+              <View style={styles.friendTextBox}>
+                <Text
+                  style={styles.friendTextName}
+                >{`${firstName} ${lastName}`}</Text>
+                <Text style={styles.friendTextTag}>@{tag}</Text>
+              </View>
+            </View>
+            <AddButton />
+          </View>
+          <DashedLine />
         </View>
-        <View style={styles.friendTextBox}>
-          <Text
-            style={styles.friendTextName}
-          >{`${firstName} ${lastName}`}</Text>
-          <Text style={styles.friendTextTag}>@{tag}</Text>
-        </View>
-        <AddButton />
-      </View>
-      <DashedLine />
+      )}
     </View>
   );
 };
@@ -47,10 +53,18 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginLeft: 20,
   },
+  center: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   friendTextBox: {
     flexDirection: "column",
+    justifyContent: "flex-start",
     paddingVertical: 10,
-    marginLeft: -80,
+    flex: 1,
+    marginLeft: -40,
   },
   friendTextName: {
     fontSize: 12,

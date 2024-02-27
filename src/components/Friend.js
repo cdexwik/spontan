@@ -31,23 +31,25 @@ const Friend = ({
         <View style={styles.left}>
           <ProfilePictureFriend />
         </View>
-        <View style={styles.friendTextBox}>
-          <Text
-            style={styles.friendTextName}
-          >{`${firstName} ${lastName}`}</Text>
-          <Text style={styles.friendTextTag}>@{tag}</Text>
-          <Text
-            style={styles.friendText}
-          >{`Response Time: ${responseTime} s`}</Text>
+        <View style={styles.center}>
+          <View style={styles.friendTextBox}>
+            <Text
+              style={styles.friendTextName}
+            >{`${firstName} ${lastName}`}</Text>
+            <Text style={styles.friendTextTag}>@{tag}</Text>
+            <Text
+              style={styles.friendText}
+            >{`Response Time: ${responseTime} s`}</Text>
+          </View>
         </View>
         {pendingRequest && (
-          <View style={styles.rightContainer}>
+          <View style={styles.right}>
             <AcceptButton onPress={acceptButtonHandler} />
             <CrossButton size={13} onPress={crossButtonHandler} />
           </View>
         )}
         {!pendingRequest && (
-          <View style={styles.rightContainer}>
+          <View style={styles.right}>
             <CrossButton size={13} onPress={crossButtonHandler} />
           </View>
         )}
@@ -73,10 +75,18 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginLeft: 20,
   },
+  center: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   friendTextBox: {
     flexDirection: "column",
+    justifyContent: "flex-start",
     paddingVertical: 10,
-    marginLeft: -50,
+    flex: 1,
+    marginLeft: -40,
   },
   friendTextName: {
     fontSize: 12,
@@ -95,17 +105,11 @@ const styles = StyleSheet.create({
     color: "#A0A0A0",
     fontFamily: "Helvetica Neue",
   },
-  rightContainer: {
+  right: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    marginRight: 10,
-  },
-  rightSpace: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
     marginRight: 10,
   },
 });

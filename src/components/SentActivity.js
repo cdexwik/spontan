@@ -1,15 +1,93 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Pressable,
 } from "react-native";
+import Modal from "react-native-modal";
 import { Ionicons } from "@expo/vector-icons";
 import DashedLine from "./DashedLine";
 import DeleteEventButton from "./DeleteEventButton";
 import { MaterialIcons } from "@expo/vector-icons";
+import AnsweredList from "./AnsweredList";
+
+const friendsData = [
+  {
+    userid: "111",
+    firstName: "Anna",
+    lastName: "Svensson",
+    tag: "anna",
+    email: "anna@svensson.se",
+    picture: "URL to database",
+    pendingRequest: true,
+    activityData: {
+      numberOfInvites: 1,
+      numberOfAccepted: 0,
+      totalResponseTime: 200,
+    },
+  },
+  {
+    userid: "222",
+    firstName: "Olle",
+    lastName: "Karlsson",
+    tag: "Olle",
+    email: "olle@karlsson.se",
+    picture: "URL to database",
+    pendingRequest: false,
+    activityData: {
+      numberOfInvites: 2,
+      numberOfAccepted: 2,
+      totalResponseTime: 500,
+    },
+  },
+  {
+    userid: "333",
+    firstName: "Gina",
+    lastName: "Garcia",
+    tag: "gina",
+    email: "gina@garcia.se",
+    picture: "URL to database",
+    pendingRequest: false,
+    activityData: {
+      numberOfInvites: 3,
+      numberOfAccepted: 2,
+      totalResponseTime: 100,
+    },
+  },
+  {
+    userid: "444",
+    firstName: "Juan",
+    lastName: "Martinez",
+    tag: "juan",
+    email: "juan@martinez.se",
+    picture: "URL to database",
+    pendingRequest: true,
+    activityData: {
+      numberOfInvites: 5,
+      numberOfAccepted: 2,
+      totalResponseTime: 800,
+    },
+  },
+  {
+    userid: "555",
+    firstName: "Magda",
+    lastName: "Martinez",
+    tag: "magda",
+    email: "magda@martinez.se",
+    picture: "URL to database",
+    pendingRequest: true,
+    activityData: {
+      numberOfInvites: 5,
+      numberOfAccepted: 2,
+      totalResponseTime: 800,
+    },
+  },
+];
 
 const SentActivity = ({
   category,
@@ -22,12 +100,17 @@ const SentActivity = ({
   const totalPeople = 2;
   const attendingPeople = 1;
   const fillPercentage = (attendingPeople / totalPeople) * 100;
-  const [expanded, setExpanded] = useState(false);
-  const attendees = ["John", "Alice", "Bob"];
 
-  const toggleList = () => {
-    setExpanded(!expanded);
-  };
+  const [friends, setFriends] = useState(friendsData);
+
+  useEffect(() => {
+    setFriends(friendsData);
+  }, [friends]);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const onPressShowModalHandler = () => setModalVisible(true);
+  const onPressHideModalHandler = () => setModalVisible(false);
 
   return (
     <View style={styles.container}>
@@ -65,23 +148,24 @@ const SentActivity = ({
           >{`${attendingPeople}/${totalPeople}`}</Text>
         </View>
         <View style={styles.answered}>
-          <Text style={styles.descriptionText}>Who answered?</Text>
-          <MaterialIcons name="expand-more" size={19} color="#EEDFF6" />
-          {/*<TouchableOpacity onPress={toggleList}>
-            <Text style={styles.expandButton}>
-              {expanded ? "Hide attendees" : "Show attendees"}
-            </Text>
-          </TouchableOpacity>
-          {expanded && (
-            <View>
-              <FlatList
-                data={attendees}
-                renderItem={({ item }) => <Text>{item}</Text>}
-                keyExtractor={(item, index) => index.toString()}
-              />
-            </View>
-          )*/}
+          <Pressable onPress={onPressShowModalHandler}>
+            <Text style={styles.descriptionText}>Who answered?</Text>
+          </Pressable>
+          <Pressable onPress={onPressShowModalHandler}>
+            <MaterialIcons name="expand-more" size={19} color="#EEDFF6" />
+          </Pressable>
         </View>
+        <Modal
+          isVisible={isModalVisible}
+          onBackdropPress={() => setModalVisible(false)}
+          onRequestClose={() => setModalVisible(false)}
+          //onSwipeComplete={() => setModalVisible(false)}
+          //swipeDirection="down"
+          animationIn={"fadeIn"}
+          animationOut={"fadeOut"}
+        >
+          <AnsweredList friends={friends} />
+        </Modal>
         <View style={styles.button}>
           <DeleteEventButton />
         </View>
@@ -101,7 +185,7 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     paddingHorizontal: 20,
     elevation: 4,
-    overflow: "hidden",
+    overflow: "visible",
     marginBottom: 16,
   },
   topInfo: {
@@ -180,17 +264,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
   button: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-  },
-  expandButton: {
-    fontSize: 16,
-    color: "blue",
-    marginTop: 10,
   },
 });
 
