@@ -13,6 +13,8 @@ import { Feather } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { MultipleSelectList } from "react-native-dropdown-select-list";
+import DashedLine from "../components/DashedLine";
+import SendButton from "../components/SendButton";
 
 function NewActivity({ onPress, friends }) {
   const [date, setDate] = useState(new Date());
@@ -475,12 +477,12 @@ function NewActivity({ onPress, friends }) {
                   </View>
                 )}
               </View>
-
+              <Text style={styles.inputLabel}>Invite Friends</Text>
               <View>
                 {
                   // https://www.npmjs.com/package/react-native-dropdown-select-list
                 }
-                <Text style={styles.inputLabel}>Invite Friends</Text>
+
                 <MultipleSelectList
                   setSelected={(val) => {
                     setSelectedFriends(val);
@@ -533,6 +535,8 @@ function NewActivity({ onPress, friends }) {
                   }}
                 />
               </View>
+              <DashedLine />
+              <SendButton />
             </View>
           </View>
         </KeyboardAwareScrollView>
