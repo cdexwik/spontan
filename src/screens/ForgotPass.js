@@ -29,7 +29,7 @@ function ForgotPass() {
   const { navigate } = useNavigation();
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <Text style={styles.spontan}>Spontan</Text>

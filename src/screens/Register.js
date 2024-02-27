@@ -30,7 +30,7 @@ function Register() {
   const { navigate } = useNavigation();
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <KeyboardAwareScrollView
           style={{ flex: 1, backgroundColor: "#2B2B2B" }}
         >
