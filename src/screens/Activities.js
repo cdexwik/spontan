@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Modal } from "react-native";
+import { View, StyleSheet, ScrollView, Modal } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import SentActivity from "../components/SentActivity";
 import NewActivityButton from "../components/NewActivityButton";
@@ -27,10 +27,38 @@ function Activities() {
           }}
         >
           <View style={styles.container}>
-            <SentActivity />
-            <SentActivity />
-            <SentActivity />
-            <SentActivity />
+            <SentActivity
+              category={"category"}
+              time={"09:37"}
+              title={"Heading title from the form"}
+              description={"I want to go to the gym tomorrow at 13:00"}
+              activityTime={"Tomorrow 13:00 - 15:00"}
+              place={"Fitness Fridhemsplan"}
+            />
+            <SentActivity
+              category={"category"}
+              time={"09:37"}
+              title={"Heading title from the form"}
+              description={"I want to go to the gym tomorrow at 13:00"}
+              activityTime={"Tomorrow 13:00 - 15:00"}
+              place={"Fitness Fridhemsplan"}
+            />
+            <SentActivity
+              category={"category"}
+              time={"09:37"}
+              title={"Heading title from the form"}
+              description={"I want to go to the gym tomorrow at 13:00"}
+              activityTime={"Tomorrow 13:00 - 15:00"}
+              place={"Fitness Fridhemsplan"}
+            />
+            <SentActivity
+              category={"category"}
+              time={"09:37"}
+              title={"Heading title from the form"}
+              description={"I want to go to the gym tomorrow at 13:00"}
+              activityTime={"Tomorrow 13:00 - 15:00"}
+              place={"Fitness Fridhemsplan"}
+            />
           </View>
         </ScrollView>
         <NewActivityButton

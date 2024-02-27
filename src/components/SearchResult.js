@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   friendTextBox: {
     flexDirection: "column",
     paddingVertical: 10,
+    marginLeft: -80,
   },
   friendTextName: {
     fontSize: 12,
