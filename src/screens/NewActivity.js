@@ -12,7 +12,6 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import moment from "moment";
 import CrossButton from "../components/CrossButton";
 
 function NewActivity({ onPress }) {
@@ -21,15 +20,33 @@ function NewActivity({ onPress }) {
   const [duration, setDuration] = useState(
     new Date(new Date().setHours(0, 0, 0, 0))
   );
+  const [endTimeOutput, setEndTimeOutput] = useState("");
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [showDurationPicker, setShowDurationPicker] = useState(false);
 
   useEffect(() => {
-    const calcEndTime = new Date();
-    setEndTime(date);
-  }, [date]);
+    const durH = duration.getHours();
+    const durM = duration.getMinutes();
+    let nd = new Date(date.getTime());
+    nd.setHours(nd.getHours() + durH);
+    nd.setMinutes(nd.getMinutes() + durM);
+    setEndTime(nd);
+  }, [date, duration]);
+
+  useEffect(() => {
+    const output = () => {
+      const timeString = endTime.toLocaleString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const dateString = endTime.toDateString();
+      const output = `${dateString}, ${timeString}`;
+      return output;
+    };
+    setEndTimeOutput(output);
+  }, [endTime]);
 
   const onChangeSetDate = ({ type }, selectedDate) => {
     if (type == "set") {
@@ -64,10 +81,6 @@ function NewActivity({ onPress }) {
     }
   };
 
-  const onChangeSetEndTime = (e, selectedDate) => {
-    setEndTime(selectedDate);
-  };
-
   const toggleDatePicker = () => {
     if (!showTimePicker && !showDurationPicker) {
       setShowDatePicker(!showDatePicker);
@@ -100,21 +113,6 @@ function NewActivity({ onPress }) {
     setDuration(duration);
     toggleDurationPicker();
   };
-
-  const showAlert = () =>
-    Alert.alert(
-      "Check yout inbox",
-      "Please check your inbox to finish the register process.",
-      [
-        {
-          text: "Ok",
-          style: "default",
-        },
-      ],
-      {
-        cancelable: true,
-      }
-    );
 
   return (
     <SafeAreaProvider>
@@ -258,7 +256,7 @@ function NewActivity({ onPress }) {
                     onChange={onChangeSetTime}
                     minimumDate={new Date()}
                     maximumDate={
-                      new Date(new Date().setDate(new Date().getDate() + 1))
+                      new Date(new Date().setDate(new Date().getDate() + 2))
                     }
                   />
                 )}
@@ -352,8 +350,19 @@ function NewActivity({ onPress }) {
                   </View>
                 )}
               </View>
+              <Text style={styles.inputLabel}>End Time</Text>
+
+              <TextInput
+                style={[styles.input, { color: "#F8f8f8" }]}
+                autoCapitalize="words"
+                cursorColor="#D9D9D9"
+                value={endTimeOutput}
+                editable={false}
+              />
+
               <Text>{date.toLocaleString()}</Text>
               <Text>{endTime.toLocaleString()}</Text>
+              <Text>{duration.toLocaleString()}</Text>
               <Text>{showDatePicker.toLocaleString()}</Text>
               <Text>{showTimePicker.toLocaleString()}</Text>
               <Text>{showDurationPicker.toLocaleString()}</Text>
