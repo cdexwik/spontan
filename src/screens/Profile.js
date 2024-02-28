@@ -3,8 +3,14 @@ import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import auth from "../../db/firestore";
+import { signOut } from "firebase/auth";
 
 function Profile() {
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
+
   const { navigate } = useNavigation();
   return (
     <SafeAreaProvider>
@@ -33,12 +39,7 @@ function Profile() {
             </Pressable>
           </View>
           <View>
-            <Pressable
-              style={styles.logOutButton}
-              onPress={() => {
-                navigate("Login");
-              }}
-            >
+            <Pressable style={styles.logOutButton} onPress={handleLogout}>
               <Text style={styles.buttonText}>Log Out</Text>
             </Pressable>
           </View>

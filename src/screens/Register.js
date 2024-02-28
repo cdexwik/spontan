@@ -52,21 +52,17 @@ function Register() {
       // allFields filled
 
       if (password === confirmPassword) {
-        console.log("DoFireBaseAuth - createUserWithEmailandPassword");
-
         await createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-
-            // ...
+            console.log("user from from register", user);
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode);
             console.log(errorMessage);
-            // ..
           });
       } else {
         alert("Passwords are different");
