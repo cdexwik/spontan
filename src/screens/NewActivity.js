@@ -11,10 +11,13 @@ import {
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { MultipleSelectList } from "react-native-dropdown-select-list";
 import DashedLine from "../components/DashedLine";
 import SendButton from "../components/SendButton";
+import NewActivityFriendsSelector from "../components/NewActivityFriendsSelector";
+import SelectDate from "../components/SelectDate";
+import SelectStartTime from "../components/SelectStartTime";
+import SelectDuration from "../components/SelectDuration";
+import SelectResponseTime from "../components/SelectResponseTime";
 
 function NewActivity({ onPress, friends }) {
   const [date, setDate] = useState(new Date());
@@ -220,188 +223,39 @@ function NewActivity({ onPress, friends }) {
               />
 
               <Text style={styles.inputLabel}>Select Date</Text>
-              {!showDatePicker && (
-                <Pressable onPress={toggleDatePicker}>
-                  <TextInput
-                    style={[styles.input, { color: "#F8f8f8" }]}
-                    autoCapitalize="words"
-                    cursorColor="#D9D9D9"
-                    value={date.toDateString()}
-                    onChangeText={setDate}
-                    editable={false}
-                    onPressIn={toggleDatePicker}
-                    placeholder={date.toDateString()}
-                  />
-                </Pressable>
-              )}
-              {showDatePicker && (
-                <DateTimePicker
-                  mode="date"
-                  display="spinner"
-                  value={date}
-                  onChange={onChangeSetDate}
-                  minimumDate={new Date()}
-                  maximumDate={
-                    new Date(new Date().setDate(new Date().getDate() + 1))
-                  }
-                />
-              )}
-
-              {showDatePicker && Platform.OS === "ios" && (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={toggleDatePicker}
-                    style={styles.pickerButton}
-                  >
-                    <Text style={styles.buttonText}>Cancel</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={confirmIosDate}
-                    style={[
-                      styles.pickerButton,
-                      { backgroundColor: "#AFE8C4" },
-                    ]}
-                  >
-                    <Text style={styles.buttonText}>Confirm</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+              <SelectDate
+                showDatePicker={showDatePicker}
+                date={date}
+                setDate={setDate}
+                toggleDatePicker={toggleDatePicker}
+                onChangeSetDate={onChangeSetDate}
+                confirmIosDate={confirmIosDate}
+              />
 
               <View>
                 <Text style={styles.inputLabel}>Select Start Time</Text>
-                {!showTimePicker && (
-                  <Pressable onPressIn={toggleTimePicker}>
-                    <TextInput
-                      style={[
-                        styles.input,
-                        {
-                          color: "#F8f8f8",
-                          width: 80,
-                          textAlign: "center",
-                          paddingLeft: -10,
-                        },
-                      ]}
-                      autoCapitalize="words"
-                      cursorColor="#D9D9D9"
-                      value={date.toLocaleString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      onChangeText={setDate}
-                      editable={false}
-                      onPressIn={toggleTimePicker}
-                      placeholder={date.toDateString()}
-                    />
-                  </Pressable>
-                )}
-                {showTimePicker && (
-                  <DateTimePicker
-                    mode="time"
-                    display="spinner"
-                    value={date}
-                    is24Hour={true}
-                    locale="en_GB"
-                    onChange={onChangeSetTime}
-                    minimumDate={new Date()}
-                    maximumDate={
-                      new Date(new Date().setDate(new Date().getDate() + 2))
-                    }
-                  />
-                )}
-
-                {showTimePicker && Platform.OS === "ios" && (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-around",
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={toggleTimePicker}
-                      style={styles.pickerButton}
-                    >
-                      <Text style={styles.buttonText}>Cancel</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={confirmIosTime}
-                      style={[
-                        styles.pickerButton,
-                        { backgroundColor: "#AFE8C4" },
-                      ]}
-                    >
-                      <Text style={styles.buttonText}>Confirm</Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
+                <SelectStartTime
+                  showTimePicker={showTimePicker}
+                  date={date}
+                  setDate={setDate}
+                  toggleTimePicker={toggleTimePicker}
+                  onChangeSetTime={onChangeSetTime}
+                  confirmIosTime={confirmIosTime}
+                />
               </View>
               <View>
                 <Text style={styles.inputLabel}>Select Duration</Text>
-                {!showDurationPicker && (
-                  <Pressable onPressIn={toggleDurationPicker}>
-                    <TextInput
-                      style={[
-                        styles.input,
-                        {
-                          color: "#F8f8f8",
-                          width: 80,
-                          textAlign: "center",
-                          paddingLeft: -10,
-                        },
-                      ]}
-                      autoCapitalize="words"
-                      cursorColor="#D9D9D9"
-                      value={duration.toLocaleString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      onChangeText={setDuration}
-                      editable={false}
-                      onPressIn={toggleDurationPicker}
-                      placeholder={duration.toDateString()}
-                    />
-                  </Pressable>
-                )}
-                {showDurationPicker && (
-                  <DateTimePicker
-                    mode="time"
-                    display="spinner"
-                    date={new Date(new Date().setHours(0, 0, 0, 0))}
-                    value={duration}
-                    is24Hour={true}
-                    locale="en_GB"
-                    onChange={onChangeSetDuration}
-                  />
-                )}
-
-                {showDurationPicker && Platform.OS === "ios" && (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-around",
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={toggleDurationPicker}
-                      style={styles.pickerButton}
-                    >
-                      <Text style={styles.buttonText}>Cancel</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={confirmIosDuration}
-                      style={[
-                        styles.pickerButton,
-                        { backgroundColor: "#AFE8C4" },
-                      ]}
-                    >
-                      <Text style={styles.buttonText}>Confirm</Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
+                <Text style={[styles.inputLabel, { marginTop: -8 }]}>
+                  hours | minutes
+                </Text>
+                <SelectDuration
+                  showDurationPicker={showDurationPicker}
+                  duration={duration}
+                  setDuration={setDuration}
+                  toggleDurationPicker={toggleDurationPicker}
+                  onChangeSetDuration={onChangeSetDuration}
+                  confirmIosDuration={confirmIosDuration}
+                />
               </View>
               <Text style={styles.inputLabel}>End Time</Text>
               <TextInput
@@ -415,126 +269,23 @@ function NewActivity({ onPress, friends }) {
                 <Text style={styles.inputLabel}>
                   Select Response Time Limit
                 </Text>
-                {!showResponseTimePicker && (
-                  <Pressable onPressIn={toggleResponseTimePicker}>
-                    <TextInput
-                      style={[
-                        styles.input,
-                        {
-                          color: "#F8f8f8",
-                          width: 80,
-                          textAlign: "center",
-                          paddingLeft: -10,
-                        },
-                      ]}
-                      autoCapitalize="words"
-                      cursorColor="#D9D9D9"
-                      value={responseTime.toLocaleString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                      onChangeText={setResponseTime}
-                      editable={false}
-                      onPressIn={toggleResponseTimePicker}
-                      placeholder={responseTime.toDateString()}
-                    />
-                  </Pressable>
-                )}
-                {showResponseTimePicker && (
-                  <DateTimePicker
-                    mode="time"
-                    display="spinner"
-                    date={new Date(new Date().setHours(0, 0, 0, 0))}
-                    value={responseTime}
-                    is24Hour={true}
-                    locale="en_GB"
-                    onChange={onChangeSetResponseTime}
-                  />
-                )}
-
-                {showResponseTimePicker && Platform.OS === "ios" && (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-around",
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={toggleResponseTimePicker}
-                      style={styles.pickerButton}
-                    >
-                      <Text style={styles.buttonText}>Cancel</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={confirmIosResponseTime}
-                      style={[
-                        styles.pickerButton,
-                        { backgroundColor: "#AFE8C4" },
-                      ]}
-                    >
-                      <Text style={styles.buttonText}>Confirm</Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-              <Text style={styles.inputLabel}>Invite Friends</Text>
-              <View>
-                {
-                  // https://www.npmjs.com/package/react-native-dropdown-select-list
-                }
-
-                <MultipleSelectList
-                  setSelected={(val) => {
-                    setSelectedFriends(val);
-                  }}
-                  data={friendsData}
-                  fontFamily="Helvetica Neue"
-                  placeholder="Select friends"
-                  searchPlaceholder="Search friends"
-                  notFoundText="No friend with this name found"
-                  label="Selected Friends"
-                  save="key"
-                  boxStyles={{
-                    backgroundColor: "#424242",
-                    fontFamily: "Helvetica Neue",
-                    color: "#f8f8f8",
-                    borderWidth: 0,
-                  }}
-                  inputStyles={{
-                    fontSize: 16,
-                    fontFamily: "Helvetica Neue",
-                    color: "#D9D9D9",
-                  }}
-                  dropdownStyles={{
-                    backgroundColor: "#424242",
-                    fontFamily: "Helvetica Neue",
-                    borderWidth: 0,
-                  }}
-                  dropdownTextStyles={{
-                    color: "#D9D9D9",
-                    fontFamily: "Helvetica Neue",
-                  }}
-                  badgeStyles={{
-                    backgroundColor: "#AFE8C4",
-                  }}
-                  badgeTextStyles={{
-                    fontSize: 12,
-                    lineHeight: 21,
-                    fontWeight: "bold",
-                    letterSpacing: 0.25,
-                    color: "black",
-                    fontFamily: "Helvetica Neue",
-                    fontStyle: "italic",
-                  }}
-                  checkBoxStyles={{
-                    backgroundColor: "#D9D9D9",
-                    borderWidth: 0,
-                  }}
-                  labelStyles={{
-                    color: "#f8f8f8",
-                  }}
+                <Text style={[styles.inputLabel, { marginTop: -8 }]}>
+                  hours | minutes
+                </Text>
+                <SelectResponseTime
+                  showResponseTimePicker={showResponseTimePicker}
+                  responseTime={responseTime}
+                  setResponseTime={setResponseTime}
+                  toggleResponseTimePicker={toggleResponseTimePicker}
+                  onChangeSetResponseTime={onChangeSetResponseTime}
+                  confirmIosResponseTime={confirmIosResponseTime}
                 />
               </View>
+              <Text style={styles.inputLabel}>Invite Friends</Text>
+              <NewActivityFriendsSelector
+                friendsData={friendsData}
+                setSelectedFriends={setSelectedFriends}
+              />
               <DashedLine />
               <SendButton />
             </View>
@@ -650,11 +401,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
-  },
-
-  datePicker: {
-    height: 120,
-    marginTop: -10,
   },
 
   pickerButton: {
