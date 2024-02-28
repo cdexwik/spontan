@@ -1,10 +1,33 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Linking, Share} from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-export default function ChatButton({ onPress }) {
+
+export default function ChatButton({}) {
+  const handlePress = async () => {
+    try {
+      const result = await Share.share({
+        message: 'Lets do something spontaneous',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+          console.log("Shared successfully");
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+        console.log("Share dismissed");
+      }
+    } catch (error) {
+      console.error("Error sharing message:", error.message);
+    }
+  };
+
+
   return (
-    <Pressable onPress={onPress} style={styles.acceptButton}>
+    <Pressable onPress={handlePress} style={styles.acceptButton}>
       <Feather name="message-square" size={16} color="black" />
     </Pressable>
   );
