@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,8 @@ import {
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../db/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const showAlert = () =>
   Alert.alert(
@@ -28,6 +30,52 @@ const showAlert = () =>
 
 function Register() {
   const { navigate } = useNavigation();
+
+  const [newUser, setNewUser] = useState({
+    firstName: "",
+    lastName: "",
+    tag: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [tag, setTag] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = async () => {
+    if (firstName && lastName && tag && email && password && confirmPassword) {
+      // allFields filled
+
+      if (password === confirmPassword) {
+        console.log("DoFireBaseAuth - createUserWithEmailandPassword");
+
+        await createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+            // ..
+          });
+      } else {
+        alert("Passwords are different");
+      }
+    } else {
+      alert("Can't register with empty field");
+    }
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
@@ -49,6 +97,7 @@ function Register() {
                 autoCapitalize="words"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setFirstName(value)}
               />
               <Text style={styles.inputLabel}>Last Name</Text>
               <TextInput
@@ -56,6 +105,7 @@ function Register() {
                 autoCapitalize="words"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setLastName(value)}
               />
               <Text style={styles.inputLabel}>Tag</Text>
               <TextInput
@@ -63,6 +113,7 @@ function Register() {
                 autoCapitalize="none"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setTag(value)}
               />
               <Text style={styles.inputLabel}>Email</Text>
               <TextInput
@@ -72,26 +123,23 @@ function Register() {
                 autoComplete="email"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setEmail(value)}
               />
               <Text style={styles.inputLabel}>Password</Text>
               <TextInput
                 style={styles.input}
                 secureTextEntry={true}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setPassword(value)}
               />
               <Text style={styles.inputLabel}>Confirm Password</Text>
               <TextInput
                 style={styles.input}
                 secureTextEntry={true}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setConfirmPassword(value)}
               />
-              <Pressable
-                style={styles.registerButton}
-                onPress={() => {
-                  showAlert();
-                  navigate("Login");
-                }}
-              >
+              <Pressable style={styles.registerButton} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Register</Text>
               </Pressable>
               <View style={styles.textBox}>

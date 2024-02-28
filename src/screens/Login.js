@@ -19,6 +19,17 @@ const Login = () => {
   const [inputContainerMarginBottom, setInputContainerMarginBottom] =
     useState(24); //FUTURE: margin 0 if ScrollView is visible
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = () => {
+    if (email && password) {
+      navigate("MainStack");
+      // Good to go
+    } else {
+    }
+    // show error
+  };
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
@@ -40,7 +51,7 @@ const Login = () => {
               setInputContainerWidth(width);
             }}
           >
-            <Text style={styles.inputLabel}>Tag or email</Text>
+            <Text style={styles.inputLabel}>Email</Text>
             <TextInput
               style={styles.input}
               keyboardType="email-address"
@@ -48,12 +59,16 @@ const Login = () => {
               autoComplete="email"
               autoCorrect={false}
               cursorColor="#D9D9D9"
+              value={email}
+              onChangeText={(value) => setEmail(value)}
             />
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
               style={styles.input}
               secureTextEntry={true}
               cursorColor="#D9D9D9"
+              value={password}
+              onChangeText={(value) => setPassword(value)}
             />
             <View style={styles.remeberMeContainer}>
               <Checkbox
@@ -63,12 +78,7 @@ const Login = () => {
               />
               <Text style={styles.remeberMeText}>Remember me</Text>
             </View>
-            <Pressable
-              style={styles.loginButton}
-              onPress={() => {
-                navigate("MainStack");
-              }}
-            >
+            <Pressable style={styles.loginButton} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Login</Text>
             </Pressable>
             <View style={styles.textBox}>

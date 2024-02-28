@@ -6,7 +6,6 @@ import {
   TextInput,
   Pressable,
   Platform,
-  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
