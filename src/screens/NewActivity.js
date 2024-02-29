@@ -25,7 +25,7 @@ import { useSelector } from "react-redux";
 function NewActivity({ onPressHideModalHandler, friends }) {
   // Form States
   const [title, setTitle] = useState("");
-  const [desription, setDescription] = useState("");
+  const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState(new Date());
@@ -73,7 +73,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     if (!title) {
       setSnackbarMessage("Cant send without title");
       setVisible(true);
-    } else if (!desription) {
+    } else if (!description) {
       setSnackbarMessage("Cant send without description");
       setVisible(true);
     } else if (!location) {
@@ -99,7 +99,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     return (
       <View>
         <Text>Title {title.toString()}</Text>
-        <Text>Description {desription.toString()}</Text>
+        <Text>Description {description.toString()}</Text>
         <Text>Location {location.toString()}</Text>
         <Text>date {date.toString()}</Text>
         <Text>endTime {endTime.toString()}</Text>
@@ -113,7 +113,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
   const handleSubmit = async () => {
     if (
       title &&
-      desription &&
+      description &&
       location &&
       isTimeSet &&
       isDurationSet &&
@@ -123,7 +123,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
       setIsSubmit(true);
       let doc = await addDoc(activitiesRef, {
         title: title,
-        desription: desription,
+        description: description,
         location: location,
         startDateAndTime: date,
         duration: duration,

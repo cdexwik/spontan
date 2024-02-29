@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView, Modal } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Modal,
+  FlatList,
+  Text,
+} from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import SentActivity from "../components/SentActivity";
 import NewActivityButton from "../components/NewActivityButton";
 import NewActivity from "./NewActivity";
+import { getDocs, query, where } from "firebase/firestore";
+import { activitiesRef } from "../../config/firebase";
+import { useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
 const friendsData = [
   {
     userid: "111",
@@ -85,6 +96,54 @@ function Activities() {
     setFriends(friendsData);
   }, [friends]);
 
+  const [myActivities, setMyActivities] = useState([]);
+  const { user } = useSelector((state) => state.user);
+
+  const isFocused = useIsFocused();
+
+  const fetchMyActivities = async () => {
+    const q = query(activitiesRef, where("userId", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    let data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ ...doc.data(), id: doc.id });
+
+      //console.log("document", doc.data());
+    });
+    setMyActivities(data);
+    console.log("myActivities");
+    console.log(myActivities);
+    console.log(typeof myActivities);
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchMyActivities();
+    }
+  }, [isFocused]);
+
+  const renderActivitiesCB = (item) => {
+    return (
+      <SentActivity
+        key={item["id"]}
+        category={"category"}
+        time={"09:37"}
+        title={item["title"]}
+        description={"spelled wreong in FB"}
+        activityTime={"Tomorrow 13:00 - 15:00"}
+        place={item["location"]}
+      />
+    );
+  };
+
+  const emptyComponent = () => {
+    return (
+      <View style={{ flex: 1 }}>
+        <Text style={styles.titleStyle}>oops! There's no data here!</Text>
+      </View>
+    );
+  };
+
   const onPressShowModalHandler = () => setModalVisible(true);
   const onPressHideModalHandler = () => setModalVisible(false);
 
@@ -104,40 +163,10 @@ function Activities() {
           }}
         >
           <View style={styles.container}>
-            <SentActivity
-              category={"category"}
-              time={"09:37"}
-              title={"Heading title from the form"}
-              description={"I want to go to the gym tomorrow at 13:00"}
-              activityTime={"Tomorrow 13:00 - 15:00"}
-              place={"Fitness Fridhemsplan"}
-            />
-            <SentActivity
-              category={"category"}
-              time={"09:37"}
-              title={"Heading title from the form"}
-              description={"I want to go to the gym tomorrow at 13:00"}
-              activityTime={"Tomorrow 13:00 - 15:00"}
-              place={"Fitness Fridhemsplan"}
-            />
-            <SentActivity
-              category={"category"}
-              time={"09:37"}
-              title={"Heading title from the form"}
-              description={"I want to go to the gym tomorrow at 13:00"}
-              activityTime={"Tomorrow 13:00 - 15:00"}
-              place={"Fitness Fridhemsplan"}
-            />
-            <SentActivity
-              category={"category"}
-              time={"09:37"}
-              title={"Heading title from the form"}
-              description={"I want to go to the gym tomorrow at 13:00"}
-              activityTime={"Tomorrow 13:00 - 15:00"}
-              place={"Fitness Fridhemsplan"}
-            />
+            <Text>Text placeholder {myActivities.length}</Text>
           </View>
         </ScrollView>
+
         <NewActivityButton
           style={styles.newActivity}
           onPress={onPressShowModalHandler}
