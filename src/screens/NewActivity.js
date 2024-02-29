@@ -18,8 +18,11 @@ import SelectStartTime from "../components/SelectStartTime";
 import SelectDuration from "../components/SelectDuration";
 import SelectResponseTime from "../components/SelectResponseTime";
 import { Snackbar } from "react-native-paper";
+import { addDoc } from "firebase/firestore";
+import { activitiesRef } from "../../config/firebase";
+import { useSelector } from "react-redux";
 
-function NewActivity({ onPress, friends }) {
+function NewActivity({ onPressHideModalHandler, friends }) {
   // Form States
   const [title, setTitle] = useState("");
   const [desription, setDescription] = useState("");
@@ -64,6 +67,8 @@ function NewActivity({ onPress, friends }) {
   const [visible, setVisible] = useState(false);
   const onDismissSnackBar = () => setVisible(false);
 
+  const { user } = useSelector((state) => state.user);
+
   const handleMissingInputSnackbar = () => {
     if (!title) {
       setSnackbarMessage("Cant send without title");
@@ -105,7 +110,7 @@ function NewActivity({ onPress, friends }) {
     );
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (
       title &&
       desription &&
@@ -116,12 +121,26 @@ function NewActivity({ onPress, friends }) {
       selectedFriends.length > 0
     ) {
       setIsSubmit(true);
-      console.log("Everything is set");
-      console.log(responseTimeDate);
-      setIsSubmit(false);
+      let doc = await addDoc(activitiesRef, {
+        title: title,
+        desription: desription,
+        location: location,
+        startDateAndTime: date,
+        duration: duration,
+        endDateAndTime: endTime,
+        responseTime: responseTimeDate,
+        invitedUsers: selectedFriends,
+        userId: user.uid,
+      });
+
+      if (doc && doc.id) {
+        console.log(doc.id);
+        onPressHideModalHandler();
+      }
     } else {
       handleMissingInputSnackbar();
     }
+    setIsSubmit(false);
   };
 
   useEffect(() => {
@@ -268,7 +287,7 @@ function NewActivity({ onPress, friends }) {
           <View style={styles.container}>
             <View style={styles.headerContainerExitMenu}>
               <View style={styles.crossButton}>
-                <Pressable onPress={onPress}>
+                <Pressable onPress={onPressHideModalHandler}>
                   <Feather name="x" size={24} color="#8F8F8F" />
                 </Pressable>
               </View>

@@ -1,12 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView, Modal } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import SentActivity from "../components/SentActivity";
 import NewActivityButton from "../components/NewActivityButton";
 import NewActivity from "./NewActivity";
+const friendsData = [
+  {
+    userid: "111",
+    firstName: "Anna",
+    lastName: "Svensson",
+    tag: "anna",
+    email: "anna@svensson.se",
+    picture: "URL to database",
+    pendingRequest: true,
+    activityData: {
+      numberOfInvites: 1,
+      numberOfAccepted: 0,
+      totalResponseTime: 200,
+    },
+  },
+  {
+    userid: "222",
+    firstName: "Olle",
+    lastName: "Karlsson",
+    tag: "Olle",
+    email: "olle@karlsson.se",
+    picture: "URL to database",
+    pendingRequest: false,
+    activityData: {
+      numberOfInvites: 2,
+      numberOfAccepted: 2,
+      totalResponseTime: 500,
+    },
+  },
+  {
+    userid: "333",
+    firstName: "Gina",
+    lastName: "Garcia",
+    tag: "gina",
+    email: "gina@garcia.se",
+    picture: "URL to database",
+    pendingRequest: false,
+    activityData: {
+      numberOfInvites: 3,
+      numberOfAccepted: 2,
+      totalResponseTime: 100,
+    },
+  },
+  {
+    userid: "444",
+    firstName: "Juan",
+    lastName: "Martinez",
+    tag: "juan",
+    email: "juan@martinez.se",
+    picture: "URL to database",
+    pendingRequest: true,
+    activityData: {
+      numberOfInvites: 5,
+      numberOfAccepted: 2,
+      totalResponseTime: 800,
+    },
+  },
+  {
+    userid: "555",
+    firstName: "Magda",
+    lastName: "Martinez",
+    tag: "magda",
+    email: "magda@martinez.se",
+    picture: "URL to database",
+    pendingRequest: true,
+    activityData: {
+      numberOfInvites: 5,
+      numberOfAccepted: 2,
+      totalResponseTime: 800,
+    },
+  },
+];
 
 function Activities() {
   const [isModalVisible, setModalVisible] = useState(false);
+  const [friends, setFriends] = useState(friendsData);
+
+  useEffect(() => {
+    setFriends(friendsData);
+  }, [friends]);
 
   const onPressShowModalHandler = () => setModalVisible(true);
   const onPressHideModalHandler = () => setModalVisible(false);
@@ -70,7 +147,10 @@ function Activities() {
           visible={isModalVisible}
           onRequestClose={() => setModalVisible(false)}
         >
-          <NewActivity onPress={onPressHideModalHandler} />
+          <NewActivity
+            onPressHideModalHandler={onPressHideModalHandler}
+            friends={friends}
+          />
         </Modal>
       </SafeAreaView>
     </SafeAreaProvider>

@@ -143,7 +143,10 @@ function Main() {
           visible={isModalVisible}
           onRequestClose={() => setModalVisible(false)}
         >
-          <NewActivity onPress={onPressHideModalHandler} friends={friends} />
+          <NewActivity
+            onPressHideModalHandler={onPressHideModalHandler}
+            friends={friends}
+          />
         </Modal>
       </SafeAreaView>
     </SafeAreaProvider>
