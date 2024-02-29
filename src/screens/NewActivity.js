@@ -25,6 +25,7 @@ import {GooglePlaceDetail,GooglePlacesAutocomplete} from "react-native-google-pl
 
 
 
+
 function NewActivity({ onPressHideModalHandler, friends }) {
   // Form States
   const [title, setTitle] = useState("");
@@ -335,7 +336,6 @@ function NewActivity({ onPressHideModalHandler, friends }) {
               <SafeAreaView>
               <GooglePlacesAutocomplete
                 placeholder='Search'
-                fetchDetails={true}
                 onPress={(data, details = null) => {
                  console.log(data,details);
                 }}
@@ -343,6 +343,8 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                   key: 'AIzaSyBhs7QyIFBJa6s2taMPq9Rf--Tg-3uaAuQ',
                   language: 'en',
                 }}
+                fetchDetails={true}
+                
               />
               </SafeAreaView>
            
