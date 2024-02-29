@@ -21,6 +21,9 @@ import { Snackbar } from "react-native-paper";
 import { addDoc } from "firebase/firestore";
 import { activitiesRef } from "../../config/firebase";
 import { useSelector } from "react-redux";
+import {GooglePlaceDetail,GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
+
+
 
 function NewActivity({ onPressHideModalHandler, friends }) {
   // Form States
@@ -93,6 +96,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
       setVisible(true);
     }
   };
+
 
   const ShowInputs = () => {
     // for debugging
@@ -327,6 +331,22 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                   Placeholder for tags
                 </Text>
               </View>
+            
+              <SafeAreaView>
+              <GooglePlacesAutocomplete
+                placeholder='Search'
+                onPress={(data, details = null) => {
+                 console.log(data,details);
+                }}
+                query={{
+                  key: 'AIzaSyBhs7QyIFBJa6s2taMPq9Rf--Tg-3uaAuQ',
+                  language: 'en',
+                }}
+              />
+              </SafeAreaView>
+           
+          
+
 
               <Text style={styles.inputLabel}>Location</Text>
               <TextInput
@@ -463,6 +483,23 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: "92%",
     maxWidth: 480,
+  },
+
+  searchContainer: {
+    position: "absolute",
+    width: "90%",
+    backgroundColor: "white",
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
+    padding: 8,
+    borderRadius: 8,
+  },
+  input: {
+    borderColor: "#888",
+    borderWidth: 1,
   },
   spontan: {
     color: "#F8F8F8",
