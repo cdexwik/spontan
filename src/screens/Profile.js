@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";

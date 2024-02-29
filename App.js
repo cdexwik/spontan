@@ -5,14 +5,17 @@ import MainStack from "./src/stacks/MainStack";
 import LoginStack from "./src/stacks/LoginStack";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { PaperProvider } from "react-native-paper";
 
 export default function App() {
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#2B2B2B" barStyle="default" />
-        <LoginStack />
-      </View>
+      <PaperProvider>
+        <View style={styles.container}>
+          <StatusBar backgroundColor="#2B2B2B" barStyle="default" />
+          <LoginStack />
+        </View>
+      </PaperProvider>
     </Provider>
   );
 }

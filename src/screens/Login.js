@@ -36,9 +36,6 @@ const Login = () => {
           }
         );
       }
-
-      // navigate("MainStack");
-      // Good to go
     } else {
     }
     // show error

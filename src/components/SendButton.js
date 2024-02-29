@@ -1,15 +1,10 @@
 import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
-const SendButton = () => {
+const SendButton = ({ onPress }) => {
   return (
     <View style={styles.container}>
-      <Pressable
-        onPress={() => {
-          console.log("Send Pressed");
-        }}
-        style={styles.sendButton}
-      >
+      <Pressable onPress={onPress} style={styles.sendButton}>
         <Text style={styles.buttonText}>Send</Text>
       </Pressable>
     </View>

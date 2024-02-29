@@ -17,25 +17,97 @@ import SelectDate from "../components/SelectDate";
 import SelectStartTime from "../components/SelectStartTime";
 import SelectDuration from "../components/SelectDuration";
 import SelectResponseTime from "../components/SelectResponseTime";
+import { Snackbar } from "react-native-paper";
 
 function NewActivity({ onPress, friends }) {
+  // Form States
+  const [title, setTitle] = useState("");
+  const [desription, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [location, setLocation] = useState("");
   const [date, setDate] = useState(new Date());
   const [endTime, setEndTime] = useState(date);
+  const [responseTimeDate, setResponseTimeDate] = useState(date);
+  const [selectedFriends, setSelectedFriends] = useState([]);
+
+  // String for displaying endTime in the right format
+  const [endTimeOutput, setEndTimeOutput] = useState("");
+
+  // Initial states for duration and responsetime
   const [duration, setDuration] = useState(
     new Date(new Date().setHours(0, 0, 0, 0))
   );
   const [responseTime, setResponseTime] = useState(
     new Date(new Date().setHours(0, 0, 0, 0))
   );
-  const [responseTimeDate, setResponseTimeDate] = useState(date);
-  const [endTimeOutput, setEndTimeOutput] = useState("");
+
+  // For controlling TimePickers
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [showDurationPicker, setShowDurationPicker] = useState(false);
   const [showResponseTimePicker, setShowResponseTimePicker] = useState(false);
 
+  // loading friends
   const [friendsData, setFriendsData] = useState([]);
-  const [selectedFriends, setSelectedFriends] = useState([]);
+
+  // To control responsetime
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  // To enable snackbar Messaging
+
+  const [isTimeSet, setIsTimeSet] = useState(false);
+  const [isDurationSet, setIsDurationSet] = useState(false);
+  const [isResponseTimeSet, setIsResponseTimeSet] = useState(false);
+
+  // For Sncakbar
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [visible, setVisible] = useState(false);
+  const onDismissSnackBar = () => setVisible(false);
+
+  const handleMissingInputSnackbar = () => {
+    if (!title) {
+      setSnackbarMessage("Cant send without title");
+      setVisible(true);
+    } else if (!desription) {
+      setSnackbarMessage("Cant send without description");
+      setVisible(true);
+    } else if (!location) {
+      setSnackbarMessage("Cant send without location");
+      setVisible(true);
+    } else if (!isTimeSet) {
+      setSnackbarMessage("Cant send without setting the start time");
+      setVisible(true);
+    } else if (!isDurationSet) {
+      setSnackbarMessage("Cant send without setting the duration");
+      setVisible(true);
+    } else if (!isResponseTimeSet) {
+      setSnackbarMessage("Cant send without setting the response time");
+      setVisible(true);
+    }
+  };
+
+  const ShowInputs = () => {
+    // for debugging
+    return (
+      <View>
+        <Text>Title {title.toString()}</Text>
+        <Text>Description {desription.toString()}</Text>
+        <Text>Location {location.toString()}</Text>
+        <Text>date {date.toString()}</Text>
+        <Text>endTime {endTime.toString()}</Text>
+        <Text>duration {duration.toString()}</Text>
+        <Text>responseTimeDate {responseTimeDate.toString()}</Text>
+        <Text>selectedFriends {selectedFriends.toString()}</Text>
+      </View>
+    );
+  };
+
+  const handleSubmit = () => {
+    setIsSubmit(true);
+    console.log("Everything is set");
+    console.log(responseTimeDate);
+    setIsSubmit(false);
+  };
 
   useEffect(() => {
     let newArray = friends.map((friend) => {
@@ -62,11 +134,11 @@ function NewActivity({ onPress, friends }) {
     // but for now we just use the date
     const respH = responseTime.getHours();
     const respM = responseTime.getMinutes();
-    let nd = new Date(date.getTime());
+    let nd = new Date();
     nd.setHours(nd.getHours() + respH);
     nd.setMinutes(nd.getMinutes() + respM);
     setResponseTimeDate(nd);
-  }, [date, responseTime]);
+  }, [responseTime, isSubmit]);
 
   useEffect(() => {
     const output = () => {
@@ -95,6 +167,7 @@ function NewActivity({ onPress, friends }) {
   const onChangeSetTime = ({ type }, selectedTime) => {
     if (type == "set") {
       setDate(selectedTime);
+      setIsTimeSet(true);
       if (Platform.OS === "android") {
         toggleTimePicker();
       }
@@ -106,6 +179,7 @@ function NewActivity({ onPress, friends }) {
   const onChangeSetResponseTime = ({ type }, selectedResponseTime) => {
     if (type == "set") {
       setResponseTime(selectedResponseTime);
+      setIsResponseTimeSet(true);
       if (Platform.OS === "android") {
         toggleResponseTimePicker();
       }
@@ -117,6 +191,7 @@ function NewActivity({ onPress, friends }) {
   const onChangeSetDuration = ({ type }, selectedDuration) => {
     if (type == "set") {
       setDuration(selectedDuration);
+      setIsDurationSet(true);
       if (Platform.OS === "android") {
         toggleDurationPicker();
       }
@@ -198,6 +273,9 @@ function NewActivity({ onPress, friends }) {
                 autoCapitalize="words"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => {
+                  setTitle(value);
+                }}
               />
               <Text style={styles.inputLabel}>Description</Text>
               <TextInput
@@ -206,6 +284,9 @@ function NewActivity({ onPress, friends }) {
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
                 placeholder="I feel like..."
+                onChangeText={(value) => {
+                  setDescription(value);
+                }}
               />
               <View>
                 <Text style={{ marginTop: 20, color: "#F8f8f8" }}>
@@ -219,6 +300,9 @@ function NewActivity({ onPress, friends }) {
                 autoCapitalize="words"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => {
+                  setLocation(value);
+                }}
               />
 
               <Text style={styles.inputLabel}>Select Date</Text>
@@ -286,8 +370,26 @@ function NewActivity({ onPress, friends }) {
                 setSelectedFriends={setSelectedFriends}
               />
               <DashedLine />
-              <SendButton />
+              <ShowInputs></ShowInputs>
+              <SendButton
+                onPress={() => {
+                  handleMissingInputSnackbar();
+                  handleSubmit();
+                }}
+              />
             </View>
+            <Snackbar
+              visible={visible}
+              onDismiss={onDismissSnackBar}
+              action={{
+                label: "Ok",
+                onPress: () => {
+                  setSnackbarMessage("");
+                },
+              }}
+            >
+              {snackbarMessage}
+            </Snackbar>
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>
