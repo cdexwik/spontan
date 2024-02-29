@@ -83,6 +83,9 @@ function NewActivity({ onPress, friends }) {
     } else if (!isResponseTimeSet) {
       setSnackbarMessage("Cant send without setting the response time");
       setVisible(true);
+    } else if (selectedFriends.length == 0) {
+      setSnackbarMessage("You need to add some friends to your activity");
+      setVisible(true);
     }
   };
 
@@ -103,10 +106,22 @@ function NewActivity({ onPress, friends }) {
   };
 
   const handleSubmit = () => {
-    setIsSubmit(true);
-    console.log("Everything is set");
-    console.log(responseTimeDate);
-    setIsSubmit(false);
+    if (
+      title &&
+      desription &&
+      location &&
+      isTimeSet &&
+      isDurationSet &&
+      isResponseTimeSet &&
+      selectedFriends.length > 0
+    ) {
+      setIsSubmit(true);
+      console.log("Everything is set");
+      console.log(responseTimeDate);
+      setIsSubmit(false);
+    } else {
+      handleMissingInputSnackbar();
+    }
   };
 
   useEffect(() => {
@@ -370,13 +385,8 @@ function NewActivity({ onPress, friends }) {
                 setSelectedFriends={setSelectedFriends}
               />
               <DashedLine />
-              <ShowInputs></ShowInputs>
-              <SendButton
-                onPress={() => {
-                  handleMissingInputSnackbar();
-                  handleSubmit();
-                }}
-              />
+
+              <SendButton onPress={handleSubmit} />
             </View>
             <Snackbar
               visible={visible}
