@@ -335,6 +335,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
               <SafeAreaView>
               <GooglePlacesAutocomplete
                 placeholder='Search'
+                fetchDetails={true}
                 onPress={(data, details = null) => {
                  console.log(data,details);
                 }}
