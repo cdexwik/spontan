@@ -340,11 +340,11 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                  console.log(data,details);
                 }}
                 query={{
-                  key: 'AIzaSyBhs7QyIFBJa6s2taMPq9Rf--Tg-3uaAuQ',
+                  key: 'AIzaSyBhs7QyIFBJa6s2taMPq9Rf--Tgw-3uaAuQ',
                   language: 'en',
                 }}
                 fetchDetails={true}
-                
+
               />
               </SafeAreaView>
            
