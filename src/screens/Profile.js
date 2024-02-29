@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import auth from "../../db/firestore";
+import { auth } from "../../config/firebase";
 import { signOut } from "firebase/auth";
 
 function Profile() {

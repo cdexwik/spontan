@@ -10,7 +10,7 @@ import {
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Checkbox from "expo-checkbox";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "../../db/firestore";
+import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
@@ -27,18 +27,14 @@ const Login = () => {
   const handleSubmit = async () => {
     if (email && password) {
       {
-        await signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log("user from from register", user);
-          })
-          .catch((error) => {
+        await signInWithEmailAndPassword(auth, email, password).catch(
+          (error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode);
             console.log(errorMessage);
-          });
+          }
+        );
       }
 
       // navigate("MainStack");

@@ -10,7 +10,7 @@ import {
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "../../db/firestore";
+import { auth } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const showAlert = () =>
@@ -52,18 +52,14 @@ function Register() {
       // allFields filled
 
       if (password === confirmPassword) {
-        await createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log("user from from register", user);
-          })
-          .catch((error) => {
+        await createUserWithEmailAndPassword(auth, email, password).catch(
+          (error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode);
             console.log(errorMessage);
-          });
+          }
+        );
       } else {
         alert("Passwords are different");
       }
