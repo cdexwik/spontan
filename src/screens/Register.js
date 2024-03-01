@@ -1,44 +1,19 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Pressable,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "../../config/firebase";
+import { auth, db } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-
-const showAlert = () =>
-  Alert.alert(
-    "Check yout inbox",
-    "Please check your inbox to finish the register process.",
-    [
-      {
-        text: "Ok",
-        style: "default",
-      },
-    ],
-    {
-      cancelable: true,
-    }
-  );
+import { Snackbar } from "react-native-paper";
+import { setDoc, doc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { addUserToFirestore } from "../../redux/slices/users";
 
 function Register() {
   const { navigate } = useNavigation();
 
-  const [newUser, setNewUser] = useState({
-    firstName: "",
-    lastName: "",
-    tag: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -47,24 +22,74 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = async () => {
+  // For Sncakbar
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [visible, setVisible] = useState(false);
+  const onDismissSnackBar = () => setVisible(false);
+
+  const handleMissingInputSnackbar = () => {
+    if (!firstName) {
+      setSnackbarMessage("Cant register without firstname");
+      setVisible(true);
+    } else if (!lastName) {
+      setSnackbarMessage("Cant register without lastname");
+      setVisible(true);
+    } else if (!tag) {
+      setSnackbarMessage("Cant register without tag");
+      setVisible(true);
+    } else if (!email) {
+      setSnackbarMessage("Cant register without email");
+      setVisible(true);
+    } else if (!password) {
+      setSnackbarMessage(
+        "You need to enter a password of minimum 6 characters"
+      );
+      setVisible(true);
+    } else if (!confirmPassword) {
+      setSnackbarMessage("You need to confirm the password");
+      setVisible(true);
+    } else if (password !== confirmPassword) {
+      setSnackbarMessage("The passwords doesnt match");
+      setVisible(true);
+    }
+  };
+
+  const register = async () => {
     if (firstName && lastName && tag && email && password && confirmPassword) {
       // allFields filled
 
       if (password === confirmPassword) {
-        await createUserWithEmailAndPassword(auth, email, password).catch(
-          (error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode);
-            console.log(errorMessage);
-          }
-        );
+        //set loading
+        try {
+          const userCredentials = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredentials.user;
+          const userId = user.uid;
+          console.log(user);
+
+          await setDoc(doc(db, "users", user.uid), {
+            userId: user.uid,
+            firstName,
+            lastName,
+            tag,
+            email,
+          });
+
+          //set loading
+        } catch (error) {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        }
       } else {
-        alert("Passwords are different");
+        handleMissingInputSnackbar();
       }
     } else {
-      alert("Can't register with empty field");
+      handleMissingInputSnackbar();
     }
   };
 
@@ -131,7 +156,7 @@ function Register() {
                 cursorColor="#D9D9D9"
                 onChangeText={(value) => setConfirmPassword(value)}
               />
-              <Pressable style={styles.registerButton} onPress={handleSubmit}>
+              <Pressable style={styles.registerButton} onPress={register}>
                 <Text style={styles.buttonText}>Register</Text>
               </Pressable>
               <View style={styles.textBox}>
@@ -144,6 +169,18 @@ function Register() {
                   <Text style={styles.loginText}>Login</Text>
                 </Pressable>
               </View>
+              <Snackbar
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                  label: "Ok",
+                  onPress: () => {
+                    setSnackbarMessage("");
+                  },
+                }}
+              >
+                {snackbarMessage}
+              </Snackbar>
             </View>
           </View>
         </KeyboardAwareScrollView>

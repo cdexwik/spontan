@@ -13,8 +13,9 @@ import NewActivityButton from "../components/NewActivityButton";
 import NewActivity from "./NewActivity";
 import { getDocs, query, where } from "firebase/firestore";
 import { activitiesRef } from "../../config/firebase";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
+import { fetchActivities } from "../../redux/slices/activities";
 const friendsData = [
   {
     userid: "111",
@@ -92,6 +93,15 @@ function Activities() {
   const [isModalVisible, setModalVisible] = useState(false);
   const [friends, setFriends] = useState(friendsData);
 
+  const { activitiesArray } = useSelector((state) => state.activities);
+  console.log("allActivities ", activitiesArray);
+
+  // fetch activities
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchActivities());
+  }, [dispatch, isFocused]);
+
   useEffect(() => {
     setFriends(friendsData);
   }, [friends]);
@@ -101,6 +111,7 @@ function Activities() {
 
   const isFocused = useIsFocused();
 
+  /*
   const fetchMyActivities = async () => {
     const q = query(activitiesRef, where("userId", "==", user.uid));
     const querySnapshot = await getDocs(q);
@@ -121,6 +132,7 @@ function Activities() {
       fetchMyActivities();
     }
   }, [isFocused]);
+  */
 
   const renderActivitiesCB = (item) => {
     return (

@@ -20,7 +20,8 @@ import SelectResponseTime from "../components/SelectResponseTime";
 import { Snackbar } from "react-native-paper";
 import { addDoc } from "firebase/firestore";
 import { activitiesRef } from "../../config/firebase";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addActivityToFirestore } from "../../redux/slices/activities";
 
 function NewActivity({ onPressHideModalHandler, friends }) {
   // Form States
@@ -68,6 +69,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
   const onDismissSnackBar = () => setVisible(false);
 
   const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleMissingInputSnackbar = () => {
     if (!title) {
@@ -110,6 +112,39 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     );
   };
 
+  const handleSubmit = () => {
+    if (
+      title &&
+      description &&
+      location &&
+      isTimeSet &&
+      isDurationSet &&
+      isResponseTimeSet &&
+      selectedFriends.length > 0
+    ) {
+      setIsSubmit(true);
+
+      let newActivity = {
+        title: title,
+        description: description,
+        location: location,
+        startDateAndTime: date,
+        duration: duration,
+        endDateAndTime: endTime,
+        responseTime: responseTimeDate,
+        invitedUsers: selectedFriends,
+        userId: user.uid,
+      };
+      dispatch(addActivityToFirestore(newActivity));
+
+      onPressHideModalHandler();
+    } else {
+      handleMissingInputSnackbar();
+    }
+    setIsSubmit(false);
+  };
+
+  /*
   const handleSubmit = async () => {
     if (
       title &&
@@ -142,6 +177,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     }
     setIsSubmit(false);
   };
+  */
 
   useEffect(() => {
     let newArray = friends.map((friend) => {

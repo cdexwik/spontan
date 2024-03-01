@@ -1,26 +1,21 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../config/firebase";
+import { useSelector } from "react-redux";
+
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import ForgotPass from "../screens/ForgotPass";
 import MainStack from "./MainStack";
 import { NavigationContainer } from "@react-navigation/native";
-import { setUser } from "../../redux/slices/user";
+
+import useAuth from "../../customHooks/useAuth";
 
 const Stack = createNativeStackNavigator();
 const LoginStack = () => {
   // RootState Callback
   const { user } = useSelector((state) => state.user);
 
-  const dispatch = useDispatch();
-
-  onAuthStateChanged(auth, (data) => {
-    //console.log(data);
-    dispatch(setUser(data));
-  });
+  useAuth();
 
   if (user) {
     return (
