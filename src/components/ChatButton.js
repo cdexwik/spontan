@@ -1,13 +1,19 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet, Linking, Share} from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  Linking,
+  Share,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
-
 
 export default function ChatButton({}) {
   const handlePress = async () => {
     try {
       const result = await Share.share({
-        message: 'Lets do something spontaneous',
+        message: "Let's do something spontaneous!",
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -25,16 +31,15 @@ export default function ChatButton({}) {
     }
   };
 
-
   return (
-    <Pressable onPress={handlePress} style={styles.acceptButton}>
+    <Pressable onPress={handlePress} style={styles.chatButton}>
       <Feather name="message-square" size={16} color="black" />
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  acceptButton: {
+  chatButton: {
     backgroundColor: "#D4F0FC",
     alignItems: "center",
     paddingVertical: 2,
@@ -42,16 +47,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-  },
-  buttonText: {
-    fontSize: 11,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "black",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
   },
 });

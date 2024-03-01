@@ -1,14 +1,14 @@
 import React from "react";
 import { SafeAreaView, View, Image, StyleSheet } from "react-native";
 
-const ProfilePictureFriend = () => {
+const ProfilePictureFriend = ({ size }) => {
   return (
     <View style={styles.container}>
       <Image
         source={{
           uri: "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png",
         }}
-        style={styles.image}
+        style={{ width: size, height: size, borderRadius: size / 2 }}
         resizeMode="cover"
       />
     </View>
@@ -18,11 +18,6 @@ const ProfilePictureFriend = () => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-  },
-  image: {
-    width: 45,
-    height: 45,
-    borderRadius: 45 / 2,
   },
 });
 

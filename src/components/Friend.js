@@ -29,7 +29,7 @@ const Friend = ({
     <View style={styles.container}>
       <View style={styles.friend}>
         <View style={styles.left}>
-          <ProfilePictureFriend />
+          <ProfilePictureFriend size={45} />
         </View>
         <View style={styles.center}>
           <View style={styles.friendTextBox}>
@@ -91,19 +91,17 @@ const styles = StyleSheet.create({
   friendTextName: {
     fontSize: 12,
     color: "#F8F8F8",
-    fontWeight: "bold",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Bold",
   },
   friendTextTag: {
     fontSize: 12,
-    fontStyle: "italic",
     color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Italic",
   },
   friendText: {
     fontSize: 12,
     color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Normal",
   },
   right: {
     flex: 1,
