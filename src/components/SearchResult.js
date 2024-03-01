@@ -69,19 +69,12 @@ const styles = StyleSheet.create({
   friendTextName: {
     fontSize: 12,
     color: "#F8F8F8",
-    fontWeight: "bold",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Bold",
   },
   friendTextTag: {
     fontSize: 12,
-    fontStyle: "italic",
     color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
-  },
-  friendText: {
-    fontSize: 12,
-    color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Italic",
   },
 });
 

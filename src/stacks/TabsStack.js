@@ -13,14 +13,6 @@ const Tabs = () => {
       backBehavior="initialRoute"
       screenOptions={({ route }) => ({
         tabBarLabel: ({ focused }) => {
-          /*let justifyContentType;
-          if (route.name === "friends") {
-            justifyContentType = "flex-start";
-          } else if (route.name === "main") {
-            justifyContentType = "center";
-          } else if (route.name === "activities") {
-            justifyContentType = "flex-end";
-          }*/
           return (
             <View
               style={{
@@ -34,12 +26,12 @@ const Tabs = () => {
             >
               <Text
                 style={{
-                  fontSize: focused ? 23 : 24,
+                  fontSize: focused ? 23 : 25,
                   color: "#F8F8F8",
                   textAlign: "center",
-                  fontFamily: "Helvetica Neue",
-                  fontStyle: "italic",
-                  fontWeight: focused ? "700" : "400",
+                  fontFamily: focused
+                    ? "HelveticaNeue-MediumItalic"
+                    : "HelveticaNeue-Italic",
                 }}
               >
                 {route.name}
@@ -58,16 +50,6 @@ const Tabs = () => {
         tabBarIndicatorStyle: { backgroundColor: "none" },
         tabBarPressColor: "transparent",
       })}
-      /*screenOptions={{
-        tabBarActiveTintColor: "tomato",
-        tabBarInactiveTintColor: "grey",
-        tabBarStyle: {
-          backgroundColor: "lightblue",
-        },
-        headerStyle: {
-          backgroundColor: "lighblue",
-        },
-      }}*/
     >
       <Tab.Screen name="friends" component={Friends} />
       <Tab.Screen name="main" component={Main} />

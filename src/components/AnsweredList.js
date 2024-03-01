@@ -10,7 +10,7 @@ function renderAnswersCB(friend) {
     //     marginBottom: 6,
     //     fontSize: 13,
     //     color: "#A0A0A0",
-    //     fontFamily: "Helvetica Neue",
+    //     fontFamily: "HelveticaNeue-Normal",
     //   }}
     // >
     //   @{friend.tag}
@@ -34,9 +34,7 @@ const AnsweredList = ({ friends }) => {
           style={{
             fontSize: 16,
             color: "#F8F8F8",
-            fontWeight: "bold",
-            fontFamily: "Helvetica Neue",
-            fontStyle: "italic",
+            fontFamily: "HelveticaNeue-BoldItalic",
             alignSelf: "center",
             marginTop: 10,
           }}

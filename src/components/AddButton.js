@@ -33,16 +33,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
   },
   buttonText: {
     fontSize: 11,
     lineHeight: 21,
-    fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
+    fontFamily: "HelveticaNeue-BoldItalic",
   },
 });
