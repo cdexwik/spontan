@@ -7,6 +7,8 @@ import MainStack from "./src/stacks/MainStack";
 import LoginStack from "./src/stacks/LoginStack";
 import Friends from "./src/screens/Friends";
 import Main from "./src/screens/Main";
+import ActivityDetail from "./src/screens/ActivityDetail";
+import Profile from "./src/screens/Profile";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,6 +38,22 @@ export default function App() {
   return (
     <View style={styles.container} onLayout={handleOnLayout}>
       <StatusBar backgroundColor="#2B2B2B" barStyle="default" />
+      {/* <ActivityDetail
+        tag={"tag"}
+        firstName={"Name"}
+        lastName={"Surname"}
+        category={"category"}
+        time={"09:37"}
+        title={"Heading title from the form"}
+        description={"I want to go to the gym tomorrow at 13:00"}
+        activityTime={"Tomorrow 13:00 - 15:00"}
+        place={"Fitness Fridhemsplan"}
+        street={"Fridhemsplansroad 1000"}
+        city={"100 10 Stockholm"}
+        weekdays={"06:00 - 23:00"}
+        saturday={"08:00 - 20:00"}
+        sunday={"closed"}
+      /> */}
       <LoginStack />
     </View>
   );

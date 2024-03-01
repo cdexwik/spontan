@@ -29,7 +29,7 @@ const Friend = ({
     <View style={styles.container}>
       <View style={styles.friend}>
         <View style={styles.left}>
-          <ProfilePictureFriend />
+          <ProfilePictureFriend size={45} />
         </View>
         <View style={styles.center}>
           <View style={styles.friendTextBox}>

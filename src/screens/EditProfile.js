@@ -3,6 +3,9 @@ import { View, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import ProfilePictureFriend from "../components/ProfilePictureFriend";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 function EditProfile() {
   const { navigate } = useNavigation();
@@ -31,7 +34,67 @@ function EditProfile() {
               </Pressable>
             </View>
           </View>
-          <View style={styles.inputContainer} />
+          <View style={styles.inputContainer}>
+            <View style={{ alignSelf: "center" }}>
+              <ProfilePictureFriend size={90} />
+              <Pressable onPress={() => {}}>
+                <FontAwesome
+                  style={{ position: "absolute", right: 0, bottom: 0 }}
+                  name="circle"
+                  size={28}
+                  color="#3B3B3B"
+                />
+                <Ionicons
+                  style={{ position: "absolute", right: 0, bottom: 2 }}
+                  name="add-circle-outline"
+                  size={24}
+                  color="#F8F8F8"
+                />
+              </Pressable>
+            </View>
+            <Text style={styles.inputLabel}>First Name</Text>
+            <TextInput
+              style={styles.input}
+              autoCapitalize="words"
+              autoCorrect={false}
+              cursorColor="#D9D9D9"
+            />
+            <Text style={styles.inputLabel}>Last Name</Text>
+            <TextInput
+              style={styles.input}
+              autoCapitalize="words"
+              autoCorrect={false}
+              cursorColor="#D9D9D9"
+            />
+            <Text style={styles.inputLabel}>Tag</Text>
+            <TextInput
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              cursorColor="#D9D9D9"
+            />
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect={false}
+              cursorColor="#D9D9D9"
+            />
+            <Text style={styles.inputLabel}>New Password</Text>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={true}
+              cursorColor="#D9D9D9"
+            />
+            <Text style={styles.inputLabel}>Confirm New Password</Text>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={true}
+              cursorColor="#D9D9D9"
+            />
+          </View>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -40,7 +103,7 @@ function EditProfile() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     backgroundColor: "#2B2B2B",
     alignItems: "center",
   },
@@ -75,13 +138,29 @@ const styles = StyleSheet.create({
     maxWidth: 480,
     minHeight: 310,
     marginTop: 22,
-    marginBottom: 24,
     flexDirection: "column",
     borderRadius: 8,
-    alignItems: "stretch",
+    alignItems: "strech",
     padding: 20,
     elevation: 4,
     overflow: "hidden",
+    marginBottom: 24,
+  },
+  inputLabel: {
+    color: "#F8F8F8",
+    marginTop: 14,
+    fontFamily: "HelveticaNeue-MediumItalic",
+    fontSize: 17,
+  },
+  input: {
+    height: 32,
+    marginTop: 6,
+    borderRadius: 8,
+    backgroundColor: "#424242",
+    fontFamily: "HelveticaNeue-LightItalic",
+    color: "rgba(217, 217, 217, 0.8)",
+    fontSize: 15,
+    paddingLeft: 10,
   },
 });
 
