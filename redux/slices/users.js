@@ -22,7 +22,7 @@ const users = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.activitiesArray = action.payload;
+      state.users = action.payload;
     });
   },
 });

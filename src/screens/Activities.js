@@ -91,6 +91,7 @@ const friendsData = [
 
 function Activities() {
   const [isModalVisible, setModalVisible] = useState(false);
+
   const [friends, setFriends] = useState(friendsData);
 
   const { activitiesArray } = useSelector((state) => state.activities);
@@ -134,24 +135,30 @@ function Activities() {
   }, [isFocused]);
   */
 
-  const renderActivitiesCB = (item) => {
+  const renderActivitiesCB = (data) => {
+    const { id, activity } = data;
+
+    const { title, description, location } = activity;
+
     return (
       <SentActivity
-        key={item["id"]}
+        key={data.id}
         category={"category"}
         time={"09:37"}
-        title={item["title"]}
-        description={"spelled wreong in FB"}
+        title={title}
+        description={description}
         activityTime={"Tomorrow 13:00 - 15:00"}
-        place={item["location"]}
+        place={location}
       />
     );
   };
 
-  const emptyComponent = () => {
+  const NoActivities = () => {
     return (
       <View style={{ flex: 1 }}>
-        <Text style={styles.titleStyle}>oops! There's no data here!</Text>
+        <Text style={styles.titleStyle}>
+          You haven't created any activities
+        </Text>
       </View>
     );
   };
@@ -175,7 +182,7 @@ function Activities() {
           }}
         >
           <View style={styles.container}>
-            <Text>Text placeholder {myActivities.length}</Text>
+            {activitiesArray.map(renderActivitiesCB)}
           </View>
         </ScrollView>
 
