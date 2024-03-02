@@ -6,6 +6,7 @@ import {
   TextInput,
   Pressable,
   Platform,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -21,10 +22,10 @@ import { Snackbar } from "react-native-paper";
 import { addDoc } from "firebase/firestore";
 import { activitiesRef } from "../../config/firebase";
 import { useSelector } from "react-redux";
-import {GooglePlaceDetail,GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
-
-
-
+import {
+  GooglePlaceDetail,
+  GooglePlacesAutocomplete,
+} from "react-native-google-places-autocomplete";
 
 function NewActivity({ onPressHideModalHandler, friends }) {
   // Form States
@@ -97,7 +98,6 @@ function NewActivity({ onPressHideModalHandler, friends }) {
       setVisible(true);
     }
   };
-
 
   const ShowInputs = () => {
     // for debugging
@@ -286,7 +286,8 @@ function NewActivity({ onPressHideModalHandler, friends }) {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
-        <KeyboardAwareScrollView
+        <ScrollView
+          keyboardShouldPersistTaps="always"
           style={{ flex: 1, backgroundColor: "#2B2B2B" }}
         >
           <View style={styles.container}>
@@ -329,38 +330,41 @@ function NewActivity({ onPressHideModalHandler, friends }) {
               />
               <View>
                 <Text style={{ marginTop: 20, color: "#F8f8f8" }}>
-                  Placeholder for tags
+                  Location
                 </Text>
               </View>
-            
+
               <SafeAreaView>
-              <GooglePlacesAutocomplete
-                placeholder='Search'
-                onPress={(data, details = null) => {
-                 console.log(data,details);
-                }}
-                query={{
-                  key: 'AIzaSyBhs7QyIFBJa6s2taMPq9Rf--Tgw-3uaAuQ',
-                  language: 'en',
-                }}
-                fetchDetails={true}
-
-              />
+                <GooglePlacesAutocomplete
+                  placeholder="Search"
+                  suppressDefaultStyles
+                  styles={{
+                    textInputContainer: {
+                      backgroundColor: "#424242",
+                    },
+                    textInput: {
+                      height: 38,
+                      color: "#D9D9D9",
+                      fontSize: 16,
+                    },
+                    listView: {
+                      color: "#D9D9D9",
+                    },
+                    predefinedPlacesDescription: {
+                      color: "#D9D9D9",
+                    },
+                  }}
+                  onPress={(data, details = null) => {
+                    console.log("data", data, "details", details);
+                    setLocation(data);
+                  }}
+                  query={{
+                    key: "AIzaSyCInT-9E8uvFFYylIXaH26k8PxRWW6rS30",
+                    language: "en",
+                  }}
+                  fetchDetails={true}
+                />
               </SafeAreaView>
-           
-          
-
-
-              <Text style={styles.inputLabel}>Location</Text>
-              <TextInput
-                style={styles.input}
-                autoCapitalize="words"
-                autoCorrect={false}
-                cursorColor="#D9D9D9"
-                onChangeText={(value) => {
-                  setLocation(value);
-                }}
-              />
 
               <Text style={styles.inputLabel}>Select Date</Text>
               <SelectDate
@@ -443,7 +447,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
               {snackbarMessage}
             </Snackbar>
           </View>
-        </KeyboardAwareScrollView>
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -499,10 +503,6 @@ const styles = StyleSheet.create({
     elevation: 4,
     padding: 8,
     borderRadius: 8,
-  },
-  input: {
-    borderColor: "#888",
-    borderWidth: 1,
   },
   spontan: {
     color: "#F8F8F8",
