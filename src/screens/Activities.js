@@ -11,7 +11,6 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import SentActivity from "../components/SentActivity";
 import NewActivityButton from "../components/NewActivityButton";
 import NewActivity from "./NewActivity";
-import { getDocs, query, where } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import {
@@ -100,46 +99,19 @@ function Activities() {
   const { activitiesArray } = useSelector((state) => state.activities);
   const { userActivitiesArray } = useSelector((state) => state.activities);
   const { user } = useSelector((state) => state.user);
-  console.log("userActivitiesArray ", userActivitiesArray);
+
+  const isFocused = useIsFocused();
 
   // fetch activities
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("user.uid");
-    console.log(user.uid);
     dispatch(fetchUserActivities(user.uid));
-  }, [dispatch, isFocused]);
+    console.log("userActivitiesArray inside use effect", userActivitiesArray);
+  }, [dispatch, isFocused, user, activitiesArray]);
 
   useEffect(() => {
     setFriends(friendsData);
   }, [friends]);
-
-  const [myActivities, setMyActivities] = useState([]);
-
-  const isFocused = useIsFocused();
-
-  /*
-  const fetchMyActivities = async () => {
-    const q = query(activitiesRef, where("userId", "==", user.uid));
-    const querySnapshot = await getDocs(q);
-    let data = [];
-    querySnapshot.forEach((doc) => {
-      data.push({ ...doc.data(), id: doc.id });
-
-      //console.log("document", doc.data());
-    });
-    setMyActivities(data);
-    console.log("myActivities");
-    console.log(myActivities);
-    console.log(typeof myActivities);
-  };
-
-  useEffect(() => {
-    if (isFocused) {
-      fetchMyActivities();
-    }
-  }, [isFocused]);
-  */
 
   const deleteActivityhandler = (id) => {
     dispatch(deleteActivity(id));

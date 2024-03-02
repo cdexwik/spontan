@@ -67,22 +67,6 @@ export const fetchUserActivities = createAsyncThunk(
   }
 );
 
-/*
-const fetchMyActivities = async () => {
-  const q = query(activitiesRef, where("userId", "==", user.uid));
-  const querySnapshot = await getDocs(q);
-  let data = [];
-  querySnapshot.forEach((doc) => {
-    data.push({ ...doc.data(), id: doc.id });
-
-    //console.log("document", doc.data());
-  });
-  setMyActivities(data);
-  console.log("myActivities");
-  console.log(myActivities);
-  console.log(typeof myActivities);
-};*/
-
 const activities = createSlice({
   name: "activities",
   initialState,
@@ -99,7 +83,7 @@ const activities = createSlice({
         state.userActivitiesArray = action.payload;
       })
       .addCase(deleteActivity.fulfilled, (state, action) => {
-        state.activitiesArray = state.activitiesArray.filter(
+        state.activitiesArray = state.userActivitiesArray.filter(
           (activity) => activity.id !== action.payload
         );
       });
