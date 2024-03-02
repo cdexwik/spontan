@@ -350,7 +350,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
               <Text style={styles.inputLabel}>Description</Text>
               <TextInput
                 style={styles.input}
-                autoCapitalize="words"
+                autoCapitalize="sentences"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
                 placeholder="I feel like..."

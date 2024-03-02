@@ -15,6 +15,8 @@ import DashedLine from "./DashedLine";
 import DeleteEventButton from "./DeleteEventButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import AnsweredList from "./AnsweredList";
+import { useDispatch } from "react-redux";
+import { deleteActivityFromFirestore } from "../../redux/slices/activities";
 
 const friendsData = [
   {
@@ -90,12 +92,14 @@ const friendsData = [
 ];
 
 const SentActivity = ({
+  id,
   category,
   time,
   title,
   description,
   activityTime,
   place,
+  onPress,
 }) => {
   const totalPeople = 2;
   const attendingPeople = 1;
@@ -167,7 +171,7 @@ const SentActivity = ({
           <AnsweredList friends={friends} />
         </Modal>
         <View style={styles.button}>
-          <DeleteEventButton />
+          <DeleteEventButton onPress={onPress} />
         </View>
       </View>
     </View>

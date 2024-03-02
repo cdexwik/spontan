@@ -16,6 +16,7 @@ import { activitiesRef } from "../../config/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { fetchActivities } from "../../redux/slices/activities";
+import { deleteActivity } from "../../redux/slices/activities";
 const friendsData = [
   {
     userid: "111",
@@ -135,20 +136,27 @@ function Activities() {
   }, [isFocused]);
   */
 
+  const deleteActivityhandler = (id) => {
+    dispatch(deleteActivity(id));
+  };
+
   const renderActivitiesCB = (data) => {
     const { id, activity } = data;
-
     const { title, description, location } = activity;
 
     return (
       <SentActivity
         key={data.id}
+        id={data.id}
         category={"category"}
         time={"09:37"}
         title={title}
         description={description}
         activityTime={"Tomorrow 13:00 - 15:00"}
         place={location}
+        onPress={() => {
+          deleteActivityhandler(data.id);
+        }}
       />
     );
   };
