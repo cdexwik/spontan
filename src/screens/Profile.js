@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -13,9 +13,26 @@ import { useNavigation } from "@react-navigation/native";
 import ProfilePictureFriend from "../components/ProfilePictureFriend";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 function Profile() {
   const { navigate } = useNavigation();
+  const [imageSrc, setImageSrc] = useState(
+    "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png"
+  );
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImageSrc(result.assets[0].uri);
+    } else {
+      alert("You did not select any image.");
+    }
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
@@ -35,8 +52,8 @@ function Profile() {
           </View>
           <View style={styles.inputContainer}>
             <View>
-              <ProfilePictureFriend size={90} />
-              <Pressable onPress={() => {}}>
+              <ProfilePictureFriend src={imageSrc} size={90} />
+              <Pressable onPress={pickImageAsync}>
                 <FontAwesome
                   style={{ position: "absolute", right: 0, bottom: 0 }}
                   name="circle"
