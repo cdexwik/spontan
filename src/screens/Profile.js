@@ -5,8 +5,14 @@ import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../config/firebase";
 import { signOut } from "firebase/auth";
+import useAuth from "../../customHooks/useAuth";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser, setLoggedIn } from "../../redux/slices/user";
 
 function Profile() {
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
+
   const handleLogout = async () => {
     await signOut(auth);
   };
@@ -39,7 +45,12 @@ function Profile() {
             </Pressable>
           </View>
           <View>
-            <Pressable style={styles.logOutButton} onPress={handleLogout}>
+            <Pressable
+              style={styles.logOutButton}
+              onPress={() => {
+                handleLogout();
+              }}
+            >
               <Text style={styles.buttonText}>Log Out</Text>
             </Pressable>
           </View>

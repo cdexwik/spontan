@@ -11,6 +11,7 @@ import { db } from "../../config/firebase";
 
 const initialState = {
   activitiesArray: [],
+  userActivitiesArray: [],
   currentUserActivitiesArray: [],
 };
 
@@ -38,7 +39,7 @@ export const deleteActivity = createAsyncThunk(
   }
 );
 
-// fetch activities
+// fetch ALL activities
 export const fetchActivities = createAsyncThunk(
   "activities/fetchActivities",
   async () => {
@@ -51,16 +52,36 @@ export const fetchActivities = createAsyncThunk(
   }
 );
 
-export const fetchActivitiesFromUser = createAsyncThunk(
-  "activities/fetchActivitiesFromUser",
-  async (userId) => {}
+// fetch activities from ONE user
+export const fetchUserActivities = createAsyncThunk(
+  "activities/fetchUserActivities",
+  async (userId) => {
+    const querySnapshot = await getDocs(collection(db, "activities"));
+    const activitiesByUser = querySnapshot.docs
+      .filter((doc) => doc.data().userId === userId)
+      .map((doc) => ({
+        id: doc.id,
+        activity: doc.data(),
+      }));
+    return activitiesByUser;
+  }
 );
 
-/// const q = query(activitiesRef, where("userId", "==", user.uid));
-/// const querySnapshot = await getDocs(q);
-/// let data = [];
-/// querySnapshot.forEach((doc) => {
-/// data.push({ ...doc.data(), id: doc.id });
+/*
+const fetchMyActivities = async () => {
+  const q = query(activitiesRef, where("userId", "==", user.uid));
+  const querySnapshot = await getDocs(q);
+  let data = [];
+  querySnapshot.forEach((doc) => {
+    data.push({ ...doc.data(), id: doc.id });
+
+    //console.log("document", doc.data());
+  });
+  setMyActivities(data);
+  console.log("myActivities");
+  console.log(myActivities);
+  console.log(typeof myActivities);
+};*/
 
 const activities = createSlice({
   name: "activities",
@@ -73,6 +94,9 @@ const activities = createSlice({
       })
       .addCase(fetchActivities.fulfilled, (state, action) => {
         state.activitiesArray = action.payload;
+      })
+      .addCase(fetchUserActivities.fulfilled, (state, action) => {
+        state.userActivitiesArray = action.payload;
       })
       .addCase(deleteActivity.fulfilled, (state, action) => {
         state.activitiesArray = state.activitiesArray.filter(

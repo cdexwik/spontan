@@ -12,10 +12,12 @@ import SentActivity from "../components/SentActivity";
 import NewActivityButton from "../components/NewActivityButton";
 import NewActivity from "./NewActivity";
 import { getDocs, query, where } from "firebase/firestore";
-import { activitiesRef } from "../../config/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
-import { fetchActivities } from "../../redux/slices/activities";
+import {
+  fetchActivities,
+  fetchUserActivities,
+} from "../../redux/slices/activities";
 import { deleteActivity } from "../../redux/slices/activities";
 const friendsData = [
   {
@@ -96,12 +98,16 @@ function Activities() {
   const [friends, setFriends] = useState(friendsData);
 
   const { activitiesArray } = useSelector((state) => state.activities);
-  console.log("allActivities ", activitiesArray);
+  const { userActivitiesArray } = useSelector((state) => state.activities);
+  const { user } = useSelector((state) => state.user);
+  console.log("userActivitiesArray ", userActivitiesArray);
 
   // fetch activities
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchActivities());
+    console.log("user.uid");
+    console.log(user.uid);
+    dispatch(fetchUserActivities(user.uid));
   }, [dispatch, isFocused]);
 
   useEffect(() => {
@@ -109,7 +115,6 @@ function Activities() {
   }, [friends]);
 
   const [myActivities, setMyActivities] = useState([]);
-  const { user } = useSelector((state) => state.user);
 
   const isFocused = useIsFocused();
 
@@ -190,7 +195,7 @@ function Activities() {
           }}
         >
           <View style={styles.container}>
-            {activitiesArray.map(renderActivitiesCB)}
+            {userActivitiesArray.map(renderActivitiesCB)}
           </View>
         </ScrollView>
 
