@@ -83,7 +83,7 @@ const activities = createSlice({
         state.userActivitiesArray = action.payload;
       })
       .addCase(deleteActivity.fulfilled, (state, action) => {
-        state.activitiesArray = state.userActivitiesArray.filter(
+        state.activitiesArray = state.activitiesArray.filter(
           (activity) => activity.id !== action.payload
         );
       });

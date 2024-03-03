@@ -8,6 +8,7 @@ import {
   Text,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { format } from "date-fns";
 import SentActivity from "../components/SentActivity";
 import NewActivityButton from "../components/NewActivityButton";
 import NewActivity from "./NewActivity";
@@ -95,18 +96,15 @@ function Activities() {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [friends, setFriends] = useState(friendsData);
-
   const { activitiesArray } = useSelector((state) => state.activities);
   const { userActivitiesArray } = useSelector((state) => state.activities);
   const { user } = useSelector((state) => state.user);
-
   const isFocused = useIsFocused();
 
   // fetch activities
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUserActivities(user.uid));
-    console.log("userActivitiesArray inside use effect", userActivitiesArray);
   }, [dispatch, isFocused, user, activitiesArray]);
 
   useEffect(() => {
@@ -119,18 +117,33 @@ function Activities() {
 
   const renderActivitiesCB = (data) => {
     const { id, activity } = data;
-    const { title, description, location } = activity;
+    const {
+      title,
+      description,
+      location,
+      startDateAndTime,
+      endDateAndTime,
+      responseTime,
+    } = activity;
+
+    const formattedStartDateTime = format(
+      startDateAndTime.toDate(),
+      "yyyy-MM-dd HH:mm"
+    );
+    const formattedEndDateTime = format(endDateAndTime.toDate(), "HH:mm");
+    //const formattedResponseTime = format(responseTime.toDate(), "HH:mm");
 
     return (
       <SentActivity
         key={data.id}
         id={data.id}
         category={"category"}
-        time={"09:37"}
+        responseTime={responseTime}
         title={title}
         description={description}
-        activityTime={"Tomorrow 13:00 - 15:00"}
-        place={location}
+        startDateAndTime={formattedStartDateTime}
+        endDateAndTime={formattedEndDateTime}
+        location={location}
         onPress={() => {
           deleteActivityhandler(data.id);
         }}
