@@ -6,9 +6,13 @@ import { useNavigation } from "@react-navigation/native";
 import { auth, db } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Snackbar } from "react-native-paper";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, batch } from "firebase/firestore";
 import { useDispatch } from "react-redux";
-import { addUserToFirestore } from "../../redux/slices/users";
+import {
+  addUserToFirestore,
+  setCurrentUser,
+  setCurrentUserData,
+} from "../../redux/slices/user";
 
 function Register() {
   const { navigate } = useNavigation();
@@ -57,6 +61,52 @@ function Register() {
   const register = async () => {
     if (firstName && lastName && tag && email && password && confirmPassword) {
       // allFields filled
+      if (password === confirmPassword) {
+        try {
+          const userCredentials = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredentials.user;
+          const userId = user.uid;
+          console.log("user credentials", user);
+
+          let newUser = {
+            userId: user.uid,
+            firstName: firstName,
+            lastName: lastName,
+            tag: tag,
+            email: email,
+            friends: [],
+            friendRequests: [],
+          };
+
+          await setDoc(doc(db, "users", user.uid), newUser);
+
+          dispatch(setCurrentUser(userId)); // Update Redux state with current user
+
+          dispatch(setCurrentUserData(newUser));
+
+          setSnackbarMessage("Success! Login to use your account");
+          setVisible(true);
+        } catch (error) {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        }
+      } else {
+        handleMissingInputSnackbar();
+      }
+    } else {
+      handleMissingInputSnackbar();
+    }
+  };
+
+  const register2 = async () => {
+    if (firstName && lastName && tag && email && password && confirmPassword) {
+      // allFields filled
 
       if (password === confirmPassword) {
         //set loading
@@ -68,15 +118,36 @@ function Register() {
           );
           const user = userCredentials.user;
           const userId = user.uid;
-          console.log(user);
+          console.log("user credentials");
 
+          let newUser = {
+            userId: user.uid,
+            firstName: firstName,
+            lastName: lastName,
+            tag: tag,
+            email: email,
+            friends: [],
+            friendRequests: [],
+          };
+
+          dispatch(addUserToFirestore(userId, newUser));
+
+          // Här skulle man kunna göra:
+          // dispatch(setUserData(newUser))
+          setSnackbarMessage("Success! Login to use your account");
+          setVisible(true);
+
+          /*
+          const user = userCredentials.user;
+          const userId = user.uid;
+          console.log("user credentials");
           await setDoc(doc(db, "users", user.uid), {
             userId: user.uid,
             firstName,
             lastName,
             tag,
             email,
-          });
+          });*/
 
           //set loading
         } catch (error) {

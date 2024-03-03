@@ -98,14 +98,14 @@ function Activities() {
   const [friends, setFriends] = useState(friendsData);
   const { activitiesArray } = useSelector((state) => state.activities);
   const { userActivitiesArray } = useSelector((state) => state.activities);
-  const { user } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const isFocused = useIsFocused();
 
   // fetch activities
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchUserActivities(user.uid));
-  }, [dispatch, isFocused, user, activitiesArray]);
+    dispatch(fetchUserActivities(currentUser));
+  }, [dispatch, isFocused, currentUser, activitiesArray]);
 
   useEffect(() => {
     setFriends(friendsData);

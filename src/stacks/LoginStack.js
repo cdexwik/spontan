@@ -8,24 +8,40 @@ import Register from "../screens/Register";
 import ForgotPass from "../screens/ForgotPass";
 import MainStack from "./MainStack";
 import { NavigationContainer } from "@react-navigation/native";
-import { setUser, setLoggedIn } from "../../redux/slices/user";
+import {
+  setCurrentUser,
+  setLoggedIn,
+  fetchUserData,
+} from "../../redux/slices/user";
 
 import { useDispatch } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 const LoginStack = () => {
   // RootState Callback
-  const { user } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const { isLoggedIn } = useSelector((state) => state.user);
+  const { currentUserData } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
   onAuthStateChanged(auth, (user) => {
     //console.log("user from authStateChanged: ", user);
-    dispatch(setUser(user));
+    if (user) {
+      dispatch(setLoggedIn(true));
+      dispatch(setCurrentUser(user.uid));
+      //fetchUserData(currentUser);
+
+      console.log("currentUser ", currentUser, " isLoggedIn ", isLoggedIn);
+      //console.log("currentUserData", currentUserData);
+    } else {
+      dispatch(setLoggedIn(false));
+      setCurrentUser(null);
+      console.log("currentUser ", currentUser, " isLoggedIn ", isLoggedIn);
+    }
   });
 
-  if (user) {
+  if (isLoggedIn) {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="MainStack">
