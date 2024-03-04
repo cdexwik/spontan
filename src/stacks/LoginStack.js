@@ -30,10 +30,10 @@ const LoginStack = () => {
     if (user) {
       dispatch(setLoggedIn(true));
       dispatch(setCurrentUser(user.uid));
-      //fetchUserData(currentUser);
+      fetchUserData(currentUser);
 
       console.log("currentUser ", currentUser, " isLoggedIn ", isLoggedIn);
-      //console.log("currentUserData", currentUserData);
+      console.log("currentUserData", currentUserData);
     } else {
       dispatch(setLoggedIn(false));
       setCurrentUser(null);

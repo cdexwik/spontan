@@ -12,7 +12,6 @@ import { db } from "../../config/firebase";
 const initialState = {
   activitiesArray: [],
   userActivitiesArray: [],
-  currentUserActivitiesArray: [],
 };
 
 // add activity to activitiesArray

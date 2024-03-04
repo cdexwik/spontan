@@ -70,6 +70,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
   const onDismissSnackBar = () => setVisible(false);
 
   const { user } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleMissingInputSnackbar = () => {
@@ -134,7 +135,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
         endDateAndTime: endTime,
         responseTime: responseTimeDate,
         invitedUsers: selectedFriends,
-        userId: user.uid,
+        userId: currentUser,
       };
       dispatch(addActivityToFirestore(newActivity));
 
