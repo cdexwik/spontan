@@ -95,6 +95,8 @@ const friendsData = [
 function Activities() {
   const [isModalVisible, setModalVisible] = useState(false);
 
+  const { currentUserData } = useSelector((state) => state.user);
+
   const [friends, setFriends] = useState(friendsData);
   const { activitiesArray } = useSelector((state) => state.activities);
   const { userActivitiesArray } = useSelector((state) => state.activities);
@@ -105,7 +107,7 @@ function Activities() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUserActivities(currentUser));
-  }, [dispatch, isFocused, currentUser, activitiesArray]);
+  }, [dispatch, currentUser, isFocused, activitiesArray]);
 
   useEffect(() => {
     setFriends(friendsData);
@@ -154,7 +156,7 @@ function Activities() {
   const NoActivities = () => {
     return (
       <View style={{ flex: 1 }}>
-        <Text style={styles.titleStyle}>
+        <Text style={[styles.normalText, { marginTop: 12, fontSize: 16 }]}>
           You haven't created any activities
         </Text>
       </View>
@@ -180,7 +182,11 @@ function Activities() {
           }}
         >
           <View style={styles.container}>
-            {userActivitiesArray.map(renderActivitiesCB)}
+            {userActivitiesArray.length > 0 ? (
+              userActivitiesArray.map(renderActivitiesCB)
+            ) : (
+              <NoActivities />
+            )}
           </View>
         </ScrollView>
 
@@ -213,6 +219,15 @@ const styles = StyleSheet.create({
 
   newActivity: {
     flex: 1,
+  },
+  normalText: {
+    fontSize: 12,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    fontFamily: "Helvetica Neue",
+    fontStyle: "italic",
+    color: "#A0A0A0",
   },
 });
 
