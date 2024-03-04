@@ -18,6 +18,7 @@ import AnsweredList from "./AnsweredList";
 import { useDispatch } from "react-redux";
 import { deleteActivityFromFirestore } from "../../redux/slices/activities";
 import Timer from "./Timer";
+import { format } from "date-fns";
 
 const friendsData = [
   {
@@ -123,7 +124,7 @@ const SentActivity = ({
     <View style={styles.container}>
       <View style={styles.topInfo}>
         <Text style={styles.topText}>you</Text>
-        <Text style={styles.topText}>{category}</Text>
+        <Text style={[styles.topText, { marginLeft: 25 }]}>{category}</Text>
         {Timer(responseTime)}
       </View>
       <View style={styles.header}>
@@ -134,7 +135,8 @@ const SentActivity = ({
         <View style={styles.time}>
           <Ionicons name="calendar-clear-outline" size={21} color="#A0A0A0" />
           <Text style={[styles.descriptionText, { marginLeft: 7 }]}>
-            {startDateAndTime} - {endDateAndTime}
+            {format(startDateAndTime, "PPPP")}{" "}
+            {format(startDateAndTime, "HH:mm")} - {endDateAndTime}
           </Text>
         </View>
         <View style={styles.place}>

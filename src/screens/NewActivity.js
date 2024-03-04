@@ -24,6 +24,7 @@ import { activitiesRef } from "../../config/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { addActivityToFirestore } from "../../redux/slices/activities";
 import CrossButton from "../components/CrossButton";
+import { format } from "date-fns";
 import {
   GooglePlaceDetail,
   GooglePlacesAutocomplete,
@@ -80,22 +81,22 @@ function NewActivity({ onPressHideModalHandler, friends }) {
 
   const handleMissingInputSnackbar = () => {
     if (!title) {
-      setSnackbarMessage("Cant send without title");
+      setSnackbarMessage("Can't send without title");
       setVisible(true);
     } else if (!description) {
-      setSnackbarMessage("Cant send without description");
+      setSnackbarMessage("Can't send without description");
       setVisible(true);
     } else if (!location) {
-      setSnackbarMessage("Cant send without location");
+      setSnackbarMessage("Can't send without location");
       setVisible(true);
     } else if (!isTimeSet) {
-      setSnackbarMessage("Cant send without setting the start time");
+      setSnackbarMessage("Can't send without setting the start time");
       setVisible(true);
     } else if (!isDurationSet) {
-      setSnackbarMessage("Cant send without setting the duration");
+      setSnackbarMessage("Can't send without setting the duration");
       setVisible(true);
     } else if (!isResponseTimeSet) {
-      setSnackbarMessage("Cant send without setting the response time");
+      setSnackbarMessage("Can't send without setting the response time");
       setVisible(true);
     } else if (selectedFriends.length == 0) {
       setSnackbarMessage("You need to add some friends to your activity");
@@ -219,12 +220,10 @@ function NewActivity({ onPressHideModalHandler, friends }) {
 
   useEffect(() => {
     const output = () => {
-      const timeString = endTime.toLocaleString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      const dateString = endTime.toDateString();
-      const output = `${dateString}, ${timeString}`;
+      const startTimeString = format(date, "HH:mm");
+      const endTimeString = format(endTime, "HH:mm");
+      const dateString = format(endTime, "PPPP");
+      const output = `${dateString}, ${startTimeString} - ${endTimeString}`;
       return output;
     };
     setEndTimeOutput(output);
@@ -325,6 +324,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <KeyboardAwareScrollView
+          keyboardShouldPersistTaps={"handled"}
           style={{ flex: 1, backgroundColor: "#2B2B2B" }}
         >
           <View style={styles.container}>
@@ -368,35 +368,55 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                 }}
               />
 
-              <View>
+              {/* <View>
                 <Text style={{ marginTop: 20, color: "#F8f8f8" }}>
-                  Location
+                  [Placeholder for tags]
                 </Text>
-              </View>
+              </View> */}
 
+              <Text style={styles.inputLabel}>Location</Text>
+              {/* <TextInput
+                style={styles.input}
+                autoCapitalize="words"
+                autoCorrect={false}
+                cursorColor="#D9D9D9"
+                onChangeText={(value) => {
+                  setLocation(value);
+                }}
+              /> */}
               <SafeAreaView>
                 <GooglePlacesAutocomplete
                   placeholder="Search"
+                  placeholderTextColor="#F8f8f8"
                   suppressDefaultStyles
                   styles={{
                     textInputContainer: {
-                      backgroundColor: "#424242",
+                      flex: 1,
+                      color: "#F8f8f8",
                     },
                     textInput: {
-                      height: 38,
-                      color: "#D9D9D9",
-                      fontSize: 16,
+                      height: 32,
+                      marginTop: 6,
+                      borderRadius: 8,
+                      backgroundColor: "#424242",
+                      fontFamily: "HelveticaNeue-LightItalic",
+                      color: "#F8f8f8",
+                      fontSize: 14,
+                      paddingLeft: 10,
                     },
                     listView: {
-                      color: "#D9D9D9",
+                      color: "#F8f8f8",
                     },
                     predefinedPlacesDescription: {
-                      color: "#D9D9D9",
+                      color: "#F8f8f8",
                     },
                   }}
                   onPress={(data, details = null) => {
-                    console.log("data", data, "details", details);
-                    setLocation(data);
+                    // console.log("data", data);
+                    // console.log("___________");
+                    // console.log("details", details);
+                    // console.log("description", data.description);
+                    setLocation(data.description);
                   }}
                   query={{
                     key: "AIzaSyCInT-9E8uvFFYylIXaH26k8PxRWW6rS30",
@@ -471,7 +491,13 @@ function NewActivity({ onPressHideModalHandler, friends }) {
               <View>
                 <Text style={styles.inputLabel}>Selected date and time</Text>
                 <TextInput
-                  style={[styles.input, { color: "#F8f8f8" }]}
+                  style={[
+                    styles.input,
+                    {
+                      marginBottom: 4,
+                      fontFamily: "HelveticaNeue-Italic",
+                    },
+                  ]}
                   autoCapitalize="words"
                   cursorColor="#D9D9D9"
                   value={endTimeOutput}
@@ -556,7 +582,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "#424242",
     fontFamily: "HelveticaNeue-LightItalic",
-    color: "rgba(217, 217, 217, 0.8)",
+    color: "#F8f8f8",
     fontSize: 14,
     paddingLeft: 10,
   },
