@@ -26,7 +26,7 @@ const FriendsList = ({ friends }) => {
         <Text
           style={{
             fontSize: 16,
-            color: "#F8F8F8",
+            color: "#A0A0A0",
             fontFamily: "HelveticaNeue-BoldItalic",
             alignSelf: "center",
             marginTop: 20,

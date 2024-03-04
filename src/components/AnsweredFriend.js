@@ -17,7 +17,13 @@ const AnsweredFriend = ({ firstName, lastName, tag, activityData }) => {
 
   return (
     <View style={styles.friend}>
-      <ProfilePictureFriend />
+      <ProfilePictureFriend
+        size={45}
+        //This should be changed to the link of the corresponding profile picture
+        src={
+          "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png"
+        }
+      />
       <View style={styles.friendTextBox}>
         <Text style={styles.friendTextName}>{`${firstName} ${lastName}`}</Text>
         <Text style={styles.friendTextTag}>@{tag}</Text>

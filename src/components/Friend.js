@@ -29,7 +29,13 @@ const Friend = ({
     <View style={styles.container}>
       <View style={styles.friend}>
         <View style={styles.left}>
-          <ProfilePictureFriend size={45} />
+          <ProfilePictureFriend
+            size={45}
+            //This should be changed to the link of the corresponding profile picture
+            src={
+              "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png"
+            }
+          />
         </View>
         <View style={styles.center}>
           <View style={styles.friendTextBox}>
