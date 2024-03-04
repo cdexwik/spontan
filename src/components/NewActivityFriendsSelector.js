@@ -15,7 +15,7 @@ const NewActivityFriendsSelector = ({ friendsData, setSelectedFriends }) => {
           setSelectedFriends(val);
         }}
         data={friendsData}
-        fontFamily="Helvetica Neue"
+        fontFamily="HelveticaNeue-Normal"
         placeholder="Select friends"
         searchPlaceholder="Search friends"
         notFoundText="No friend with this name found"
@@ -23,35 +23,33 @@ const NewActivityFriendsSelector = ({ friendsData, setSelectedFriends }) => {
         save="key"
         boxStyles={{
           backgroundColor: "#424242",
-          fontFamily: "Helvetica Neue",
+          fontFamily: "HelveticaNeue-Normal",
           color: "#f8f8f8",
           borderWidth: 0,
         }}
         inputStyles={{
-          fontSize: 16,
-          fontFamily: "Helvetica Neue",
+          fontSize: 14,
+          fontFamily: "HelveticaNeue-Normal",
           color: "#D9D9D9",
         }}
         dropdownStyles={{
           backgroundColor: "#424242",
-          fontFamily: "Helvetica Neue",
+          fontFamily: "HelveticaNeue-Normal",
           borderWidth: 0,
         }}
         dropdownTextStyles={{
           color: "#D9D9D9",
-          fontFamily: "Helvetica Neue",
+          fontFamily: "HelveticaNeue-Normal",
         }}
         badgeStyles={{
-          backgroundColor: "#AFE8C4",
+          backgroundColor: "#EEDFF6",
         }}
         badgeTextStyles={{
           fontSize: 12,
           lineHeight: 21,
-          fontWeight: "bold",
           letterSpacing: 0.25,
           color: "black",
-          fontFamily: "Helvetica Neue",
-          fontStyle: "italic",
+          fontFamily: "HelveticaNeue-BoldItalic",
         }}
         checkBoxStyles={{
           backgroundColor: "#D9D9D9",
