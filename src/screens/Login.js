@@ -10,6 +10,8 @@ import {
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Checkbox from "expo-checkbox";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../config/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const { navigate } = useNavigation();
@@ -19,9 +21,28 @@ const Login = () => {
   const [inputContainerMarginBottom, setInputContainerMarginBottom] =
     useState(24); //FUTURE: margin 0 if ScrollView is visible
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async () => {
+    if (email && password) {
+      {
+        await signInWithEmailAndPassword(auth, email, password).catch(
+          (error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+          }
+        );
+      }
+    } else {
+    }
+    // show error
+  };
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <Text style={styles.spontan}>Spontan</Text>
@@ -40,7 +61,7 @@ const Login = () => {
               setInputContainerWidth(width);
             }}
           >
-            <Text style={styles.inputLabel}>Tag or email</Text>
+            <Text style={styles.inputLabel}>Email</Text>
             <TextInput
               style={styles.input}
               keyboardType="email-address"
@@ -48,12 +69,16 @@ const Login = () => {
               autoComplete="email"
               autoCorrect={false}
               cursorColor="#D9D9D9"
+              value={email}
+              onChangeText={(value) => setEmail(value)}
             />
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
               style={styles.input}
               secureTextEntry={true}
               cursorColor="#D9D9D9"
+              value={password}
+              onChangeText={(value) => setPassword(value)}
             />
             <View style={styles.remeberMeContainer}>
               <Checkbox
@@ -63,12 +88,7 @@ const Login = () => {
               />
               <Text style={styles.remeberMeText}>Remember me</Text>
             </View>
-            <Pressable
-              style={styles.loginButton}
-              onPress={() => {
-                navigate("MainStack");
-              }}
-            >
+            <Pressable style={styles.loginButton} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Log In</Text>
             </Pressable>
             <View style={styles.textBox}>

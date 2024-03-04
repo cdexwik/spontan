@@ -5,10 +5,9 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import MainStack from "./src/stacks/MainStack";
 import LoginStack from "./src/stacks/LoginStack";
-import Friends from "./src/screens/Friends";
-import Main from "./src/screens/Main";
-import ActivityDetail from "./src/screens/ActivityDetail";
-import Profile from "./src/screens/Profile";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import { PaperProvider } from "react-native-paper";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,9 +35,11 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container} onLayout={handleOnLayout}>
-      <StatusBar backgroundColor="#2B2B2B" barStyle="default" />
-      {/* <ActivityDetail
+    <Provider store={store}>
+      <PaperProvider>
+        <View style={styles.container} onLayout={handleOnLayout}>
+          <StatusBar backgroundColor="#2B2B2B" barStyle="default" />
+          {/* <ActivityDetail
         tag={"tag"}
         firstName={"Name"}
         lastName={"Surname"}
@@ -54,8 +55,10 @@ export default function App() {
         saturday={"08:00 - 20:00"}
         sunday={"closed"}
       /> */}
-      <LoginStack />
-    </View>
+          <LoginStack />
+        </View>
+      </PaperProvider>
+    </Provider>
   );
 }
 

@@ -1,36 +1,172 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Pressable,
-  Alert,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
-
-const showAlert = () =>
-  Alert.alert(
-    "Check yout inbox",
-    "Please check your inbox to finish the register process.",
-    [
-      {
-        text: "Ok",
-        style: "default",
-      },
-    ],
-    {
-      cancelable: true,
-    }
-  );
+import { auth, db } from "../../config/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Snackbar } from "react-native-paper";
+import { setDoc, doc, batch } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import {
+  addUserToFirestore,
+  setCurrentUser,
+  setCurrentUserData,
+} from "../../redux/slices/user";
 
 function Register() {
   const { navigate } = useNavigation();
+
+  const dispatch = useDispatch();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [tag, setTag] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  // For Sncakbar
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [visible, setVisible] = useState(false);
+  const onDismissSnackBar = () => setVisible(false);
+
+  const handleMissingInputSnackbar = () => {
+    if (!firstName) {
+      setSnackbarMessage("Cant register without firstname");
+      setVisible(true);
+    } else if (!lastName) {
+      setSnackbarMessage("Cant register without lastname");
+      setVisible(true);
+    } else if (!tag) {
+      setSnackbarMessage("Cant register without tag");
+      setVisible(true);
+    } else if (!email) {
+      setSnackbarMessage("Cant register without email");
+      setVisible(true);
+    } else if (!password) {
+      setSnackbarMessage(
+        "You need to enter a password of minimum 6 characters"
+      );
+      setVisible(true);
+    } else if (!confirmPassword) {
+      setSnackbarMessage("You need to confirm the password");
+      setVisible(true);
+    } else if (password !== confirmPassword) {
+      setSnackbarMessage("The passwords doesnt match");
+      setVisible(true);
+    }
+  };
+
+  const register = async () => {
+    if (firstName && lastName && tag && email && password && confirmPassword) {
+      // allFields filled
+      if (password === confirmPassword) {
+        try {
+          const userCredentials = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredentials.user;
+          const userId = user.uid;
+          console.log("user credentials", user);
+
+          let newUser = {
+            userId: user.uid,
+            firstName: firstName,
+            lastName: lastName,
+            tag: tag,
+            email: email,
+            friends: [],
+            friendRequests: [],
+          };
+
+          await setDoc(doc(db, "users", user.uid), newUser);
+
+          dispatch(setCurrentUser(userId)); // Update Redux state with current user
+
+          dispatch(setCurrentUserData(newUser));
+
+          setSnackbarMessage("Success! Login to use your account");
+          setVisible(true);
+        } catch (error) {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        }
+      } else {
+        handleMissingInputSnackbar();
+      }
+    } else {
+      handleMissingInputSnackbar();
+    }
+  };
+
+  const register2 = async () => {
+    if (firstName && lastName && tag && email && password && confirmPassword) {
+      // allFields filled
+
+      if (password === confirmPassword) {
+        //set loading
+        try {
+          const userCredentials = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredentials.user;
+          const userId = user.uid;
+          console.log("user credentials");
+
+          let newUser = {
+            userId: user.uid,
+            firstName: firstName,
+            lastName: lastName,
+            tag: tag,
+            email: email,
+            friends: [],
+            friendRequests: [],
+          };
+
+          dispatch(addUserToFirestore(userId, newUser));
+
+          // Här skulle man kunna göra:
+          // dispatch(setUserData(newUser))
+          setSnackbarMessage("Success! Login to use your account");
+          setVisible(true);
+
+          /*
+          const user = userCredentials.user;
+          const userId = user.uid;
+          console.log("user credentials");
+          await setDoc(doc(db, "users", user.uid), {
+            userId: user.uid,
+            firstName,
+            lastName,
+            tag,
+            email,
+          });*/
+
+          //set loading
+        } catch (error) {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        }
+      } else {
+        handleMissingInputSnackbar();
+      }
+    } else {
+      handleMissingInputSnackbar();
+    }
+  };
+
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <KeyboardAwareScrollView
           style={{ flex: 1, backgroundColor: "#2B2B2B" }}
         >
@@ -49,6 +185,7 @@ function Register() {
                 autoCapitalize="words"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setFirstName(value)}
               />
               <Text style={styles.inputLabel}>Last Name</Text>
               <TextInput
@@ -56,6 +193,7 @@ function Register() {
                 autoCapitalize="words"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setLastName(value)}
               />
               <Text style={styles.inputLabel}>Tag</Text>
               <TextInput
@@ -63,6 +201,7 @@ function Register() {
                 autoCapitalize="none"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setTag(value)}
               />
               <Text style={styles.inputLabel}>Email</Text>
               <TextInput
@@ -72,26 +211,23 @@ function Register() {
                 autoComplete="email"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setEmail(value)}
               />
               <Text style={styles.inputLabel}>Password</Text>
               <TextInput
                 style={styles.input}
                 secureTextEntry={true}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setPassword(value)}
               />
               <Text style={styles.inputLabel}>Confirm Password</Text>
               <TextInput
                 style={styles.input}
                 secureTextEntry={true}
                 cursorColor="#D9D9D9"
+                onChangeText={(value) => setConfirmPassword(value)}
               />
-              <Pressable
-                style={styles.registerButton}
-                onPress={() => {
-                  showAlert();
-                  navigate("Login");
-                }}
-              >
+              <Pressable style={styles.registerButton} onPress={register}>
                 <Text style={styles.buttonText}>Register</Text>
               </Pressable>
               <View style={styles.textBox}>
@@ -104,6 +240,18 @@ function Register() {
                   <Text style={styles.loginText}>Log In</Text>
                 </Pressable>
               </View>
+              <Snackbar
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                  label: "Ok",
+                  onPress: () => {
+                    setSnackbarMessage("");
+                  },
+                }}
+              >
+                {snackbarMessage}
+              </Snackbar>
             </View>
           </View>
         </KeyboardAwareScrollView>

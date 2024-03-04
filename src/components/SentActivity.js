@@ -15,6 +15,9 @@ import DashedLine from "./DashedLine";
 import DeleteEventButton from "./DeleteEventButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import AnsweredList from "./AnsweredList";
+import { useDispatch } from "react-redux";
+import { deleteActivityFromFirestore } from "../../redux/slices/activities";
+import Timer from "./Timer";
 
 const friendsData = [
   {
@@ -90,12 +93,16 @@ const friendsData = [
 ];
 
 const SentActivity = ({
+  id,
   category,
-  time,
+  responseTime,
   title,
   description,
-  activityTime,
-  place,
+  startDateAndTime,
+  endDateAndTime,
+  location,
+  onPress,
+  invitedUsers,
 }) => {
   const totalPeople = 2;
   const attendingPeople = 1;
@@ -117,7 +124,7 @@ const SentActivity = ({
       <View style={styles.topInfo}>
         <Text style={styles.topText}>you</Text>
         <Text style={styles.topText}>{category}</Text>
-        <Text style={styles.topText}>{time}</Text>
+        {Timer(responseTime)}
       </View>
       <View style={styles.header}>
         <Text style={styles.headerText}>{title}</Text>
@@ -127,13 +134,13 @@ const SentActivity = ({
         <View style={styles.time}>
           <Ionicons name="calendar-clear-outline" size={21} color="#A0A0A0" />
           <Text style={[styles.descriptionText, { marginLeft: 7 }]}>
-            {activityTime}
+            {startDateAndTime} - {endDateAndTime}
           </Text>
         </View>
         <View style={styles.place}>
           <Ionicons name="location-outline" size={21} color="#A0A0A0" />
           <Text style={[styles.descriptionText, { marginLeft: 7 }]}>
-            {place}
+            {location}
           </Text>
         </View>
       </View>
@@ -169,7 +176,7 @@ const SentActivity = ({
           <AnsweredList friends={friends} />
         </Modal>
         <View style={styles.button}>
-          <DeleteEventButton />
+          <DeleteEventButton onPress={onPress} />
         </View>
       </View>
     </View>

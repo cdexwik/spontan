@@ -11,7 +11,7 @@ function EditProfile() {
   const { navigate } = useNavigation();
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <View style={styles.crossButton}>

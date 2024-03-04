@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  Pressable,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -14,8 +7,20 @@ import ProfilePictureFriend from "../components/ProfilePictureFriend";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { auth } from "../../config/firebase";
+import { signOut } from "firebase/auth";
+import useAuth from "../../customHooks/useAuth";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser, setLoggedIn } from "../../redux/slices/user";
 
 function Profile() {
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
+
   const { navigate } = useNavigation();
   const [imageSrc, setImageSrc] = useState(
     "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png"
@@ -35,7 +40,7 @@ function Profile() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <View style={styles.leftSpace} />
@@ -165,7 +170,7 @@ function Profile() {
             <Pressable
               style={styles.logOutButton}
               onPress={() => {
-                navigate("Login");
+                handleLogout();
               }}
             >
               <Text style={styles.buttonText}>Log Out</Text>
