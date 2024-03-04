@@ -6,6 +6,7 @@ import {
   TextInput,
   Pressable,
   Platform,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -23,6 +24,10 @@ import { activitiesRef } from "../../config/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { addActivityToFirestore } from "../../redux/slices/activities";
 import CrossButton from "../components/CrossButton";
+import {
+  GooglePlaceDetail,
+  GooglePlacesAutocomplete,
+} from "react-native-google-places-autocomplete";
 
 function NewActivity({ onPressHideModalHandler, friends }) {
   // Form States
@@ -103,7 +108,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     return (
       <View>
         <Text>Title {title.toString()}</Text>
-        <Text>Description {description.toString()}</Text>
+        <Text>Description {desription.toString()}</Text>
         <Text>Location {location.toString()}</Text>
         <Text>date {date.toString()}</Text>
         <Text>endTime {endTime.toString()}</Text>
@@ -362,22 +367,44 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                   setDescription(value);
                 }}
               />
+
               <View>
                 <Text style={{ marginTop: 20, color: "#F8f8f8" }}>
-                  Placeholder for tags
+                  Location
                 </Text>
               </View>
 
-              <Text style={styles.inputLabel}>Location</Text>
-              <TextInput
-                style={styles.input}
-                autoCapitalize="words"
-                autoCorrect={false}
-                cursorColor="#D9D9D9"
-                onChangeText={(value) => {
-                  setLocation(value);
-                }}
-              />
+              <SafeAreaView>
+                <GooglePlacesAutocomplete
+                  placeholder="Search"
+                  suppressDefaultStyles
+                  styles={{
+                    textInputContainer: {
+                      backgroundColor: "#424242",
+                    },
+                    textInput: {
+                      height: 38,
+                      color: "#D9D9D9",
+                      fontSize: 16,
+                    },
+                    listView: {
+                      color: "#D9D9D9",
+                    },
+                    predefinedPlacesDescription: {
+                      color: "#D9D9D9",
+                    },
+                  }}
+                  onPress={(data, details = null) => {
+                    console.log("data", data, "details", details);
+                    setLocation(data);
+                  }}
+                  query={{
+                    key: "AIzaSyCInT-9E8uvFFYylIXaH26k8PxRWW6rS30",
+                    language: "en",
+                  }}
+                  fetchDetails={true}
+                />
+              </SafeAreaView>
 
               <Text style={styles.inputLabel}>Date</Text>
               <SelectDate
