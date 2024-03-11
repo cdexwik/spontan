@@ -23,23 +23,35 @@ const ReceivedActivity = ({
     <View style={styles.container}>
       <View style={styles.topInfo}>
         <Text style={styles.topText}>@{tag}</Text>
-        <Text style={styles.topText}>{category}</Text>
+        <Text numberOfLines={1} style={styles.topText}>
+          {category}
+        </Text>
         <Text style={styles.topText}>{time}</Text>
       </View>
       <View style={styles.header}>
-        <Text style={styles.headerText}>{title}</Text>
-        <Text style={styles.descriptionText}>{description}</Text>
+        <Text numberOfLines={1} style={styles.headerText}>
+          {title}
+        </Text>
+        <Text numberOfLines={1} style={styles.descriptionText}>
+          {description}
+        </Text>
       </View>
       <View style={styles.timePlace}>
         <View style={styles.time}>
           <Ionicons name="calendar-clear-outline" size={21} color="#A0A0A0" />
-          <Text style={[styles.descriptionText, { marginLeft: 7 }]}>
+          <Text
+            numberOfLines={1}
+            style={[styles.descriptionText, { marginLeft: 7 }]}
+          >
             {activityTime}
           </Text>
         </View>
         <View style={styles.place}>
           <Ionicons name="location-outline" size={21} color="#A0A0A0" />
-          <Text style={[styles.descriptionText, { marginLeft: 7 }]}>
+          <Text
+            numberOfLines={1}
+            style={[styles.descriptionText, { marginLeft: 7 }]}
+          >
             {place}
           </Text>
         </View>

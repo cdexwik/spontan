@@ -110,12 +110,14 @@ function EditProfile() {
             <TextInput
               style={styles.input}
               secureTextEntry={true}
+              autoCapitalize="none"
               cursorColor="#D9D9D9"
             />
             <Text style={styles.inputLabel}>Confirm New Password</Text>
             <TextInput
               style={styles.input}
               secureTextEntry={true}
+              autoCapitalize="none"
               cursorColor="#D9D9D9"
             />
           </View>

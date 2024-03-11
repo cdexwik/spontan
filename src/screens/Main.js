@@ -123,11 +123,11 @@ function Main() {
                 tag={"anna"}
                 category={"sport"}
                 time={"00:36"}
-                title={"Badmintion"}
+                title={"Badminton"}
                 description={
-                  "I'd like to go and play badmintion during lunch, who's game??"
+                  "I'd like to go and play badminton during lunch, who's in??"
                 }
-                activityTime={"Tomorrow 12.00 - 13.30"}
+                activityTime={"Tomorrow 12:00 - 13:30"}
                 place={"Frescati Sports center"}
               />
             </TouchableOpacity>
@@ -138,8 +138,8 @@ function Main() {
                 category={"bar"}
                 time={"03:05"}
                 title={"Beers and games"}
-                description={"Lets go and play some games and drink!"}
-                activityTime={"Tomorrow 21.00 - 00.30"}
+                description={"Lets go play some games and drink!"}
+                activityTime={"Tomorrow 21:00 - 00:30"}
                 place={"Ugglan"}
               />
             </TouchableOpacity>
@@ -169,18 +169,18 @@ function Main() {
             lastName={"Svensson"}
             tag={"anna"}
             category={"sport"}
-            activityTime={"12.00 - 13.30"}
+            activityTime={"12:00 - 13:30"}
             time={"00:36"}
-            title={"Badmintion"}
+            title={"Badminton"}
             description={
-              "I'd like to go and play badmintion during lunch, who's game??"
+              "I'd like to go and play badminton during lunch, who's in??"
             }
             place={"Frescati Sports Center"}
             street={"Svante Arrhenius väg 4"}
             city={"114 18 Stockholm"}
-            weekdays={"08.00 - 22.00"}
-            saturday={"09.00 - 19.00"}
-            sunday={"09.00 - 22.00"}
+            weekdays={"08:00 - 22:00"}
+            saturday={"09:00 - 19:00"}
+            sunday={"09:00 - 22:00"}
             onPressHideActivityDetailFirst={onPressHideActivityDetailFirst}
           ></ActivityDetail>
         </Modal>
@@ -195,15 +195,15 @@ function Main() {
             lastName={"Martinez"}
             tag={"juan"}
             category={"bar"}
-            activityTime={"21.00 - 00.30"}
+            activityTime={"21:00 - 00:30"}
             time={"03:05"}
             title={"Beers and games"}
-            description={"Lets go and play some games and drink!"}
+            description={"Lets go play some games and drink!"}
             place={"Ugglan Boule & Bar"}
             street={"Närkesgatan 6"}
             city={"114 18 Stockholm"}
-            weekdays={"16.00 - 23.00"}
-            saturday={"16.00 - 01.00"}
+            weekdays={"16:00 - 23:00"}
+            saturday={"16:00 - 01:00"}
             sunday={"closed"}
             onPressHideActivityDetailSecond={onPressHideActivityDetailSecond}
           ></ActivityDetailSecond>

@@ -37,16 +37,16 @@ const Login = () => {
     // Show a user-friendly error message to the user.
     switch (errorCode) {
       case "auth/invalid-email":
-        setSnackbarMessage("The email address you entered is invalid.");
+        setSnackbarMessage("The email address you entered is invalid");
         setVisible(true);
 
         break;
       case "auth/wrong-password":
-        setSnackbarMessage("The password you entered is incorrect.");
+        setSnackbarMessage("The password you entered is incorrect");
         setVisible(true);
         break;
       default:
-        setSnackbarMessage("An unexpected error occurred.");
+        setSnackbarMessage("An unexpected error occurred");
         setVisible(true);
         break;
     }
@@ -58,7 +58,7 @@ const Login = () => {
         handleAuthError(error);
       });
     } else {
-      setSnackbarMessage("Cant login without Email and password.");
+      setSnackbarMessage("Can't login without email and password");
       setVisible(true);
     }
   };
@@ -97,6 +97,7 @@ const Login = () => {
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
               style={styles.input}
+              autoCapitalize="none"
               secureTextEntry={true}
               cursorColor="#D9D9D9"
               value={password}

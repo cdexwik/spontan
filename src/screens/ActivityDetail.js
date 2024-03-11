@@ -43,7 +43,7 @@ function ActivityDetail({
             <View style={styles.infoContainer}>
               <View style={styles.crossButton}>
                 <CrossButton
-                  size={20}
+                  size={14}
                   onPress={onPressHideActivityDetailFirst}
                 />
               </View>

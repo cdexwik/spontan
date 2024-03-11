@@ -86,6 +86,9 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     } else if (!description) {
       setSnackbarMessage("Can't send without description");
       setVisible(true);
+    } else if (!category) {
+      setSnackbarMessage("Can't send without category");
+      setVisible(true);
     } else if (!location) {
       setSnackbarMessage("Can't send without location");
       setVisible(true);
@@ -109,7 +112,8 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     return (
       <View>
         <Text>Title {title.toString()}</Text>
-        <Text>Description {desription.toString()}</Text>
+        <Text>Description {description.toString()}</Text>
+        <Text>Category {category.toString()}</Text>
         <Text>Location {location.toString()}</Text>
         <Text>date {date.toString()}</Text>
         <Text>endTime {endTime.toString()}</Text>
@@ -124,6 +128,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     if (
       title &&
       description &&
+      category &&
       location &&
       isTimeSet &&
       isDurationSet &&
@@ -135,6 +140,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
       let newActivity = {
         title: title,
         description: description,
+        category: category,
         location: location,
         startDateAndTime: date,
         duration: duration,
@@ -365,6 +371,17 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                 placeholder="I feel like..."
                 onChangeText={(value) => {
                   setDescription(value);
+                }}
+              />
+
+              <Text style={styles.inputLabel}>Category</Text>
+              <TextInput
+                style={styles.input}
+                autoCapitalize="none"
+                autoCorrect={false}
+                cursorColor="#D9D9D9"
+                onChangeText={(value) => {
+                  setCategory(value);
                 }}
               />
 

@@ -8,6 +8,10 @@ import LoginStack from "./src/stacks/LoginStack";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { PaperProvider } from "react-native-paper";
+import { LogBox } from "react-native";
+
+// To prevent warnings from showing up
+LogBox.ignoreAllLogs(true);
 
 SplashScreen.preventAutoHideAsync();
 

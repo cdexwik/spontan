@@ -33,16 +33,16 @@ function Register() {
 
   const handleMissingInputSnackbar = () => {
     if (!firstName) {
-      setSnackbarMessage("Cant register without firstname");
+      setSnackbarMessage("Can't register without first name");
       setVisible(true);
     } else if (!lastName) {
-      setSnackbarMessage("Cant register without lastname");
+      setSnackbarMessage("Can't register without last name");
       setVisible(true);
     } else if (!tag) {
-      setSnackbarMessage("Cant register without tag");
+      setSnackbarMessage("Can't register without tag");
       setVisible(true);
     } else if (!email) {
-      setSnackbarMessage("Cant register without email");
+      setSnackbarMessage("Can't register without email");
       setVisible(true);
     } else if (!password) {
       setSnackbarMessage(
@@ -53,7 +53,7 @@ function Register() {
       setSnackbarMessage("You need to confirm the password");
       setVisible(true);
     } else if (password !== confirmPassword) {
-      setSnackbarMessage("The passwords doesnt match");
+      setSnackbarMessage("The passwords don't match");
       setVisible(true);
     }
   };
@@ -65,16 +65,16 @@ function Register() {
     // Show a user-friendly error message to the user.
     switch (errorCode) {
       case "auth/invalid-email":
-        setSnackbarMessage("The email address you entered is invalid.");
+        setSnackbarMessage("The email address you entered is invalid");
         setVisible(true);
 
         break;
       case "auth/wrong-password":
-        setSnackbarMessage("The password you entered is incorrect.");
+        setSnackbarMessage("The password you entered is incorrect");
         setVisible(true);
         break;
       default:
-        setSnackbarMessage("An unexpected error occurred.");
+        setSnackbarMessage("An unexpected error occurred");
         setVisible(true);
         break;
     }
@@ -196,7 +196,6 @@ function Register() {
                 Embrace the{"\n"}spark of Spontaneity!
               </Text>
             </View>
-
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>First Name</Text>
               <TextInput
@@ -235,6 +234,7 @@ function Register() {
               <Text style={styles.inputLabel}>Password</Text>
               <TextInput
                 style={styles.input}
+                autoCapitalize="none"
                 secureTextEntry={true}
                 cursorColor="#D9D9D9"
                 onChangeText={(value) => setPassword(value)}
@@ -242,6 +242,7 @@ function Register() {
               <Text style={styles.inputLabel}>Confirm Password</Text>
               <TextInput
                 style={styles.input}
+                autoCapitalize="none"
                 secureTextEntry={true}
                 cursorColor="#D9D9D9"
                 onChangeText={(value) => setConfirmPassword(value)}
@@ -260,6 +261,7 @@ function Register() {
                 </Pressable>
               </View>
               <Snackbar
+                style={{ width: "107%" }}
                 visible={visible}
                 onDismiss={onDismissSnackBar}
                 action={{

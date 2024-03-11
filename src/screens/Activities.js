@@ -127,6 +127,7 @@ function Activities() {
       startDateAndTime,
       endDateAndTime,
       responseTime,
+      category,
     } = activity;
 
     const formattedStartDateTime = format(
@@ -140,7 +141,7 @@ function Activities() {
       <SentActivity
         key={data.id}
         id={data.id}
-        category={"category"}
+        category={category}
         responseTime={responseTime}
         title={title}
         description={description}
