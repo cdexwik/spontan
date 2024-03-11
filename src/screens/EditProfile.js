@@ -7,9 +7,11 @@ import ProfilePictureFriend from "../components/ProfilePictureFriend";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { useSelector } from "react-redux";
 
 function EditProfile() {
   const { navigate } = useNavigation();
+  const { currentUserData } = useSelector((state) => state.user);
 
   const [imageSrc, setImageSrc] = useState(
     "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png"
@@ -76,6 +78,7 @@ function EditProfile() {
               autoCapitalize="words"
               autoCorrect={false}
               cursorColor="#D9D9D9"
+              defaultValue={currentUserData.firstName}
             />
             <Text style={styles.inputLabel}>Last Name</Text>
             <TextInput
@@ -83,6 +86,7 @@ function EditProfile() {
               autoCapitalize="words"
               autoCorrect={false}
               cursorColor="#D9D9D9"
+              defaultValue={currentUserData.lastName}
             />
             <Text style={styles.inputLabel}>Tag</Text>
             <TextInput
@@ -90,6 +94,7 @@ function EditProfile() {
               autoCapitalize="none"
               autoCorrect={false}
               cursorColor="#D9D9D9"
+              defaultValue={currentUserData.tag.toString().toLowerCase()}
             />
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
@@ -99,6 +104,7 @@ function EditProfile() {
               autoComplete="email"
               autoCorrect={false}
               cursorColor="#D9D9D9"
+              defaultValue={currentUserData.email}
             />
             <Text style={styles.inputLabel}>New Password</Text>
             <TextInput

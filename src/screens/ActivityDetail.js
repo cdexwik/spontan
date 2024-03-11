@@ -25,7 +25,7 @@ function ActivityDetail({
   weekdays,
   saturday,
   sunday,
-  onPress,
+  onPressHideActivityDetail,
 }) {
   const totalPeople = 2;
   const attendingPeople = 1;
@@ -33,7 +33,7 @@ function ActivityDetail({
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <ScrollView>
           <View style={styles.container}>
             <View style={styles.headerContainer}>
@@ -42,7 +42,7 @@ function ActivityDetail({
 
             <View style={styles.infoContainer}>
               <View style={styles.crossButton}>
-                <CrossButton size={14} onPress={onPress} />
+                <CrossButton size={20} onPress={onPressHideActivityDetail} />
               </View>
               <View style={styles.personContainer}>
                 <Text style={styles.personText}>

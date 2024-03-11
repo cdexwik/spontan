@@ -14,8 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser, setLoggedIn } from "../../redux/slices/user";
 
 function Profile() {
-  const { isLoggedIn } = useSelector((state) => state.user);
-  const { user } = useSelector((state) => state.user);
+  const { currentUserData } = useSelector((state) => state.user);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -77,7 +76,7 @@ function Profile() {
               <Text
                 style={[styles.descriptionText, { fontSize: 19, marginTop: 4 }]}
               >
-                Name Surname
+                {currentUserData.firstName} {currentUserData.lastName}
               </Text>
               <Text
                 style={[
@@ -85,7 +84,7 @@ function Profile() {
                   { fontSize: 15, marginBottom: 16 },
                 ]}
               >
-                @tag
+                @{currentUserData.tag.toString().toLowerCase()}
               </Text>
               <Text
                 style={[
