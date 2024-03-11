@@ -170,10 +170,9 @@ const Search = () => {
           backgroundColor: "#424242",
         }}
         inputStyle={{
+          fontFamily: "HelveticaNeue-LightItalic",
+          color: "rgba(217, 217, 217, 0.8)",
           fontSize: 13,
-          fontFamily: "Helvetica Neue",
-          fontStyle: "italic",
-          color: "#D9D9D9",
         }}
         leftIconContainerStyle={{}}
         rightIconContainerStyle={{}}

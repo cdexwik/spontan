@@ -14,7 +14,7 @@ const initialState = {
   currentUser: null,
   isLoggedIn: false,
   currentUserData: {},
-  currentUserFriends: {},
+  currentUserFriends: [],
   users: [],
 };
 

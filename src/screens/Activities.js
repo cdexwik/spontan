@@ -17,8 +17,9 @@ import { useIsFocused } from "@react-navigation/native";
 import {
   fetchActivities,
   fetchUserActivities,
+  deleteActivity,
 } from "../../redux/slices/activities";
-import { deleteActivity } from "../../redux/slices/activities";
+
 const friendsData = [
   {
     userid: "111",
