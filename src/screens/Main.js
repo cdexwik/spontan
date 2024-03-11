@@ -11,6 +11,7 @@ import ReceivedActivity from "../components/ReceivedActivity";
 import NewActivityButton from "../components/NewActivityButton";
 import NewActivity from "./NewActivity";
 import ActivityDetail from "./ActivityDetail";
+import ActivityDetailSecond from "./ActivityDetailSecond";
 
 const friendsData = [
   {
@@ -88,7 +89,10 @@ const friendsData = [
 function Main() {
   const [isModalVisible, setModalVisible] = useState(false);
   const [friends, setFriends] = useState(friendsData);
-  const [isActivityDetailVisible, setIsActivityDetailVisible] = useState(false);
+  const [isActivityDetailVisibleFirst, setIsActivityDetailVisibleFirst] =
+    useState(false);
+  const [isActivityDetailVisibleSecond, setIsActivityDetailVisibleSecond] =
+    useState(false);
 
   useEffect(() => {
     setFriends(friendsData);
@@ -97,8 +101,15 @@ function Main() {
   const onPressShowModalHandler = () => setModalVisible(true);
   const onPressHideModalHandler = () => setModalVisible(false);
 
-  const onPressShowActivityDetail = () => setIsActivityDetailVisible(true);
-  const onPressHideActivityDetail = () => setIsActivityDetailVisible(false);
+  const onPressShowActivityDetailFirst = () =>
+    setIsActivityDetailVisibleFirst(true);
+  const onPressHideActivityDetailFirst = () =>
+    setIsActivityDetailVisibleFirst(false);
+
+  const onPressShowActivityDetailSecond = () =>
+    setIsActivityDetailVisibleSecond(true);
+  const onPressHideActivityDetailSecond = () =>
+    setIsActivityDetailVisibleSecond(false);
 
   return (
     <SafeAreaProvider>
@@ -107,10 +118,7 @@ function Main() {
           style={{ flex: 1, backgroundColor: "#2B2B2B", marginBottom: 30 }}
         >
           <View style={styles.container}>
-            <TouchableOpacity
-              style={{ width: "98%" }}
-              onPress={onPressShowActivityDetail}
-            >
+            <TouchableOpacity onPress={onPressShowActivityDetailFirst}>
               <ReceivedActivity
                 tag={"anna"}
                 category={"sport"}
@@ -123,15 +131,18 @@ function Main() {
                 place={"Frescati Sports center"}
               />
             </TouchableOpacity>
-            <ReceivedActivity
-              tag={"tag"}
-              category={"category"}
-              time={"09:37"}
-              title={"Heading title from the form"}
-              description={"I want to go to the gym tomorrow at 13:00"}
-              activityTime={"Tomorrow 13:00 - 15:00"}
-              place={"Fitness Fridhemsplan"}
-            />
+
+            <TouchableOpacity onPress={onPressShowActivityDetailSecond}>
+              <ReceivedActivity
+                tag={"juan"}
+                category={"bar"}
+                time={"03:05"}
+                title={"Beers and games"}
+                description={"Lets go and play some games and drink!"}
+                activityTime={"Tomorrow 21.00 - 00.30"}
+                place={"Ugglan"}
+              />
+            </TouchableOpacity>
           </View>
         </ScrollView>
         <NewActivityButton
@@ -150,8 +161,8 @@ function Main() {
         </Modal>
         <Modal
           animationType="slide"
-          visible={isActivityDetailVisible}
-          onRequestClose={() => setIsActivityDetailVisible(false)}
+          visible={isActivityDetailVisibleFirst}
+          onRequestClose={() => setIsActivityDetailVisibleFirst(false)}
         >
           <ActivityDetail
             firstName={"Anna"}
@@ -170,8 +181,32 @@ function Main() {
             weekdays={"08.00 - 22.00"}
             saturday={"09.00 - 19.00"}
             sunday={"09.00 - 22.00"}
-            onPressHideActivityDetail={onPressHideActivityDetail}
+            onPressHideActivityDetailFirst={onPressHideActivityDetailFirst}
           ></ActivityDetail>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          visible={isActivityDetailVisibleSecond}
+          onRequestClose={() => setIsActivityDetailVisibleSecond(false)}
+        >
+          <ActivityDetailSecond
+            firstName={"Juan"}
+            lastName={"Martinez"}
+            tag={"juan"}
+            category={"bar"}
+            activityTime={"21.00 - 00.30"}
+            time={"03:05"}
+            title={"Beers and games"}
+            description={"Lets go and play some games and drink!"}
+            place={"Ugglan Boule & Bar"}
+            street={"Närkesgatan 6"}
+            city={"114 18 Stockholm"}
+            weekdays={"16.00 - 23.00"}
+            saturday={"16.00 - 01.00"}
+            sunday={"closed"}
+            onPressHideActivityDetailSecond={onPressHideActivityDetailSecond}
+          ></ActivityDetailSecond>
         </Modal>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -182,7 +217,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#2B2B2B",
-    alignItems: "center",
+    //alignItems: "center",
     maxWidth: 480,
   },
 });

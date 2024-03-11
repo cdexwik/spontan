@@ -10,7 +10,7 @@ import YesButton from "../components/YesButton";
 import NoButton from "../components/NoButton";
 import ChatButton from "../components/ChatButton";
 
-function ActivityDetail({
+function ActivityDetailSecond({
   firstName,
   lastName,
   tag,
@@ -25,7 +25,7 @@ function ActivityDetail({
   weekdays,
   saturday,
   sunday,
-  onPressHideActivityDetailFirst,
+  onPressHideActivityDetailSecond,
 }) {
   const totalPeople = 2;
   const attendingPeople = 1;
@@ -44,7 +44,7 @@ function ActivityDetail({
               <View style={styles.crossButton}>
                 <CrossButton
                   size={20}
-                  onPress={onPressHideActivityDetailFirst}
+                  onPress={onPressHideActivityDetailSecond}
                 />
               </View>
               <View style={styles.personContainer}>
@@ -53,13 +53,7 @@ function ActivityDetail({
                   {"\n"}proposed an activity!
                 </Text>
                 <View style={styles.profilePicture}>
-                  <ProfilePictureFriend
-                    size={60}
-                    //This should be changed to the link of the corresponding profile picture
-                    src={
-                      "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png"
-                    }
-                  />
+                  <ProfilePictureFriend size={60} />
                 </View>
               </View>
             </View>
@@ -342,4 +336,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActivityDetail;
+export default ActivityDetailSecond;
