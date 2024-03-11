@@ -18,7 +18,13 @@ const SearchResult = ({
         <View>
           <View style={styles.friend}>
             <View style={styles.left}>
-              <ProfilePictureFriend />
+              <ProfilePictureFriend
+                size={45}
+                //This should be changed to the link of the corresponding profile picture
+                src={
+                  "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png"
+                }
+              />
             </View>
             <View style={styles.center}>
               <View style={styles.friendTextBox}>
@@ -69,19 +75,12 @@ const styles = StyleSheet.create({
   friendTextName: {
     fontSize: 12,
     color: "#F8F8F8",
-    fontWeight: "bold",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Bold",
   },
   friendTextTag: {
     fontSize: 12,
-    fontStyle: "italic",
     color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
-  },
-  friendText: {
-    fontSize: 12,
-    color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Italic",
   },
 });
 

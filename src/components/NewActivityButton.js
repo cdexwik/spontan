@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { StyleSheet, Pressable, TouchableOpacity } from "react-native";
+import React from "react";
+import { StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function NewActivityButton({ onPress }) {

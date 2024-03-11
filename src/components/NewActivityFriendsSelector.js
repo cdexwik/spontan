@@ -15,50 +15,57 @@ const NewActivityFriendsSelector = ({ friendsData, setSelectedFriends }) => {
           setSelectedFriends(val);
         }}
         data={friendsData}
-        fontFamily="Helvetica Neue"
         placeholder="Select friends"
         searchPlaceholder="Search friends"
         notFoundText="No friend with this name found"
-        label="Selected Friends"
+        label="Selected Friends:"
         save="key"
         boxStyles={{
+          paddingLeft: 10,
           backgroundColor: "#424242",
-          fontFamily: "Helvetica Neue",
+          fontFamily: "HelveticaNeue-LightItalic",
           color: "#f8f8f8",
+          fontSize: 14,
           borderWidth: 0,
         }}
         inputStyles={{
-          fontSize: 16,
-          fontFamily: "Helvetica Neue",
-          color: "#D9D9D9",
+          backgroundColor: "#424242",
+          fontFamily: "HelveticaNeue-LightItalic",
+          color: "#f8f8f8",
+          fontSize: 14,
+          borderWidth: 0,
+          paddingLeft: 5,
         }}
         dropdownStyles={{
           backgroundColor: "#424242",
-          fontFamily: "Helvetica Neue",
+          fontFamily: "HelveticaNeue-LightItalic",
+          color: "#f8f8f8",
+          fontSize: 14,
           borderWidth: 0,
         }}
         dropdownTextStyles={{
-          color: "#D9D9D9",
-          fontFamily: "Helvetica Neue",
+          fontFamily: "HelveticaNeue-LightItalic",
+          color: "#f8f8f8",
+          fontSize: 14,
         }}
         badgeStyles={{
-          backgroundColor: "#AFE8C4",
+          backgroundColor: "#EEDFF6",
         }}
         badgeTextStyles={{
           fontSize: 12,
           lineHeight: 21,
-          fontWeight: "bold",
           letterSpacing: 0.25,
           color: "black",
-          fontFamily: "Helvetica Neue",
-          fontStyle: "italic",
+          fontFamily: "HelveticaNeue-BoldItalic",
         }}
         checkBoxStyles={{
           backgroundColor: "#D9D9D9",
           borderWidth: 0,
         }}
         labelStyles={{
+          fontFamily: "HelveticaNeue-Italic",
           color: "#f8f8f8",
+          fontSize: 14,
         }}
       />
     </View>

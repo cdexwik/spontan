@@ -6,6 +6,7 @@ import {
   TextInput,
   Pressable,
   Platform,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -22,6 +23,12 @@ import { addDoc } from "firebase/firestore";
 import { activitiesRef } from "../../config/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { addActivityToFirestore } from "../../redux/slices/activities";
+import CrossButton from "../components/CrossButton";
+import { format } from "date-fns";
+import {
+  GooglePlaceDetail,
+  GooglePlacesAutocomplete,
+} from "react-native-google-places-autocomplete";
 
 function NewActivity({ onPressHideModalHandler, friends }) {
   // Form States
@@ -74,22 +81,22 @@ function NewActivity({ onPressHideModalHandler, friends }) {
 
   const handleMissingInputSnackbar = () => {
     if (!title) {
-      setSnackbarMessage("Cant send without title");
+      setSnackbarMessage("Can't send without title");
       setVisible(true);
     } else if (!description) {
-      setSnackbarMessage("Cant send without description");
+      setSnackbarMessage("Can't send without description");
       setVisible(true);
     } else if (!location) {
-      setSnackbarMessage("Cant send without location");
+      setSnackbarMessage("Can't send without location");
       setVisible(true);
     } else if (!isTimeSet) {
-      setSnackbarMessage("Cant send without setting the start time");
+      setSnackbarMessage("Can't send without setting the start time");
       setVisible(true);
     } else if (!isDurationSet) {
-      setSnackbarMessage("Cant send without setting the duration");
+      setSnackbarMessage("Can't send without setting the duration");
       setVisible(true);
     } else if (!isResponseTimeSet) {
-      setSnackbarMessage("Cant send without setting the response time");
+      setSnackbarMessage("Can't send without setting the response time");
       setVisible(true);
     } else if (selectedFriends.length == 0) {
       setSnackbarMessage("You need to add some friends to your activity");
@@ -102,7 +109,7 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     return (
       <View>
         <Text>Title {title.toString()}</Text>
-        <Text>Description {description.toString()}</Text>
+        <Text>Description {desription.toString()}</Text>
         <Text>Location {location.toString()}</Text>
         <Text>date {date.toString()}</Text>
         <Text>endTime {endTime.toString()}</Text>
@@ -213,12 +220,10 @@ function NewActivity({ onPressHideModalHandler, friends }) {
 
   useEffect(() => {
     const output = () => {
-      const timeString = endTime.toLocaleString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      const dateString = endTime.toDateString();
-      const output = `${dateString}, ${timeString}`;
+      const startTimeString = format(date, "HH:mm");
+      const endTimeString = format(endTime, "HH:mm");
+      const dateString = format(endTime, "PPPP");
+      const output = `${dateString}, ${startTimeString} - ${endTimeString}`;
       return output;
     };
     setEndTimeOutput(output);
@@ -319,18 +324,10 @@ function NewActivity({ onPressHideModalHandler, friends }) {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#2B2B2B" }}>
         <KeyboardAwareScrollView
+          keyboardShouldPersistTaps={"handled"}
           style={{ flex: 1, backgroundColor: "#2B2B2B" }}
         >
           <View style={styles.container}>
-            <View style={styles.headerContainerExitMenu}>
-              <View style={styles.crossButton}>
-                <Pressable onPress={onPressHideModalHandler}>
-                  <Feather name="x" size={24} color="#8F8F8F" />
-                </Pressable>
-              </View>
-
-              <View style={styles.checkButton} />
-            </View>
             <View style={styles.headerContainer}>
               <Text style={styles.spontan}>Spontan</Text>
               <Text style={styles.subTitle}>
@@ -338,7 +335,17 @@ function NewActivity({ onPressHideModalHandler, friends }) {
               </Text>
             </View>
             <View style={styles.formContainer}>
-              <Text style={styles.inputLabel}>Title</Text>
+              <View style={styles.crossButton}>
+                <CrossButton size={14} onPress={onPressHideModalHandler} />
+              </View>
+              <Text
+                style={[
+                  styles.inputLabel,
+                  { fontFamily: "HelveticaNeue-Bold" },
+                ]}
+              >
+                Title
+              </Text>
               <TextInput
                 style={styles.input}
                 autoCapitalize="words"
@@ -354,19 +361,21 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                 autoCapitalize="sentences"
                 autoCorrect={false}
                 cursorColor="#D9D9D9"
+                placeholderTextColor="rgba(217, 217, 217, 0.8)"
                 placeholder="I feel like..."
                 onChangeText={(value) => {
                   setDescription(value);
                 }}
               />
-              <View>
+
+              {/* <View>
                 <Text style={{ marginTop: 20, color: "#F8f8f8" }}>
-                  Placeholder for tags
+                  [Placeholder for tags]
                 </Text>
-              </View>
+              </View> */}
 
               <Text style={styles.inputLabel}>Location</Text>
-              <TextInput
+              {/* <TextInput
                 style={styles.input}
                 autoCapitalize="words"
                 autoCorrect={false}
@@ -374,9 +383,50 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                 onChangeText={(value) => {
                   setLocation(value);
                 }}
-              />
+              /> */}
+              <SafeAreaView>
+                <GooglePlacesAutocomplete
+                  placeholder="Search"
+                  placeholderTextColor="#F8f8f8"
+                  suppressDefaultStyles
+                  styles={{
+                    textInputContainer: {
+                      flex: 1,
+                      color: "#F8f8f8",
+                    },
+                    textInput: {
+                      height: 32,
+                      marginTop: 6,
+                      borderRadius: 8,
+                      backgroundColor: "#424242",
+                      fontFamily: "HelveticaNeue-LightItalic",
+                      color: "#F8f8f8",
+                      fontSize: 14,
+                      paddingLeft: 10,
+                    },
+                    listView: {
+                      color: "#F8f8f8",
+                    },
+                    predefinedPlacesDescription: {
+                      color: "#F8f8f8",
+                    },
+                  }}
+                  onPress={(data, details = null) => {
+                    // console.log("data", data);
+                    // console.log("___________");
+                    // console.log("details", details);
+                    // console.log("description", data.description);
+                    setLocation(data.description);
+                  }}
+                  query={{
+                    key: "AIzaSyCInT-9E8uvFFYylIXaH26k8PxRWW6rS30",
+                    language: "en",
+                  }}
+                  fetchDetails={true}
+                />
+              </SafeAreaView>
 
-              <Text style={styles.inputLabel}>Select Date</Text>
+              <Text style={styles.inputLabel}>Date</Text>
               <SelectDate
                 showDatePicker={showDatePicker}
                 date={date}
@@ -386,45 +436,42 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                 confirmIosDate={confirmIosDate}
               />
 
-              <View>
-                <Text style={styles.inputLabel}>Select Start Time</Text>
-                <SelectStartTime
-                  showTimePicker={showTimePicker}
-                  date={date}
-                  setDate={setDate}
-                  toggleTimePicker={toggleTimePicker}
-                  onChangeSetTime={onChangeSetTime}
-                  confirmIosTime={confirmIosTime}
-                />
+              <View style={{ flexDirection: "row" }}>
+                <View>
+                  <Text style={styles.inputLabel}>Start Time</Text>
+                  <SelectStartTime
+                    showTimePicker={showTimePicker}
+                    date={date}
+                    setDate={setDate}
+                    toggleTimePicker={toggleTimePicker}
+                    onChangeSetTime={onChangeSetTime}
+                    confirmIosTime={confirmIosTime}
+                  />
+                </View>
+                <View style={{ marginLeft: 14 }}>
+                  <Text style={styles.inputLabel}>
+                    Duration{" "}
+                    <Text style={{ fontFamily: "HelveticaNeue-Light" }}>
+                      (hours : minutes)
+                    </Text>
+                  </Text>
+                  <SelectDuration
+                    showDurationPicker={showDurationPicker}
+                    duration={duration}
+                    setDuration={setDuration}
+                    toggleDurationPicker={toggleDurationPicker}
+                    onChangeSetDuration={onChangeSetDuration}
+                    confirmIosDuration={confirmIosDuration}
+                  />
+                </View>
               </View>
-              <View>
-                <Text style={styles.inputLabel}>Select Duration</Text>
-                <Text style={[styles.inputLabel, { marginTop: -8 }]}>
-                  hours | minutes
-                </Text>
-                <SelectDuration
-                  showDurationPicker={showDurationPicker}
-                  duration={duration}
-                  setDuration={setDuration}
-                  toggleDurationPicker={toggleDurationPicker}
-                  onChangeSetDuration={onChangeSetDuration}
-                  confirmIosDuration={confirmIosDuration}
-                />
-              </View>
-              <Text style={styles.inputLabel}>End Time</Text>
-              <TextInput
-                style={[styles.input, { color: "#F8f8f8" }]}
-                autoCapitalize="words"
-                cursorColor="#D9D9D9"
-                value={endTimeOutput}
-                editable={false}
-              />
+
               <View>
                 <Text style={styles.inputLabel}>
-                  Select Response Time Limit
-                </Text>
-                <Text style={[styles.inputLabel, { marginTop: -8 }]}>
-                  hours | minutes
+                  Response Time Limit{" "}
+                  <Text style={{ fontFamily: "HelveticaNeue-Light" }}>
+                    (hours : minutes)
+                  </Text>
                 </Text>
                 <SelectResponseTime
                   showResponseTimePicker={showResponseTimePicker}
@@ -441,7 +488,22 @@ function NewActivity({ onPressHideModalHandler, friends }) {
                 setSelectedFriends={setSelectedFriends}
               />
               <DashedLine />
-
+              <View>
+                <Text style={styles.inputLabel}>Selected date and time</Text>
+                <TextInput
+                  style={[
+                    styles.input,
+                    {
+                      marginBottom: 4,
+                      fontFamily: "HelveticaNeue-Italic",
+                    },
+                  ]}
+                  autoCapitalize="words"
+                  cursorColor="#D9D9D9"
+                  value={endTimeOutput}
+                  editable={false}
+                />
+              </View>
               <SendButton onPress={handleSubmit} />
             </View>
             <Snackbar
@@ -469,53 +531,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#2B2B2B",
     alignItems: "center",
   },
-  headerContainerExitMenu: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 18,
-    width: "92%",
-    maxWidth: 480,
-  },
-  crossButton: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  },
-  profile: {
-    color: "#F8F8F8",
-    fontSize: 18,
-    textAlign: "center",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    fontWeight: "400",
-  },
-  checkButton: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
   headerContainer: {
     alignItems: "center",
-    marginTop: 30,
-    width: "92%",
-    maxWidth: 480,
+    marginTop: 20,
+    maxWidth: 380,
+  },
+  crossButton: {
+    position: "absolute",
+    top: 6,
+    left: 6,
   },
   spontan: {
     color: "#F8F8F8",
     fontSize: 42,
     textAlign: "center",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    fontWeight: "700",
+    fontFamily: "HelveticaNeue-BoldItalic",
   },
   subTitle: {
     color: "#F8F8F8",
     textAlign: "center",
-    marginTop: 40,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    fontWeight: "400",
+    marginTop: 30,
+    fontFamily: "HelveticaNeue-MediumItalic",
     fontSize: 28,
     lineHeight: 28,
   },
@@ -534,25 +570,21 @@ const styles = StyleSheet.create({
     elevation: 4,
     overflow: "hidden",
   },
-
   inputLabel: {
-    color: "#a0a0a0",
-    marginTop: 20,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    fontSize: 14,
-    marginBottom: 6,
+    marginTop: 14,
+    fontSize: 13,
+    color: "#A0A0A0",
+    fontFamily: "HelveticaNeue-Normal",
   },
   input: {
-    height: 36,
+    height: 32,
+    marginTop: 6,
     borderRadius: 8,
     backgroundColor: "#424242",
-    fontFamily: "Helvetica Neue",
-    color: "#D9D9D9",
-    //fontStyle: "italic",
+    fontFamily: "HelveticaNeue-LightItalic",
+    color: "#F8f8f8",
     fontSize: 14,
     paddingLeft: 10,
-    paddingVertical: 4,
   },
   rowWrapper: {
     flexDirection: "row",
@@ -578,17 +610,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
   },
   buttonText: {
-    fontSize: 12,
+    fontSize: 16,
     lineHeight: 21,
-    fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
+    fontFamily: "HelveticaNeue-BoldItalic",
   },
 });
 

@@ -95,7 +95,7 @@ function Friends() {
           </View>
 
           <View style={styles.searchContainer}>
-            <Text style={styles.header}>Add New Friends</Text>
+            <Text style={styles.header}>Add new friends</Text>
             <Search />
           </View>
         </View>
@@ -137,11 +137,8 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: 24,
-    marginBottom: 4,
     marginLeft: 20,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    fontWeight: "700",
+    fontFamily: "HelveticaNeue-BoldItalic",
     fontSize: 20,
     color: "#F8f8f8",
   },

@@ -55,9 +55,7 @@ export default function Timer(responseTime) {
 const styles = StyleSheet.create({
   topText: {
     fontSize: 12,
-    fontStyle: "italic",
-    fontWeight: "300",
-    color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
+    color: "rgba(160, 160, 160, 0.7)",
+    fontFamily: "HelveticaNeue-LightItalic",
   },
 });

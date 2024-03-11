@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { format } from "date-fns";
 
 // create a component
 const SelectResponseTime = ({
@@ -22,31 +23,27 @@ const SelectResponseTime = ({
 }) => {
   return (
     <View>
-      {!showResponseTimePicker && (
-        <Pressable onPressIn={toggleResponseTimePicker}>
-          <TextInput
-            style={[
-              styles.input,
-              {
-                color: "#F8f8f8",
-                width: 80,
-                textAlign: "center",
-                paddingLeft: -10,
-              },
-            ]}
-            autoCapitalize="words"
-            cursorColor="#D9D9D9"
-            value={responseTime.toLocaleString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-            onChangeText={setResponseTime}
-            editable={false}
-            onPress={toggleResponseTimePicker}
-            placeholder={responseTime.toDateString()}
-          />
-        </Pressable>
-      )}
+      {/* {!showResponseTimePicker && ( */}
+      <Pressable onPressIn={toggleResponseTimePicker}>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              width: 80,
+              textAlign: "center",
+              paddingLeft: -10,
+            },
+          ]}
+          autoCapitalize="words"
+          cursorColor="#D9D9D9"
+          value={format(responseTime, "HH:mm")}
+          onChangeText={setResponseTime}
+          editable={false}
+          onPress={toggleResponseTimePicker}
+          placeholder={format(responseTime.toDateString(), "HH:mm")}
+        />
+      </Pressable>
+      {/* )} */}
       {showResponseTimePicker && (
         <DateTimePicker
           mode="time"
@@ -87,15 +84,14 @@ const SelectResponseTime = ({
 // define your styles
 const styles = StyleSheet.create({
   input: {
-    height: 36,
+    height: 32,
+    marginTop: 6,
     borderRadius: 8,
     backgroundColor: "#424242",
-    fontFamily: "Helvetica Neue",
-    color: "#D9D9D9",
-    //fontStyle: "italic",
+    fontFamily: "HelveticaNeue-LightItalic",
+    color: "#F8f8f8",
     fontSize: 14,
     paddingLeft: 10,
-    paddingVertical: 4,
   },
   datePicker: {
     height: 120,
@@ -110,17 +106,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
   },
   buttonText: {
     fontSize: 12,
     lineHeight: 21,
-    fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
+    fontFamily: "HelveticaNeue-BoldItalic",
   },
 });
 

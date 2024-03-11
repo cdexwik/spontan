@@ -18,6 +18,7 @@ import AnsweredList from "./AnsweredList";
 import { useDispatch } from "react-redux";
 import { deleteActivityFromFirestore } from "../../redux/slices/activities";
 import Timer from "./Timer";
+import { format } from "date-fns";
 
 const friendsData = [
   {
@@ -123,7 +124,7 @@ const SentActivity = ({
     <View style={styles.container}>
       <View style={styles.topInfo}>
         <Text style={styles.topText}>you</Text>
-        <Text style={styles.topText}>{category}</Text>
+        <Text style={[styles.topText, { marginLeft: 25 }]}>{category}</Text>
         {Timer(responseTime)}
       </View>
       <View style={styles.header}>
@@ -134,7 +135,8 @@ const SentActivity = ({
         <View style={styles.time}>
           <Ionicons name="calendar-clear-outline" size={21} color="#A0A0A0" />
           <Text style={[styles.descriptionText, { marginLeft: 7 }]}>
-            {startDateAndTime} - {endDateAndTime}
+            {format(startDateAndTime, "PPPP")}{" "}
+            {format(startDateAndTime, "HH:mm")} - {endDateAndTime}
           </Text>
         </View>
         <View style={styles.place}>
@@ -144,7 +146,9 @@ const SentActivity = ({
           </Text>
         </View>
       </View>
-      <DashedLine />
+      <View style={{ marginVertical: 4 }}>
+        <DashedLine />
+      </View>
       <View style={styles.bottom}>
         <View style={styles.attendants}>
           <View style={styles.progressBar}>
@@ -184,12 +188,12 @@ const SentActivity = ({
 const styles = StyleSheet.create({
   container: {
     width: "98%",
-    minHeight: 240,
-    height: 240,
+    minHeight: 230,
+    height: 230,
     backgroundColor: "#3B3B3B",
     flexDirection: "column",
     borderRadius: 8,
-    paddingVertical: 18,
+    paddingVertical: 16,
     paddingHorizontal: 20,
     elevation: 4,
     overflow: "visible",
@@ -198,14 +202,12 @@ const styles = StyleSheet.create({
   topInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 12,
+    marginBottom: 8,
   },
   topText: {
     fontSize: 12,
-    fontStyle: "italic",
-    fontWeight: "300",
-    color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
+    color: "rgba(160, 160, 160, 0.7)",
+    fontFamily: "HelveticaNeue-LightItalic",
   },
   header: {
     flexDirection: "column",
@@ -213,31 +215,29 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    fontStyle: "italic",
-    fontWeight: "bold",
     color: "#F8F8F8F8",
-    fontFamily: "Helvetica Neue",
-    marginBottom: 8,
+    fontFamily: "HelveticaNeue-BoldItalic",
+    marginBottom: 2,
   },
   descriptionText: {
     fontSize: 13,
     color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Normal",
   },
   amountText: {
     fontSize: 12,
     color: "#A0A0A0",
-    fontFamily: "Helvetica Neue",
+    fontFamily: "HelveticaNeue-Normal",
   },
   timePlace: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    marginBottom: 14,
+    marginBottom: 10,
   },
   time: {
     flexDirection: "row",
-    marginBottom: 10,
+    marginBottom: 8,
   },
   place: {
     flexDirection: "row",

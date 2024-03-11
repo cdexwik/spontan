@@ -16,14 +16,13 @@ const firebaseConfig = {
   appId: "1:771829335180:web:ee4cfe0a0d23fe76fa27a9",
 };
 
-// This solusion gives an error - https://github.com/firebase/firebase-js-sdk/issues/7584
-/*
-export const app = initializeApp(firebaseConfig);
-export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-});*/
-
 // Initialize Firebase
+
+// This solution gives an error - https://github.com/firebase/firebase-js-sdk/issues/7584
+// export const app = initializeApp(firebaseConfig);
+// export const auth = initializeAuth(app, {
+//   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+// });
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 

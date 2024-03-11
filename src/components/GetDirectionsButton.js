@@ -1,20 +1,20 @@
 import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
-export default function NoButton({ onPress }) {
+export default function GetDirectionsButton({ onPress }) {
   return (
-    <Pressable onPress={onPress} style={styles.acceptButton}>
-      <Text style={styles.buttonText}>No</Text>
+    <Pressable onPress={onPress} style={styles.directionsButton}>
+      <Text style={styles.buttonText}>Get directions</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  acceptButton: {
-    backgroundColor: "#FDD3D5",
+  directionsButton: {
+    backgroundColor: "#AFE8C4",
     alignItems: "center",
     paddingVertical: 0,
-    paddingHorizontal: 16,
+    paddingHorizontal: 18,
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,

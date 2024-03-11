@@ -237,7 +237,7 @@ function Register() {
                     navigate("Login");
                   }}
                 >
-                  <Text style={styles.loginText}>Login</Text>
+                  <Text style={styles.loginText}>Log In</Text>
                 </Pressable>
               </View>
               <Snackbar
@@ -268,24 +268,20 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 20,
     maxWidth: 380,
   },
   spontan: {
     color: "#F8F8F8",
     fontSize: 42,
     textAlign: "center",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    fontWeight: "700",
+    fontFamily: "HelveticaNeue-BoldItalic",
   },
   subTitle: {
     color: "#F8F8F8",
     textAlign: "center",
-    marginTop: 40,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    fontWeight: "400",
+    marginTop: 30,
+    fontFamily: "HelveticaNeue-MediumItalic",
     fontSize: 28,
     lineHeight: 28,
   },
@@ -306,19 +302,17 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     color: "#F8F8F8",
-    marginTop: 20,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
+    marginTop: 14,
+    fontFamily: "HelveticaNeue-MediumItalic",
     fontSize: 17,
   },
   input: {
     height: 32,
-    marginTop: 8,
+    marginTop: 6,
     borderRadius: 8,
     backgroundColor: "#424242",
-    fontFamily: "Helvetica Neue",
-    color: "#D9D9D9",
-    fontStyle: "italic",
+    fontFamily: "HelveticaNeue-LightItalic",
+    color: "rgba(217, 217, 217, 0.8)",
     fontSize: 15,
     paddingLeft: 10,
   },
@@ -331,17 +325,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 16,
     elevation: 3,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
   },
   buttonText: {
     fontSize: 16,
     lineHeight: 21,
-    fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
+    fontFamily: "HelveticaNeue-BoldItalic",
   },
   textBox: {
     flexDirection: "row",
@@ -351,21 +341,17 @@ const styles = StyleSheet.create({
   normalText: {
     fontSize: 12,
     lineHeight: 21,
-    fontWeight: "bold",
     letterSpacing: 0.25,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    color: "#A0A0A0",
+    fontFamily: "HelveticaNeue-BoldItalic",
+    color: "rgba(160, 160, 160, 0.7)",
   },
   loginText: {
     paddingLeft: 4,
     fontSize: 12,
     lineHeight: 21,
-    fontWeight: "bold",
     letterSpacing: 0.25,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
-    color: "#afe8c4",
+    fontFamily: "HelveticaNeue-BoldItalic",
+    color: "rgba(175, 232, 196, 0.7)",
   },
 });
 

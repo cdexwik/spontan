@@ -224,10 +224,8 @@ const styles = StyleSheet.create({
   normalText: {
     fontSize: 12,
     lineHeight: 21,
-    fontWeight: "bold",
     letterSpacing: 0.25,
-    fontFamily: "Helvetica Neue",
-    fontStyle: "italic",
+    fontFamily: "HelveticaNeue-BoldItalic",
     color: "#A0A0A0",
   },
 });
