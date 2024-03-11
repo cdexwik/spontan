@@ -12,6 +12,7 @@ import Checkbox from "expo-checkbox";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { Snackbar } from "react-native-paper";
 
 const Login = () => {
   const { navigate } = useNavigation();
@@ -24,21 +25,42 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // For Sncakbar
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [visible, setVisible] = useState(false);
+  const onDismissSnackBar = () => setVisible(false);
+
+  const handleAuthError = (error) => {
+    // Check the error code to determine the type of error that occurred.
+    const errorCode = error.code;
+
+    // Show a user-friendly error message to the user.
+    switch (errorCode) {
+      case "auth/invalid-email":
+        setSnackbarMessage("The email address you entered is invalid.");
+        setVisible(true);
+
+        break;
+      case "auth/wrong-password":
+        setSnackbarMessage("The password you entered is incorrect.");
+        setVisible(true);
+        break;
+      default:
+        setSnackbarMessage("An unexpected error occurred.");
+        setVisible(true);
+        break;
+    }
+  };
+
   const handleSubmit = async () => {
     if (email && password) {
-      {
-        await signInWithEmailAndPassword(auth, email, password).catch(
-          (error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode);
-            console.log(errorMessage);
-          }
-        );
-      }
+      await signInWithEmailAndPassword(auth, email, password).catch((error) => {
+        handleAuthError(error);
+      });
     } else {
+      setSnackbarMessage("Cant login without Email and password.");
+      setVisible(true);
     }
-    // show error
   };
   return (
     <SafeAreaProvider>
@@ -139,6 +161,18 @@ const Login = () => {
               ></View>
             </ScrollView>
           )}
+          <Snackbar
+            visible={visible}
+            onDismiss={onDismissSnackBar}
+            action={{
+              label: "Ok",
+              onPress: () => {
+                setSnackbarMessage("");
+              },
+            }}
+          >
+            {snackbarMessage}
+          </Snackbar>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

@@ -58,6 +58,28 @@ function Register() {
     }
   };
 
+  const handleAuthError = (error) => {
+    // Check the error code to determine the type of error that occurred.
+    const errorCode = error.code;
+
+    // Show a user-friendly error message to the user.
+    switch (errorCode) {
+      case "auth/invalid-email":
+        setSnackbarMessage("The email address you entered is invalid.");
+        setVisible(true);
+
+        break;
+      case "auth/wrong-password":
+        setSnackbarMessage("The password you entered is incorrect.");
+        setVisible(true);
+        break;
+      default:
+        setSnackbarMessage("An unexpected error occurred.");
+        setVisible(true);
+        break;
+    }
+  };
+
   const register = async () => {
     if (firstName && lastName && tag && email && password && confirmPassword) {
       // allFields filled
@@ -91,10 +113,7 @@ function Register() {
           setSnackbarMessage("Success! Login to use your account");
           setVisible(true);
         } catch (error) {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode);
-          console.log(errorMessage);
+          handleAuthError(error);
         }
       } else {
         handleMissingInputSnackbar();
