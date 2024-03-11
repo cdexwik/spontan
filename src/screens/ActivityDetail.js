@@ -50,7 +50,13 @@ function ActivityDetail({
                   {"\n"}proposed an activity!
                 </Text>
                 <View style={styles.profilePicture}>
-                  <ProfilePictureFriend size={60} />
+                  <ProfilePictureFriend
+                    size={60}
+                    //This should be changed to the link of the corresponding profile picture
+                    src={
+                      "https://upload.wikimedia.org/wikipedia/commons/1/18/React_Native_Logo.png"
+                    }
+                  />
                 </View>
               </View>
             </View>

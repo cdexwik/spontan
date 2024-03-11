@@ -107,7 +107,10 @@ function Main() {
           style={{ flex: 1, backgroundColor: "#2B2B2B", marginBottom: 30 }}
         >
           <View style={styles.container}>
-            <TouchableOpacity onPress={onPressShowActivityDetail}>
+            <TouchableOpacity
+              style={{ width: "98%" }}
+              onPress={onPressShowActivityDetail}
+            >
               <ReceivedActivity
                 tag={"anna"}
                 category={"sport"}
